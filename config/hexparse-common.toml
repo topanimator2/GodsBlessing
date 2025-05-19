@@ -1,0 +1,11 @@
+#can directly parse great spell patterns, without scrolls
+#Allowed Values: ALL, DISABLED, BY_SCROLL
+ParseGreatSpells = "BY_SCROLL"
+#enable comments and auto parse indents into comment iota for display
+ParseCommentsIndents = true
+#cost to parse single keyword into iota
+#Range: 0 ~ 100000
+ParserBaseCost = 0
+#display colorful nested lists and intro/retros
+ShowColorfulNested = true
+
