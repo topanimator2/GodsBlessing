@@ -1,0 +1,9 @@
+{
+    "type": "palladium:after_image",
+    "color": "#4fe812",
+    "spacing": 1,
+    "lifetime": 3,
+    "opacity": 0.5,
+    "normal_transparency": true
+}
+

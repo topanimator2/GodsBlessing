@@ -1,0 +1,6 @@
+{
+    "type": "palladium:default",
+    "max_stack_size": 1,
+    "creative_mode_tab": "minecraft:combat",
+    "is_fire_resistant":true
+}

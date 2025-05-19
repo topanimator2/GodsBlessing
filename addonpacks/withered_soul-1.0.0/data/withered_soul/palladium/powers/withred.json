@@ -1,0 +1,1268 @@
+{
+    "name": "withred soul",
+    "background": "minecraft:textures/block/soul_sand.png",
+    "icon": "minecraft:wither_skeleton_skull",
+    "gui_display_type": "tree",
+    "energy_bars": {
+  "Soul": {
+    "color": "#8b0ab2",
+    "max":6666,
+    "synced_value": {
+      "type": "score",
+      "objective": "withred_soul.souls",
+      "fallback": 0
+    }
+  }
+},
+   
+    "abilities": 
+    {
+
+        "soul_eater": {
+            "type": "palladium:command",
+            "icon": "minecraft:soul_sand",
+            "title": "Soul Eater",
+            "first_tick_commands": [
+                "scoreboard objectives add withred_soul.got_kill totalKillCount",
+                "scoreboard objectives add withred_soul.deaths deathCount",
+                "scoreboard objectives add withred_soul.souls dummy",
+                "scoreboard objectives add withred_soul.timer dummy",
+                "scoreboard players set @s withred_soul.timer 6000",
+                "scoreboard objectives add withred_soul.soul_multiplier dummy",
+                "scoreboard players set @s withred_soul.soul_multiplier 10",
+                "scoreboard players set @s withred_soul.got_kill 0"
+            ],
+            "commands": [
+                "execute if score @s withred_soul.deaths matches 0.. run scoreboard players set @s withred_soul.souls 10",
+                "execute if score @s withred_soul.deaths matches 0.. run scoreboard players reset @s withred_soul.deaths",
+                "execute if score @s withred_soul.timer matches ..0 run scoreboard players remove @s withred_soul.souls 30",
+                "execute if score @s withred_soul.souls matches ..0 run scoreboard players set @s withred_soul.souls 0",
+                "execute if score @s withred_soul.timer matches ..0 run scoreboard players set @s withred_soul.timer 6000",
+                "scoreboard players remove @s withred_soul.timer 1",
+                "scoreboard players operation @s withred_soul.got_kill *= @s withred_soul.soul_multiplier",
+                "scoreboard players operation @s withred_soul.souls += @s withred_soul.got_kill",
+                "scoreboard players set @s withred_soul.got_kill 0",
+                "execute if score @s withred_soul.souls matches 6660.. run scoreboard players set @s withred_soul.souls 6660"
+                
+            ]
+        },
+
+            
+
+
+        
+
+        "cloak_of_souls": 
+        {
+            "type": "palladium:invisibility",
+            "icon": "palladium:textures/icon/invisibility.png",
+            "bar_color": "white",
+            "title": "Cloak of Souls",
+
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:toggle",
+                        "cooldown": 2400,
+                        "key_type": "key_bind",
+                        "needs_empty_hand": false,
+                        "allow_scrolling_when_crouching": true
+                    },
+                    {
+                        "type": "palladium:objective_score",
+                        "objective": "withred_soul.souls",
+                        "min_score": 200,
+                        "max_score": 2147483647
+                    }
+                ]
+            }
+        },"dead seer":
+        {
+            "type": "palladium:entity_damage",
+            "icon": "minecraft:soul_torch",
+
+            "title": "dead seer",
+            "bar_color": "purple",
+            "hidden": false,
+            "hidden_in_bar": false,
+            "list_index": -1,
+            "gui_position": "null",
+            "description": "null",
+            "damage": 20,
+            "damage_type": "minecraft:player_attack",
+            "effect": "null",
+            "fire_seconds": 0,
+            "potion_seconds": 0,
+            "potion_amplifier": 0,
+            "hide_particles": false,
+            "range": 100,
+            "at": "null",
+            "by": "@s",
+            "from": "@s",
+            "command_as_entity": "null",
+            "excluded_tag": "damage_excluded_tag",
+
+            
+            "conditions":{
+            "enabling": [
+                {"type":"palladium:toggle",
+                "cooldown": 20,
+                "key_type":"key_bind",
+                "needs_empty_hand":false,
+                "allow_scrolling_when_crouching":true
+                },{
+                    "type": "palladium:objective_score",
+                    "objective": "withred_soul.souls",
+                    "min_score": 200,
+                    "max_score": 2147483647
+                }
+                  ]  }
+        },"dead seer drain":
+        {
+            "type": "palladium:command",
+            "hidden": true,
+            "commands": [
+                "scoreboard players remove @s withred_soul.souls 4"
+            ],
+            
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "power": "null",
+                        "ability": "dead seer"
+                    }
+         
+                ]
+            }
+        },
+
+        
+
+    
+
+            "soul death":{
+
+            "type":"palladium:command",
+            "hidden":true,
+            "commands":[
+                "damage @s 6666666 minecraft:wither"
+            
+                
+            ],
+            "conditions":{
+                "enabling":[
+                {
+                    "type":"palladium:objective_score",
+                    "objective":"withred_soul.souls",
+                    "max_score":0
+                    
+                    
+                 
+
+
+                }
+            ]
+        }
+        },
+            
+        "eat_the_dead": 
+        {
+            "type": "palladium:command",
+            "icon": "minecraft:hay_block",
+            "title": "Eat the dead",
+            "bar_color": "magenta",
+            "commands":[
+                "effect give @s minecraft:saturation 60 60 true"
+
+
+            ],
+
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:toggle",
+                        "cooldown": 2400,
+                        "key_type": "key_bind",
+                        "needs_empty_hand": false,
+                        "allow_scrolling_when_crouching": true
+                    },
+                    {
+                        "type": "palladium:objective_score",
+                        "objective": "withred_soul.souls",
+                        "min_score": 10,
+                        "max_score": 2147483647
+                    }
+                ]
+            }
+        },
+
+        "eat_the_dead_drain":
+        {
+            "type": "palladium:command",
+            "hidden": true,
+            "commands": [
+                "scoreboard players remove @s withred_soul.souls 1"
+            ],
+            
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "power": "null",
+                        "ability": "eat_the_dead"
+                    }
+         
+                ]
+            }
+        },
+        "soul_destroyer":
+        {"type": "palladium:command",
+            "icon": "minecraft:textures/mob_effect/nausea.png",
+            "title": "Soul destroyer",
+            "bar_color": "white",
+            "commands":[
+                "effect give @e[distance=..5] minecraft:nausea 3 6 true",
+                "effect give @e[distance=..5] minecraft:wither 3 3 true",
+                "effect clear @s minecraft:wither",
+                "effect clear @s minecraft:nausea"
+                
+            ],
+
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:toggle",
+                        "cooldown": 0,
+                        "key_type": "key_bind",
+                        "needs_empty_hand": false,
+                        "allow_scrolling_when_crouching": true
+                    }
+                ]
+            }
+        },
+                     
+                    "death_wish":
+                    {"type": "palladium:command",
+                        "icon": "minecraft:textures/mob_effect/wither.png",
+                        "bar_color": "black",
+                        "title": "Death Wish",
+                        "list index":-1,
+                        "commands":[
+                    
+                            "effect give @e[distance=..20] minecraft:wither 40 40 true",
+                            "effect clear @s minecraft:wither"
+                            
+                        ],
+            
+                        "conditions": {
+                            "enabling": [
+                                {
+                                    "type": "palladium:action",
+                                    "cooldown": 0,
+                                    "key_type": "key_bind",
+                                    "needs_empty_hand": false,
+                                    "allow_scrolling_when_crouching": true
+                                }            
+                        
+
+                    
+                ]
+            }
+        }, 
+
+        "death_wish_drain":
+
+        {
+            "type": "palladium:command",
+            "hidden": true,
+            "commands": [
+                "scoreboard players remove @s withred_soul.souls 80"
+            ],
+            
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "power": "null",
+                        "ability": "death_wish"
+                    }
+                ]
+            }
+        },
+              
+        "death_incoming":
+        {
+            "type": "palladium:entity_damage",
+            "icon": "minecraft:wither_skeleton_skull",
+
+            "title": "Death",
+            "bar_color": "red",
+            "hidden": false,
+            "hidden_in_bar": false,
+            "list_index": -1,
+            "gui_position": "null",
+            "description": "kills the enemy u are looking at",
+            "damage": 6666666,
+            "damage_type": "minecraft:magic",
+            "effect": "null",
+            "fire_seconds": 0,
+            "potion_seconds": 0,
+            "potion_amplifier": 0,
+            "hide_particles": false,
+            "range": 200,
+            "at": "null",
+            "by": "@s",
+            "from": "@s",
+            "command_as_entity": "null",
+            "excluded_tag": "damage_excluded_tag",
+
+            "conditions":{
+            "enabling": [
+                {"type":"palladium:action",
+                "cooldown": 18000,
+                "key_type":"key_bind",
+                "needs_empty_hand":false,
+                "allow_scrolling_when_crouching":true
+
+
+                }
+                
+            ]
+             }
+        },
+
+        "death_seer":    
+        {
+            "type": "palladium:entity_damage",
+            "icon": "minecraft:wither_rose",
+                   
+
+            "title": "saw death",
+            "bar_color": "black",
+            "hidden": false,
+            "hidden_in_bar":false,
+            "list_index": -4,
+            "gui_position": "null",
+            "description": "null",
+            "damage": 4,
+            "damage_type": "minecraft:player_attack",
+            "effect": "blindness",
+            "fire_seconds": 0,
+            "potion_seconds": 60,
+            "potion_amplifier": 1,
+            "hide_particles": false,
+            "range": 50,
+            "at": "null",
+            "by": "@s",
+            "from": "@s",
+            "command_as_entity": "null",
+            "excluded_tag": "damage_excluded_tag",
+
+            "conditions":{
+            "enabling": [
+                {"type":"palladium:toggle",
+                "cooldown": 0,
+                "key_type":"key_bind",
+                "needs_empty_hand":false,
+                "allow_scrolling_when_crouching":true
+                }
+                  ]  }
+
+        },
+
+        "death_incoming_drain":{
+            "type": "palladium:command",
+            "hidden": true,
+            "commands": [
+                "scoreboard players remove @s withred_soul.souls 2500",
+                "playsound minecraft:ambient.underwater.loop.additions.ultra_rare ambient @a ~ ~ ~ 200 0.3",
+                "playsound born_in_chaos_v1:hah ambient @a ~ ~ ~ 10 0.5"
+                
+            ],
+            
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "power": "null",
+                        "ability": "death_incoming"
+                      
+                    }
+                ]
+            }
+         },"death_incoming_night_of_shadows":{
+            "type": "palladium:command",
+            "hidden": true,
+            "commands": [
+            "effect give @e[distance=..20] minecraft:wither 200 20 true",
+                
+            "effect give @e[distance=..20] minecraft:darkness 500 20 true",
+            "effect give @e[distance=..40] grave.core:freeze 40",
+            "playsound minecraft:entity.lightning_bolt.thunder ambient @a ~ ~ ~ 99 0.1",
+            "effect clear @s grave.core:freeze",
+             "effect clear @s minecraft:darkness"
+
+            ],
+            
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "power": "null",
+                        "ability": "death_incoming"
+                      
+                    },{
+                        "type": "palladium:moon_phase",
+                        "min_phase": 4,
+                        "max_phase": 4
+                    },{
+                        "type": "palladium:item_in_slot",
+                       "item": {
+                       "item": "withered_soul:chrono_scythe"
+                   },
+                       "slot": "mainhand"
+                           
+                       }
+                ]
+            } 
+         },
+         "intangible_cloak_of_souls":{
+            "type": "palladium:intangibility",
+            "icon": "minecraft:blaze_rod",
+            "title": "null",
+            "bar_color": "light_gray",
+            "hidden": true,
+            "hidden_in_bar": true,
+            "list_index": -1,
+            "gui_position": "null",
+            "description": "null",
+            "vertical": false,
+            "whitelist": "null",
+            "blacklist": "palladium:prevents_intangibility",
+
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "power": "null",
+                        "ability": "cloak_of_souls"
+                      
+                    }]
+                }
+     
+     
+     
+                }, "night_of_shadows":{
+                    "type":"palladium:command",
+                    
+                    "hidden":true,
+                    "commands":[
+                        
+                    "effect give @s saturation 60 60 true",
+                    "photon fx photon:night_of_shadows entity @s 0 0 0"
+                    
+                    
+                    ],  
+                
+                    "conditions":{
+                        "enabling": [
+                    {
+                       "type": "palladium:moon_phase",
+                        "min_phase": 4,
+                        "max_phase": 4
+                      
+                    }]
+                }
+
+
+
+
+
+
+
+                }, 
+                
+                "day_not_good":
+                {
+                    "type":"palladium:command",
+                    "hidden":true,
+                    "commands":[
+                    "effect give @s weakness 2 1 true",
+                    "effect give @s night_vision 20 1 true",
+                    "effect give @s slowness 1 1 true"
+                
+                ], 
+                    
+                
+
+                    "conditions":{
+                        "enabling": [
+                    {
+                       "type": "palladium:day"
+                        
+                      
+                    }]
+                }
+
+
+                 },"night":{
+                    "type":"palladium:command",
+                    
+                    
+                    "hidden":true,
+                    "commands":[
+                    "effect give @s night_vision 20 1 true",
+                    "effect give @s speed 20 6 true",
+                    "effect give @s fire_resistance 1 1 true"
+                ],
+
+                    "conditions":{
+                        "enabling": [
+                    {
+                       "type": "palladium:night"
+                        
+                    }]
+                }
+                    
+            },"nether":{
+                    "type":"palladium:command",
+                    
+                    
+                    "hidden":true,
+                    "commands":[
+                    
+                    "effect give @s fire_resistance 1 1 true",
+                    "effect give @s night_vision 20 20 true"
+                    
+                ],
+                    "conditions":{
+                        "enabling": [
+                    {
+                       "type": "palladium:dimension",
+                       "dimension":"minecraft:the_nether" 
+                    }]
+                }
+                    
+          },"end":{
+                    "type":"palladium:command",
+                    
+                    
+                    "hidden":true,
+                    "commands":[
+                    
+                    
+                    "effect give @s night_vision 20 20 true"
+                    
+                ],
+                    "conditions":{
+                        "enabling": [
+                    {
+                       "type": "palladium:dimension",
+                       "dimension":"minecraft:the_end" 
+                    }]
+                }
+                    
+          },"effect_death_seer":{
+            "type":"palladium:command",
+            "hidden":true,
+            "commands":
+            "photon fx photon:seer1 entity @s 0 0 0",
+
+            "conditions":{
+            "enabling":[
+                {
+                    "type": "palladium:ability_enabled",
+                    "power": "null",
+                    "ability": "death_seer"
+                  
+                }
+            ]
+            }
+
+
+          },"effect_soul_destroyer":{
+            "type":"palladium:command",
+            "hidden":true,
+            "commands":
+            "photon fx photon:soul_destroyer1 entity @s 0 0 0",
+
+            "conditions":{
+            "enabling":[
+                {
+                    "type": "palladium:ability_enabled",
+                    "power": "null",
+                    "ability": "soul_destroyer"
+                  
+                }
+            ]
+            }
+
+                
+      },"effect_death_wish":{
+            "type":"palladium:command",
+            "hidden":true,
+            "commands":
+            "photon fx photon:death_wish1 entity @s 0 0 0",
+
+            "conditions":{
+            "enabling":[
+                {
+                    "type": "palladium:ability_enabled",
+                    "power": "null",
+                    "ability": "death_wish"
+                  
+                }
+            ]
+            }          
+        },"effect_eat_the_dead":{
+            "type":"palladium:command",
+            "hidden":true,
+            "commands":
+            "photon fx photon:eat_the_dead entity @s 0 0 0",
+
+            "conditions":{
+            "enabling":[
+                {
+                    "type": "palladium:ability_enabled",
+                    "power": "null",
+                    "ability": "eat_the_dead"
+                  
+                }
+            ]}
+},
+"effect_death_incoming_normal":{
+            "type":"palladium:command",
+            "hidden":true,
+            "commands":
+            "photon fx photon:death_incoming_normal entity @s 0 0 0",
+
+
+          "conditions":{
+            "enabling":[
+                {
+                    "type": "palladium:ability_enabled",
+                    "power": "null",
+                    "ability": "death_incoming"
+                  
+                }
+            ]}  
+        },   "fly": {
+            "type": "palladium:attribute_modifier",
+            "icon": "minecraft:feather",
+            "attribute": "palladium:flight_speed",
+            "amount": 1,
+            "title": "soul form",
+            "bar_color": "white",
+
+            "conditions":{
+            "enabling": [
+                {"type":"palladium:toggle",
+                "cooldown": 666,
+                "key_type":"key_bind",
+                "needs_empty_hand":false,
+                "allow_scrolling_when_crouching":true
+                },{
+                        "type": "palladium:objective_score",
+                        "objective": "withred_soul.souls",
+                        "min_score": 100,
+                        "max_score": 2147483647
+                    }
+                  ]  }
+        },"effect_fly_invis":{
+            "type":"palladium:command",
+            "hidden":true,
+            "commands":[
+            "photon fx photon:death_incoming_normal entity @s 0 0 0",
+            
+            "effect give @s darkness 3 1 true"
+        ],
+
+
+          "conditions":{
+            "enabling":[
+                {
+                    "type": "palladium:ability_enabled",
+                    "power": "null",
+                    "ability": "fly"
+                  
+                },{
+                    "type": "palladium:objective_score",
+                    "objective": "withred_soul.souls",
+                    "min_score": 300,
+                    "max_score": 2147483647
+                }
+            ]}  
+        },"death_wish_night_of_shadows":{
+            "type": "palladium:command",
+            "hidden": true,
+            "commands": [
+            "effect give @e[distance=..20] minecraft:wither 60 20 true",
+                
+            "effect give @e[distance=..20] minecraft:blindness 40 20 true",
+            "effect give @e[distance=..20] grave.core:freeze 2",
+            "effect clear @s grave.core:freeze ",
+             "effect clear @s minecraft:blindness"
+
+            ],
+            
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "power": "null",
+                        "ability": "death_wish"
+                      
+                    },{
+                        "type": "palladium:moon_phase",
+                        "min_phase": 4,
+                        "max_phase": 4
+                    },{
+                        "type": "palladium:item_in_slot",
+                       "item": {
+                       "item": "withered_soul:chrono_scythe"
+                   },
+                       "slot": "mainhand"
+                           
+                       }
+                ]
+            } 
+         },"soul_destroyer_night_of_shadows":{
+            "type": "palladium:command",
+            "hidden": true,
+            "commands": [
+            "effect give @e[distance=..10] minecraft:wither 3 3 true",
+            "effect give @e[distance=..15] minecraft:nausea 3 3 true",   
+            "effect give @e[distance=..10] minecraft:darkness 40 20 true",
+            "effect give @e[distance=..10] minecraft:slowness 1 1 true",
+            
+            "effect clear @s minecraft:slowness",
+             "effect clear @s minecraft:darkness",
+             "effect clear @s minecraft:nausea",
+             "effect clear @s minecraft:wither"
+
+            ],
+            
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "power": "null",
+                        "ability": "soul_destroyer"
+                      
+                    },{
+                        "type": "palladium:moon_phase",
+                        "min_phase": 4,
+                        "max_phase": 4
+                    },{
+                        "type": "palladium:item_in_slot",
+                       "item": {
+                       "item": "withered_soul:chrono_scythe"
+                   },
+                       "slot": "mainhand"
+                           
+                       }
+                ]
+            } 
+         },"die_die_die":{
+            "type": "palladium:command",
+            "hidden": false,
+            "icon": "minecraft:potion",
+            "bar_color": "red",
+            "title":"die die die!",
+            "commands": [
+            "effect give @e[distance=..5] minecraft:instant_damage 40 2 true",
+            
+            
+            "effect clear @s minecraft:instant_damage"
+            
+
+            ],
+            
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:action",
+    "cooldown": 20,
+    "key_type": "key_bind",
+    "needs_empty_hand": false,
+    "allow_scrolling_when_crouching": true
+                      
+                    },{
+                        "type": "palladium:moon_phase",
+                        "min_phase": 4,
+                        "max_phase": 4
+                    }
+                ]
+            } 
+         },
+
+         "die_die_die_drain":{
+             "type": "palladium:command",
+             "hidden": true,
+             "commands": [
+                 "scoreboard players remove @s withred_soul.souls 400"
+             ],
+             
+             "conditions": {
+                 "enabling": [
+                     {
+                         "type": "palladium:ability_enabled",
+                         "power": "null",
+                         "ability": "die_die_die"
+                       
+                     }
+                 ]
+             }
+          },"see_all_souls":{
+            "type": "palladium:command",
+            "hidden": false,
+            "icon": "minecraft:torch",
+            "title":"see all souls",
+            "bar_color": "white",
+            "commands": [
+            "effect give @e[distance=..80] minecraft:glowing 3 30 true",
+            "effect give @s wither 1 1",
+            "playsound minecraft:ambient.cave master @a[distance=..20]",
+            
+            "effect clear @s minecraft:glowing"
+            
+
+            ],
+            
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:action",
+    "cooldown": 200,
+    "key_type": "key_bind",
+    "needs_empty_hand": false,
+    "allow_scrolling_when_crouching": true
+                      
+                    }
+                ]
+        
+        
+
+            }
+    },"effect_death_incoming_night":{
+        "type":"palladium:command",
+        "hidden":true,
+        "commands":
+        "photon fx photon:death_incoming_night3 entity @s 0 0 0",
+
+
+      "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "death_incoming_night_of_shadows"
+              
+            }
+        ]}  
+    },"effect_death_wish_night":{
+        "type":"palladium:command",
+        "hidden":true,
+        "commands":
+        "photon fx photon:death_wish_night entity @s 0 0 0",
+
+
+      "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "death_wish_night_of_shadows"
+              
+            }
+        ]}  
+    },"effect_die_die_die":{
+        "type":"palladium:command",
+        "hidden":true,
+        "commands":
+        "photon fx photon:die_die_die entity @s 0 0 0",
+
+
+      "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "die_die_die"
+              
+            }
+        ]}  
+    },"change_the_worlds":{
+            "type": "palladium:command",
+            "hidden": true,
+            "icon": "minecraft:torch",
+            "title":"change the worrlds",
+            "bar_color": "white",
+            "commands": [
+            "time set night",
+            
+            "time add 4d",
+            "execute as @s at @s run execute as @e[distance=..40] at @e[distance=3..40] run summon minecraft:lightning_bolt",
+            "playsound born_in_chaos_v1:halloween master @a ~ ~ ~ 10 0.4"
+            
+
+            ],
+            
+            "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "see_all_souls"
+                
+            },{
+                "type": "palladium:crouching"
+            },{
+                "type": "palladium:health",
+                "min_health": 0,
+                "max_health": 15
+            },{
+             "type": "palladium:item_in_slot",
+            "item": {
+            "item": "withered_soul:chrono_scythe"
+        },
+            "slot": "mainhand"
+                
+            }
+
+
+
+            
+        ]}  
+    },"change_the_worlds_drain":{
+             "type": "palladium:command",
+             "hidden": true,
+             "commands": [
+                 "scoreboard players remove @s withred_soul.souls 1000"
+             ],
+             
+             "conditions": {
+                 "enabling": [
+                     {
+                         "type": "palladium:ability_enabled",
+                         "power": "null",
+                         "ability": "change_the_worlds"
+                       
+                     }
+                 ]
+             }
+          },"scythe_of_souls":{
+            
+            "type": "palladium:command",
+             "hidden": true,
+             "commands": [
+                 "effect give @s minecraft:strength 1 1 true"
+             ],
+
+            "conditions":{
+        "enabling":[
+            {
+                
+                    "type": "palladium:moon_phase",
+                    "min_phase": 4,
+                    "max_phase": 4
+                
+                
+            },{
+                "type": "palladium:health",
+                "min_health": 0,
+                "max_health": 18
+            },{
+             "type": "palladium:item_in_slot",
+            "item": {
+            "item": "withered_soul:chrono_scythe"
+        },
+            "slot": "mainhand"
+                
+            }
+          ]}},"scythe_replace":{
+
+            "type": "palladium:command",
+             "hidden": true,
+             "commands": [
+                 "item replace entity @s weapon.mainhand with withered_soul:chrono_scythe",
+                 "say The vessel of chaos and destruction has awaken",
+                 "summon minecraft:lightning_bolt",
+                 "effect give @e minecraft:darkness 20 20",
+                 "playsound minecraft:entity.skeleton_horse.death master @a ~ ~ ~ 1 0.1",
+                 "playsound minecraft:entity.wither.spawn master @a ~ ~ ~ 5 0.1"
+             ],
+             "conditions":{
+                "enabling":[
+                    {
+                        "type": "palladium:ability_enabled",
+                        "power": "null",
+                        "ability": "die_die_die"
+                        
+                    },{
+                        "type": "palladium:item_in_slot",
+                    "item": {
+                        "item": "netherite_hoe"
+                    },
+                    "slot": "mainhand"
+
+                    },{
+                    "type":"palladium:night"
+                
+                
+                }
+                ]
+                 }
+                },"soul_form_activate":{
+                    "type": "palladium:render_layer",
+                    "icon": "minecraft:blaze_rod",
+                    "title": "soul form",
+                    "bar_color": "light_gray",
+                    "hidden": true,
+                    "hidden_in_bar": true,
+                    "list_index": -1,
+                    "gui_position": "null",
+                    "description": "null",
+                    "render_layer": "withered_soul:soul_form",
+
+                    "conditions":{
+                     "enabling":[
+            {
+                        "type": "palladium:ability_enabled",
+                        "power": "null",
+                        "ability": "fly"
+              
+            }
+        ]}  
+},"cloak_of_souls_sneak":{
+
+    "type": "palladium:command",
+     "hidden": true,
+     "commands": [
+         "tp @s ~ ~-0.1 ~"
+     ],
+     "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "cloak_of_souls"
+                
+            },{
+                "type": "palladium:crouching"
+            }
+        ]
+         }
+        },"lightning_death":{
+            "type": "palladium:command",
+            "hidden": true,
+            "icon": "minecraft:torch",
+            "title":"Death lightning",
+            "bar_color": "white",
+            "commands": [
+                
+            "summon minecraft:lightning_bolt ~20 ~ ~20",
+            "summon minecraft:lightning_bolt ~20 ~ ~-20",
+            "summon minecraft:lightning_bolt ~-20 ~ ~20",
+            "summon minecraft:lightning_bolt ~-20 ~ ~-20",
+            "summon minecraft:lightning_bolt ~5 ~ ~5",
+            "summon minecraft:lightning_bolt ~5 ~ ~-5",
+            "summon minecraft:lightning_bolt ~-5 ~ ~5",
+            "summon minecraft:lightning_bolt ~-5 ~ ~-5"
+            
+
+            ],
+            
+            "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "death_incoming"
+            },{
+             "type": "palladium:item_in_slot",
+            "item": {
+            "item": "withered_soul:chrono_scythe"
+        },
+            "slot": "mainhand"
+                
+            }
+
+
+
+            
+        ]}  
+    }, "trail":
+    {
+        "type": "palladium:trail",
+        "icon": "minecraft:blaze_rod",
+        "title": "trail",
+        "bar_color": "light_gray",
+        "hidden": true,
+        "hidden_in_bar": true,
+        "list_index": -1,
+        "gui_position": "null",
+        "description": "null",
+        "trail": "withered_soul:gradient",
+
+        "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "soul_destroyer"
+            }
+
+
+
+            
+        ]}  
+    },
+    "fly_sound":{
+        "type": "palladium:play_sound",
+        "icon": "minecraft:blaze_rod",
+        "title": "null",
+        "bar_color": "light_gray",
+        "hidden": true,
+        "hidden_in_bar": true,
+        "list_index": -1,
+        "gui_position": "null",
+        "description": "null",
+        "sound": "minecraft:item.elytra.flying",
+        "volume": 1,
+        "pitch": 1,
+        "looping": true,
+        "play_self": false,
+
+        "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "fly"
+            }
+
+
+
+            
+        ]}  
+    },"skin_of_chaos":{
+        "type": "palladium:skin_change",
+        "icon": "minecraft:blaze_rod",
+        "title": "changes the skin at new moon",
+        "bar_color": "light_gray",
+        "hidden": true,
+        "hidden_in_bar": true,
+        "list_index": -1,
+        "gui_position": "null",
+        "description": "null",
+        "texture": "withered_soul:textures/models/reaper_skin_mc.png",
+        "model_type": "keep",
+        "priority": 50,
+        
+
+
+        "conditions": {
+            "enabling": [
+               {
+                    "type": "palladium:moon_phase",
+                    "min_phase": 4,
+                    "max_phase": 4
+                }
+            ]
+        } 
+     
+    },"soul_form":{
+        "type": "palladium:skin_change",
+        "icon": "minecraft:blaze_rod",
+        "title": "changes the skin when using the fly ability",
+        "bar_color": "light_gray",
+        "hidden": true,
+        "hidden_in_bar": true,
+        "list_index": -1,
+        "gui_position": "null",
+        "description": "null",
+        "texture": "withered_soul:textures/models/reaper_soul_skin_mc.png",
+        "model_type": "keep",
+        "priority": 40,
+        
+
+
+        "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "fly"
+            }
+
+
+
+            
+        ]}  
+     
+    },"rain_no_good":{
+        "type": "palladium:command",
+        "hidden": false,
+        "icon": "minecraft:water_bucket",
+        "title":"Not Waterproof",
+        "bar_color": "white",
+        "commands": [
+            
+        "effect give @s darkness 3 1 true",
+        "effect give @s slowness 1 1 true",
+        "effect give @s weakness 5 1 true"
+        
+
+        ],
+        
+        "conditions":{
+    "enabling":[
+        {
+            "type": "palladium:is_in_water_rain_or_bubble"
+        }
+
+
+
+        
+    ]}  
+},"name_change":{
+    "type": "palladium:name_change",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "name": {
+        "text": "Chaos demon"
+
+    },
+    "conditions": {
+            "enabling": [
+               {
+                    "type": "palladium:moon_phase",
+                    "min_phase": 4,
+                    "max_phase": 4
+                }
+            ]
+        } 
+     
+    }
+}
+}                   
+
+
+    
+
+
+
+    
+
+
+
+         
+ 

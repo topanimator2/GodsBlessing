@@ -1,0 +1,30 @@
+{  
+    
+
+    "name": "lightning_affinity_buff",
+    "background": "minecraft:textures/block/soul_sand.png",
+    "icon": "minecraft:soul_torch",
+    "gui_display_type": "tree",
+    "abilities":{
+        "give": {
+            "type": "palladium:command",
+            "icon": "minecraft:torch",
+
+            "commands": [
+                "scoreboard players add @s lightning_affinity 1",
+                "clear @s withered_soul:lightning_affinity 1"
+            ],
+            
+            "conditions": {
+                "enabling": [
+                    {
+                        "type":"palladium:held",
+                        "key_type":"right_click"
+                    }
+                    
+                   
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,110 @@
+{
+    "name": "berserker",
+    "background": "minecraft:textures/block/deepslate.png",
+    "icon": "minecraft:iron_sword",
+    "gui_display_type": "tree",
+    "energy_bars": {
+  "Rage_meter": {
+    "color": "#d60606",
+    "max":100,
+    "synced_value": {
+      "type": "score",
+      "objective": "rage",
+      "fallback": 0
+    }
+  }
+},
+   
+    "abilities": 
+    {
+        "rage_scoreboard": {
+            "type": "palladium:command",
+            "icon": "minecraft:soul_sand",
+            "hidden":true,
+            "title": "Soul Eater",
+            "first_tick_commands": [
+                "scoreboard objectives add rage.got_kill totalKillCount",
+                "scoreboard objectives add rage.deaths deathCount",
+                "scoreboard objectives add rage dummy",
+                "scoreboard objectives add rage.timer dummy",
+                "scoreboard players set @s rage.timer 300",
+                "scoreboard players set @s rage.got_kill 0"
+            ],
+            "commands": [
+                "execute if score @s rage.deaths matches 0.. run scoreboard players set @s rage 50",
+                "execute if score @s rage.deaths matches 0.. run scoreboard players reset @s rage.deaths",
+                "execute if score @s rage.timer matches ..0 run scoreboard players remove @s rage 1",
+                "execute if score @s rage matches ..0 run scoreboard players set @s rage 0",
+                "execute if score @s rage.timer matches ..0 run scoreboard players set @s rage.timer 300",
+                "scoreboard players remove @s rage.timer 1",
+                "scoreboard players operation @s rage += @s rage.got_kill",
+                "scoreboard players set @s rage.got_kill 0",
+                "execute if score @s rage matches 100.. run scoreboard players set @s rage 100"
+                
+            ]
+        },
+        "kill_them_all": {
+            "type":"palladium:command",
+            "title": "Kill them all",
+            "icon":"minecraft:textures/mob_effect/strength.png",
+            "description":"run",
+            "bar_color":"red",
+            "commands": [
+                "effect give @s minecraft:strength 15 4 true",
+                "effect give @s minecraft:speed 20 2 true"
+            ],
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:action",
+                        "cooldown": 2200,
+                        "key_type": "key_bind",
+                        "needs_empty_hand": false,
+                        "allow_scrolling_when_crouching": true
+                    }, {
+                        "type": "palladium:objective_score",
+                        "objective": "rage",
+                        "min_score": 99,
+                        "max_score": 101
+                    }
+                ]
+            }
+        },"kill_them_all_drain":{
+            "type": "palladium:command",
+            "hidden": true,
+            "commands": [
+                "scoreboard players set @s rage 0",
+                "playsound born_in_chaos_v1:fallen_curse_mark ambient @s"
+            ],
+            
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "power": "null",
+                        "ability": "kill_them_all"
+                    }
+         
+                ]
+            }
+        }
+        
+    
+}
+           
+              
+       
+}
+           
+
+
+    
+
+
+
+    
+
+
+
+         
+ 

@@ -1,0 +1,40 @@
+{  
+    
+
+    "name": "withered_soul_activate",
+    "background": "minecraft:textures/block/soul_sand.png",
+    "icon": "minecraft:soul_torch",
+    "gui_display_type": "tree",
+    "abilities":{
+        "give": {
+            "type": "palladium:command",
+            "icon": "minecraft:wither_skeleton_skull",
+
+            "commands": [
+                "superpower remove withered_soul:all @s",
+                "superpower add withered_soul:withred @s",
+                "item replace entity @s weapon.mainhand with ender_pearl",
+                "playsound born_in_chaos_v1:krampus_alert_close ambient @s",
+                "summon minecraft:lightning_bolt ~20 ~ ~20",
+            "summon minecraft:lightning_bolt ~20 ~ ~-20",
+            "summon minecraft:lightning_bolt ~-20 ~ ~20",
+            "summon minecraft:lightning_bolt ~-20 ~ ~-20",
+            "summon minecraft:lightning_bolt ~5 ~ ~5",
+            "summon minecraft:lightning_bolt ~5 ~ ~-5",
+            "summon minecraft:lightning_bolt ~-5 ~ ~5",
+            "summon minecraft:lightning_bolt ~-5 ~ ~-5"
+            ],
+            
+            "conditions": {
+                "enabling": [
+                    {
+                        "type":"palladium:held",
+                        "key_type":"right_click"
+                    }
+                    
+                   
+                ]
+            }
+        }
+    }
+}

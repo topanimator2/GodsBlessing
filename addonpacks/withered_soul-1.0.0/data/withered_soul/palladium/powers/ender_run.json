@@ -1,0 +1,183 @@
+{
+    "name": "Enderrun",
+    "background": "minecraft:textures/block/command_block.png",
+    "icon": "minecraft:redstone_block",
+    "gui_display_type": "list",
+    "abilities": {
+        "scoreboard": {
+            "type": "palladium:command",
+            "icon": "minecraft:command_block",
+            "title": "scoreboard",
+            "hidden":true,
+            "first_tick_commands": [
+                "scoreboard objectives add resistanceorstrenght dummy",
+                "scoreboard players set @s resistanceorstrenght 0"
+            ],
+            "commands": []
+        },
+
+
+        "teleporter": {
+            "type": "palladium:command",
+            "icon": "minecraft:ender_pearl",
+            "title": "Teleport",
+            "description":"teleports u 15 blocks",
+            "commands": [
+                "execute as @s at @s if block ^ ^ ^15 minecraft:air run tp @s ^ ^ ^15",
+                "effect give @s minecraft:slow_falling 2 0 true",
+                "playsound minecraft:entity.ender_eye.death master @a[distance=..15]"
+            ],
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:action",
+                        "cooldown": 40,
+                        "key_type": "key_bind",
+                        "needs_empty_hand": false,
+                        "allow_scrolling_when_crouching": true
+                    }
+                ]
+            }
+        },
+
+
+        "pointer": {
+            "type":"palladium:command",
+            "title": "Pointer",
+            "description":"shows u where the tp goes",
+            "icon": "minecraft:compass",
+            "commands": [
+                "particle soul_fire_flame ^ ^1.25 ^15 0 0 0 0.02 5 normal @s"
+            ],
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:toggle",
+                        "cooldown": 0,
+                        "key_type": "key_bind",
+                        "needs_empty_hand": false,
+                        "allow_scrolling_when_crouching": true
+                    }
+                ]
+            }
+        },
+
+
+        "magnet": {
+            "type":"palladium:command",
+            "icon":"minecraft:dispenser",
+            "title": "Magnet",
+            "description":"a magnet duh",
+            "commands": [
+                "execute as @s at @s run tp @e[type=minecraft:item,distance=..10] @s"
+            ],
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:toggle",
+                        "cooldown": 0,
+                        "key_type": "key_bind",
+                        "needs_empty_hand": false,
+                        "allow_scrolling_when_crouching": true
+                    }
+                ]
+            }
+        },
+
+
+        "resistanceorstrenght": {
+            "type":"palladium:command",
+            "title": "Resistance or Strenght",
+            "icon": "minecraft:diamond_sword",
+            "commands": [
+                "scoreboard players add @s resistanceorstrenght 1"
+            ],
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:action",
+                        "cooldown": 60,
+                        "key_type": "key_bind",
+                        "needs_empty_hand": false,
+                        "allow_scrolling_when_crouching": true
+                    }
+                ]
+            }
+        },
+        "resistance": {
+            "type":"palladium:command",
+            "title": "Resistance",
+            "icon": "minecraft:diamond_chestplate",
+            "commands": [
+                "effect give @s minecraft:resistance 2 0 true"
+                
+            ],
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:objective_score",
+                        "objective": "resistanceorstrenght",
+                        "min_score": 0,
+                        "max_score": 0
+                    }
+                ]
+            }
+        },
+        "strenght": {
+            "type":"palladium:command",
+            "title": "Strength",
+            "commands": [
+                "effect give @s minecraft:strength 1 0 true"
+            ],
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:objective_score",
+                        "objective": "resistanceorstrenght",
+                        "min_score": 1,
+                        "max_score": 1
+                    }
+                ]
+            }
+        },
+        "r_or_s_reset": {
+            "type":"palladium:command",
+            "description":"lets ur choose if u want resistance or strength",
+            "title": "R or S Reset",
+            "commands": [
+                "scoreboard players set @s resistanceorstrenght 0"
+            ],
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:objective_score",
+                        "objective": "resistanceorstrenght",
+                        "min_score": 2
+                    }
+                ]
+            }
+        },
+        "panic": {
+            "type":"palladium:command",
+            "title": "Panik Knopf",
+            "icon":"minecraft:textures/mob_effect/speed.png",
+            "description":"run",
+            "bar_color":"red",
+            "commands": [
+                "effect give @s minecraft:speed 10 20 true",
+                "effect give @s minecraft:jump_boost 10 2 true"
+            ],
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:action",
+                        "cooldown": 2200,
+                        "key_type": "key_bind",
+                        "needs_empty_hand": false,
+                        "allow_scrolling_when_crouching": true
+                    }
+                ]
+            }
+        }
+    }
+}

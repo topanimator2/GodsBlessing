@@ -1,0 +1,236 @@
+{
+    "name": "watching",
+    "background": "minecraft:textures/block/black_glazed_terracotta.png",
+    "icon": "palladium:textures/icon/invisibility.png",
+    "gui_display_type": "tree",
+   
+    "abilities": 
+    {
+        "ghost": 
+        {
+            "type": "palladium:invisibility",
+            "icon": "palladium:textures/icon/invisibility.png",
+            "bar_color": "white",
+            "title": "He is always watching",
+
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:toggle",
+                        "cooldown": 0,
+                        "key_type": "key_bind",
+                        "needs_empty_hand": false,
+                        "allow_scrolling_when_crouching": true
+                    }
+                ]
+            }
+        },
+         "intangible_ghost":{
+            "type": "palladium:intangibility",
+            "icon": "minecraft:skeleton_skull",
+            "title": "null",
+            "bar_color": "light_gray",
+            "hidden": false,
+            "hidden_in_bar": false,
+            "list_index": -1,
+            "gui_position": "null",
+            "description": "With this u can ripp time and space appart",
+            "vertical": false,
+            "whitelist": "null",
+            "blacklist": "palladium:prevents_intangibility",
+
+            "conditions": {
+                "enabling": [
+                    {
+                       "type": "palladium:toggle",
+                        "cooldown": 1200,
+                        "key_type": "key_bind",
+                        "needs_empty_hand": false,
+                        "allow_scrolling_when_crouching": true
+                      
+                    }]
+                }
+     
+     
+     
+                },"ghost_":{
+            "type": "palladium:command",
+            "hidden": true,
+            "icon": "minecraft:torch",
+            "title":"tp down",
+            "bar_color": "white",
+            "commands": [
+                
+           "tp @s ~ ~-0.1 ~"
+            
+
+            ],
+            
+            "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "intangible_ghost"
+            },{
+                "type": "palladium:crouching"
+            }
+
+
+
+            
+        ]}  
+    },"nobody_will_move_ever_again":{
+            "type": "palladium:command",
+            "hidden": false,
+            "icon": "minecraft:chain",
+            "title":"shackels",
+            "description":"shackles the enemy to the ground",
+            "bar_color": "red",
+            "commands": [
+                
+           "effect give @e[distance=..20] minecraft:slowness 50 20 true",
+           "effect give @e[distance=..20] born_in_chaos_v1:gaze_of_terror 20 20 true",
+           "effect give @s minecraft:speed 15 4 true",
+           "effect clear @s minecraft:slowness",
+           "effect clear @s born_in_chaos_v1:gaze_of_terror",
+          
+           "playsound born_in_chaos_v1:nightmare_stalker_roar master @a[distance=..40] ~ ~ ~ 10 0.4"
+            
+
+            ],
+            
+            "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:action",
+                        "cooldown": 2400,
+                        "key_type": "key_bind",
+                        "needs_empty_hand": false,
+                        "allow_scrolling_when_crouching": true
+            }
+
+
+
+            
+        ]}  
+    },"u_not_movin":
+        {
+            "type": "palladium:entity_damage",
+            "icon": "minecraft:wither_skeleton_skull",
+
+            "title": "U not movin",
+            "bar_color": "black",
+            "hidden": false,
+            "hidden_in_bar": false,
+            "list_index": -1,
+            "gui_position": "null",
+            "description": "slows the enemy u are looking at",
+            "damage": 4,
+            "damage_type": "minecraft:magic",
+            "effect": "minecraft:slowness",
+            "fire_seconds": 0,
+            "potion_seconds": 120,
+            "potion_amplifier": 30,
+            "hide_particles": false,
+            "range": 50,
+            "at": "null",
+            "by": "@s",
+            "from": "@s",
+            "command_as_entity": "null",
+            "excluded_tag": "damage_excluded_tag",
+
+            "conditions":{
+            "enabling": [
+                {"type":"palladium:action",
+                "cooldown": 300,
+                "key_type":"key_bind",
+                "needs_empty_hand":false,
+                "allow_scrolling_when_crouching":true
+
+
+                }
+                
+            ]
+             }
+        },"levi":{
+            "icon":"withered_soul:textures/icon/wind_charged.png",
+            "type": "palladium:command",
+            "title":"levitation",
+            "hidden":false,
+            "commands": [
+           
+                
+            "effect give @s minecraft:levitation 1 1 true"
+            
+
+            ],
+            
+            "conditions": {
+                "enabling": [
+                    {
+                        "type":"palladium:toggle",
+                "cooldown": 800,
+                "key_type":"key_bind",
+                "needs_empty_hand":false,
+                "allow_scrolling_when_crouching":true
+                       
+                      
+                    }
+                ]
+            } 
+         },"night_vision":{
+            "icon":"minecraft:torch",
+            "type": "palladium:command",
+            "hidden": true,
+            "commands": [
+           
+                
+            "effect give @s minecraft:night_vision 15 1 true"
+            
+
+            ]
+            
+         },"sneak_attack":{
+            "icon":"minecraft:torch",
+            "type": "palladium:command",
+            "hidden": true,
+            "commands": [
+           
+                
+            "effect give @s minecraft:strength 1 0 true"
+            
+
+            ],
+            "conditions": {
+                "enabling": [
+                    
+                        {
+    "type": "palladium:crouching"
+},{
+    "type": "palladium:ability_enabled",
+    "power": "null",
+    "ability": "ghost"
+}
+                      
+                    
+            
+                ]
+            } 
+            
+         }
+
+        
+}                   
+}
+
+    
+
+
+
+    
+
+
+
+         
+ 

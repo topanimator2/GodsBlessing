@@ -1,0 +1,21 @@
+modLoader = 'lowcodefml'
+showAsResourcePack = false
+loaderVersion="[47,)"
+license="All rights reserved"
+
+[[mods]]
+modId="withered_soul"
+displayName="Withered soul"
+version="1.0.0"
+logoFile = "logo.png"
+logoBlur = false
+description='''
+ads a new superpower that needs souls to survive
+'''
+
+[[dependencies.withered_soul]]
+modId = "palladium"
+mandatory = true
+versionRange = ""
+ordering = "NONE"
+side = "BOTH"

@@ -1,0 +1,16 @@
+{
+  "pack": {
+    "id": "withered_soul",
+    "description": "ads a new superpower that needs souls to survive",
+    "pack_format": 15,
+    "version": "1.0.0"
+  },
+  "dependencies": {
+    "common": {
+    },
+    "fabric": {
+    },
+    "forge": {
+    }
+  }
+}

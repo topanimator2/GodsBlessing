@@ -1,0 +1,5 @@
+{
+    "type": "geckolib:default",
+    "model":"withered_soul:geo/soul_form.geo.json",
+    "textures":"withered_soul:textures/models/soul_form.png"
+}

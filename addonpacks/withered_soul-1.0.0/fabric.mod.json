@@ -1,0 +1,11 @@
+{
+    "schemaVersion": 1,
+    "authors": [],
+    "environment": "*",
+    "name": "Withered soul",
+    "id": "withered_soul",
+    "version": "1.0.0",
+    "description": "ads a new superpower that needs souls to survive",
+    "icon": "logo.png",
+    "license": "All rights reserved"
+}

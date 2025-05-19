@@ -1,0 +1,33 @@
+{  
+    
+
+    "name": "blood_activate",
+    "background": "minecraft:textures/block/soul_sand.png",
+    "icon": "minecraft:soul_torch",
+    "gui_display_type": "tree",
+    "abilities":{
+        "give": {
+            "type": "palladium:command",
+            "icon": "minecraft:skeleton_skull",
+
+            "commands": [
+                "superpower remove withered_soul:all @s",
+                "superpower add withered_soul:berserker @s",
+                "playsound minecraft:entity.ender_dragon.ambient ambient @s",
+                "clear @s withered_soul:orb_of_blood 1",
+                "playsound minecraft:entity.pillager.death ambient @s"
+            ],
+            
+            "conditions": {
+                "enabling": [
+                    {
+                        "type":"palladium:held",
+                        "key_type":"right_click"
+                    }
+                    
+                   
+                ]
+            }
+        }
+    }
+}
