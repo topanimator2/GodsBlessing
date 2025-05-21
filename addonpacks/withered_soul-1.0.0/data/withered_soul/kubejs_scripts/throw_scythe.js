@@ -61,7 +61,7 @@ spinItems.forEach(item => {
   
   thrownEntities.forEach(entity => { 
               event.server.runCommandSilent(`execute as ${entity.getUuid()} run data merge entity @s `+
-           `{start_interpolation:0,transformation:{left_rotation:[0f,0.918f,0f,0.397f]}}}`)
+           `{start_interpolation:0,transformation:{left_rotation:[0f,0.918f,0f,0.397f]}}`)
   })
       }
     )
@@ -132,7 +132,7 @@ LevelEvents.tick(event => {
         if(t % INTERVAL === 0) {
           console.log(INTERVAL)
               event.server.runCommandSilent(`execute as ${entity.getUuid()} run data merge entity @s `+
-           `{start_interpolation:0,transformation:{left_rotation:[0f,0.918f,0f,0.397f]}}}`)
+           `{start_interpolation:0,transformation:{left_rotation:[0f,0.918f,0f,0.397f]}}`)
     event.server.scheduleInTicks(
       HALF,                             // data passed to callback
       () => {                  
