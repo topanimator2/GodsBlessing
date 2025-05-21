@@ -144,11 +144,3 @@
 		# Default: true
 		warnAboutSodium = true
 
-[mod_compat]
-
-	[mod_compat.enabled_builtin_plugins]
-		#
-		# Enables the plugin for Quark.
-		# Default: true
-		quark = true
-
