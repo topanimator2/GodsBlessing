@@ -1,5 +1,5 @@
 let spinItems = [
-  ["withered_soul:chrono_scythe", 0.8, "return", 2, 11, "none", "none" /*<= clash // stick_in_ground*/, "dropped_model" /*<= dropped_model // basic_model*/, 0.2, 2.5, 15 /*<= Range*/,{
+  ["withered_soul:chrono_scythe", 0.8, "return", 2, 11, "none", "none" /*<= clash // stick_in_ground*/, "dropped_model" /*<= dropped_model // basic_model*/, 0.8, 2.5, 15 /*<= Range*/,{
     throwsound:["minecraft:item.armor.equip_chain",0.5, 0.7],
     flyingsound:["minecraft:particle.soul_escape",1, 0.7],
     hitsound:["minecraft:block.anvil.place",0.5, 0.7],
@@ -20,7 +20,10 @@ function isColliding(entityA, entityB, hitboxA, hitboxB) {
   let distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
   return distance < (hitboxA + hitboxB);
 }
-
+        const HALF_SECONDS = 0.5;
+        const SECONDS   = HALF_SECONDS*2;          // change to 1, 0.5, 5 … whatever you need
+        const INTERVAL  = SECONDS * 20;          // ticks between MAIN calls
+        const HALF      = Math.floor(INTERVAL / 2); // ticks between MAIN and HALF
 // Right-click: Summon an item_display with a destination, thrower UUID, state, and initial rotation.
 // Right-click: Summon an item_display with a destination, thrower UUID, state, and initial rotation.
 spinItems.forEach(item => {
@@ -38,16 +41,70 @@ spinItems.forEach(item => {
     // (The transformation values can be adjusted per model.)
     let command;
     if(item[7] === "dropped_model") {
-      command = `/execute in ${player.getLevel().dimension} run summon minecraft:item_display ${player.getX()} ${player.getY()+1} ${player.getZ()} {item:{id:"${item[0]}",Count:1},transformation:{left_rotation:[0f,1f,1f,0f],right_rotation:[0f,1f,0f,1f],scale:[${item[8]}f,${item[8]}f,${item[8]}f],translation:[0f,0f,0f]},KubeJSPersistentData:{destination:[${destX}f,${destY}f,${destZ}f],thrower:"${throwerUuid}",state:"flying",rotation:0}}`;
+      command = `/execute in ${player.getLevel().dimension} run summon minecraft:item_display ${player.getX()} ${player.getY()+1} ${player.getZ()} {item:{id:"${item[0]}",Count:1},interpolation_duration:${INTERVAL},transformation:{left_rotation:[0f,-0.377f,0f,0.926f],right_rotation:[0f,0f,0.709f,0.706f],scale:[${item[8]}f,${item[8]}f,${item[8]}f],translation:[0f,0f,0f]},KubeJSPersistentData:{destination:[${destX}f,${destY}f,${destZ}f],thrower:"${throwerUuid}",state:"flying",rotation:0}}`;
     } else if(item[7] === "basic_model") {
-      command = `/execute in ${player.getLevel().dimension} run summon minecraft:item_display ${player.getX()} ${player.getY()+1} ${player.getZ()} {item:{id:"${item[0]}",Count:1},transformation:{left_rotation:[0f,1f,1f,0f],right_rotation:[0f,1f,0f,0f],scale:[${item[8]}f,${item[8]}f,${item[8]}f],translation:[0f,0f,0f]},KubeJSPersistentData:{destination:[${destX}f,${destY}f,${destZ}f],thrower:"${throwerUuid}",state:"flying",rotation:0}}`;
+      command = `/execute in ${player.getLevel().dimension} run summon minecraft:item_display ${player.getX()} ${player.getY()+1} ${player.getZ()} {item:{id:"${item[0]}",Count:1},interpolation_duration:${INTERVAL},transformation:{left_rotation:[0f,1f,1f,0f],right_rotation:[0f,1f,0f,0f],scale:[${item[8]}f,${item[8]}f,${item[8]}f],translation:[0f,0f,0f]},KubeJSPersistentData:{destination:[${destX}f,${destY}f,${destZ}f],thrower:"${throwerUuid}",state:"flying",rotation:0}}`;
     }
     event.server.runCommandSilent(`/playsound ${item[11].throwsound[0]} master @a ${player.getX()} ${player.getY()+1} ${player.getZ()} ${item[11].throwsound[1]} ${item[11].throwsound[2]}`)
     event.server.runCommandSilent(command);
     player.addItemCooldown(player.getMainHandItem(), 20*item[9]);
+
+
+        event.server.scheduleInTicks(
+      10,                             // data passed to callback
+      () => {                
+      let thrownEntities = event.level.getEntities().filter(e => {
+    return e.nbt != null &&
+           e.nbt.KubeJSPersistentData != null &&
+           e.nbt.KubeJSPersistentData.destination != null;
+  });
+  
+  thrownEntities.forEach(entity => { 
+              event.server.runCommandSilent(`execute as ${entity.getUuid()} run data merge entity @s `+
+           `{start_interpolation:0,transformation:{left_rotation:[0f,0.918f,0f,0.397f]}}}`)
+  })
+      }
+    )
   });
 });
+// kubejs/server_scripts/rotate_thrown_entities.js
+/*
+ServerEvents.loaded(e => {
+  const INTERVAL = 40        //   2 seconds (20 t = 1 s)
+  const HALF      = 20        //   1 second
 
+  // the callback that actually runs every INTERVAL ticks
+  function tick(cb) {
+    const server = cb.server
+
+    // find entities that were “thrown” and still have a destination tag
+    const targets = server.getEntities().filter(en =>
+      en.nbt?.KubeJSPersistentData?.destination
+    )
+
+    targets.forEach(en => {
+      server.runCommandSilent(
+        `execute as ${en.getUuid()} run data merge entity @s ` +
+        `{start_interpolation:0,transformation:{left_rotation:[0f,1.7f,1f,0.714f]}}`
+      )
+
+      // undo half a second later
+      server.scheduleInTicks(HALF, null, () => {
+        server.runCommandSilent(
+          `execute as ${en.getUuid()} run data merge entity @s ` +
+          `{start_interpolation:0,transformation:{left_rotation:[0f,1f,1f,0f]}}`
+        )
+      })
+    })
+
+    // queue the next loop
+    cb.reschedule(INTERVAL)
+  }
+
+  // fire the first one
+  e.server.scheduleInTicks(INTERVAL, null, tick)
+})
+*/
 // Tick handler: Update thrown item movement, spin, state transitions, and hitbox collisions.
 LevelEvents.tick(event => {
   // Process each thrown entity that has our custom persistent data.
@@ -61,13 +118,31 @@ LevelEvents.tick(event => {
     spinItems.forEach(item => {
       if (entity.nbt.item.id === item[0]) {
         let data = entity.nbt.KubeJSPersistentData;
-        
+        /*
         // --- Rotation Update ---
         let rotation = Number(data.rotation) || 0;
         rotation = (rotation + 30) % 360;
         data.rotation = rotation;
         if(data.state !== "stuck") {
-          entity.setRotation(rotation, 0);
+          event.server.runCommandSilent(`execute as @e[tag=rotest] run data merge entity @s {interpolation_start:-1,transformation:{right_rotation:[0f,0f,0f,1f]}}`)
+        }
+*/
+        let t = event.server.tickCount
+
+        if(t % INTERVAL === 0) {
+          console.log(INTERVAL)
+              event.server.runCommandSilent(`execute as ${entity.getUuid()} run data merge entity @s `+
+           `{start_interpolation:0,transformation:{left_rotation:[0f,0.918f,0f,0.397f]}}}`)
+    event.server.scheduleInTicks(
+      HALF,                             // data passed to callback
+      () => {                  
+        console.log(HALF)                    // callback
+        event.server.runCommandSilent(
+          `/execute as ${entity.getUuid()} run data merge entity @s ` +
+          `{start_interpolation:0,transformation:{left_rotation:[0f,-0.377f,0f,0.926f]}}`
+        )
+      }
+    )
         }
         
         // --- Movement Update ---
