@@ -1,3 +1,4 @@
+/*
 // kubejs/client_scripts/entityMotionBlur.js
 const BLUR_ID = 'minecraft:shaders/post/entity_motion_blur.json';
 let shaderLoaded = false;
@@ -33,3 +34,4 @@ if (pass) {
     shaderLoaded = false;
   }
 })
+*/
