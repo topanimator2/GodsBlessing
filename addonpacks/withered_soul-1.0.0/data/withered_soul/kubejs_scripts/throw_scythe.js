@@ -1,5 +1,5 @@
 let spinItems = [
-  ["withered_soul:chrono_scythe", 0.8, "return", 2, 18, "none", "none" /*<= clash // stick_in_ground*/, "dropped_model" /*<= dropped_model // basic_model*/, 0.8, 2.5, 15 /*<= Range*/, {
+  ["withered_soul:chrono_scythe", 0.8, "return", 2, 15, "none", "none" /*<= clash // stick_in_ground*/, "dropped_model" /*<= dropped_model // basic_model*/, 0.8, 2.5, 15 /*<= Range*/, {
     throwsound: ["minecraft:item.armor.equip_chain", 0.5, 0.7],
     flyingsound: ["minecraft:particle.soul_escape", 1, 0.7],
     hitsound: ["minecraft:block.anvil.place", 0.5, 0.7],
