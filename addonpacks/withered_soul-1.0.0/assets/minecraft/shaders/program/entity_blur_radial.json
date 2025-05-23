@@ -1,0 +1,11 @@
+{
+  "vertex":   "entity_blur_radial",
+  "fragment": "entity_blur_radial",
+  "samplers": [{ "name": "DiffuseSampler" }],
+  "uniforms": [
+    { "name": "uMotion",   "type": "float", "count": 2, "values": [0,0] },
+    { "name": "uStrength", "type": "float", "count": 1, "values": [0.6] }
+  ],
+  "attributes": ["Position"],
+  "blend": { "func": "add", "srcrgb": "one", "dstrgb": "zero" }
+}

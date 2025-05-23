@@ -41,14 +41,20 @@ spinItems.forEach(item => {
     // (The transformation values can be adjusted per model.)
     let command;
     if (item[7] === "dropped_model") {
-      command = `/execute in ${player.getLevel().dimension} run summon minecraft:item_display ${player.getX()} ${player.getY() + 1} ${player.getZ()} {item:{id:"${item[0]}",Count:1},interpolation_duration:${INTERVAL},transformation:{left_rotation:[0f,-0.377f,0f,0.926f],right_rotation:[0f,0f,0.709f,0.706f],scale:[${item[8]}f,${item[8]}f,${item[8]}f],translation:[0f,0f,0f]},KubeJSPersistentData:{destination:[${destX}f,${destY}f,${destZ}f],thrower:"${throwerUuid}",state:"flying",rotation:0}}`;
+      command = `/execute in ${player.getLevel().dimension} run summon minecraft:item_display ${player.getX()} ${player.getY() + 1} ${player.getZ()} {item:{id:"${item[0]}",Count:1, tag:${player.getMainHandItem().nbt}},interpolation_duration:${INTERVAL},transformation:{left_rotation:[0f,-0.377f,0f,0.926f],right_rotation:[0f,0f,0.709f,0.706f],scale:[${item[8]}f,${item[8]}f,${item[8]}f],translation:[0f,0f,0f]},KubeJSPersistentData:{destination:[${destX}f,${destY}f,${destZ}f],thrower:"${throwerUuid}",state:"flying",rotation:0}}`;
     } else if (item[7] === "basic_model") {
-      command = `/execute in ${player.getLevel().dimension} run summon minecraft:item_display ${player.getX()} ${player.getY() + 1} ${player.getZ()} {item:{id:"${item[0]}",Count:1},interpolation_duration:${INTERVAL},transformation:{left_rotation:[0f,1f,1f,0f],right_rotation:[0f,1f,0f,0f],scale:[${item[8]}f,${item[8]}f,${item[8]}f],translation:[0f,0f,0f]},KubeJSPersistentData:{destination:[${destX}f,${destY}f,${destZ}f],thrower:"${throwerUuid}",state:"flying",rotation:0}}`;
+      command = `/execute in ${player.getLevel().dimension} run summon minecraft:item_display ${player.getX()} ${player.getY() + 1} ${player.getZ()} {item:{id:"${item[0]}",Count:1, tag:${player.getMainHandItem().nbt}},interpolation_duration:${INTERVAL},transformation:{left_rotation:[0f,1f,1f,0f],right_rotation:[0f,1f,0f,0f],scale:[${item[8]}f,${item[8]}f,${item[8]}f],translation:[0f,0f,0f]},KubeJSPersistentData:{destination:[${destX}f,${destY}f,${destZ}f],thrower:"${throwerUuid}",state:"flying",rotation:0}}`;
     }
     event.server.runCommandSilent(`/playsound ${item[11].throwsound[0]} master @a ${player.getX()} ${player.getY() + 1} ${player.getZ()} ${item[11].throwsound[1]} ${item[11].throwsound[2]}`)
     event.server.runCommandSilent(command);
-    player.addItemCooldown(player.getMainHandItem(), 20 * item[9]);
-
+    let mainhand = player.getMainHandItem()
+    let newCount = mainhand.getCount() - 1;
+    if (newCount <= 0) {
+      player.setMainHandItem(Item.of("minecraft:air"));
+    } else {
+      mainhand.setCount(newCount);
+      player.setMainHandItem(mainhand);
+    }  
     let thrownEntities = event.level.getEntities().filter(e => {
       return e.nbt != null &&
         e.nbt.KubeJSPersistentData != null &&
@@ -111,7 +117,7 @@ const Q180 = [0, 1.0000, 0, 0.0000];
 const Q270 = [0, 0.7071, 0, -0.7071];
 
 const TWEEN_TICKS = 1;          // run every tick
-const DEG_PER_TICK = 30;
+const DEG_PER_TICK = -300;
 // Tick handler: Update thrown item movement, spin, state transitions, and hitbox collisions.
 LevelEvents.tick(event => {
   // Process each thrown entity that has our custom persistent data.
@@ -306,11 +312,16 @@ LevelEvents.tick(event => {
         // In both returning and stuck states, if the thrown item collides with its thrower, remove it.
         if (data.state === "returning" || data.state === "stuck") {
           let players = event.level.getPlayers();
-          let collision = players.some(p => isColliding(entity, p, thrownHitboxRadius, playerHitboxRadius));
+          players.forEach(p => {
+          let enbt = entity.getNbt()
+          let inbt = enbt.item
+            let collision = isColliding(entity, p, thrownHitboxRadius, playerHitboxRadius)
           if (collision) {
+            event.server.runCommandSilent(`give ${p.getDisplayName().getString()} ${inbt.id}${inbt.tag} ${inbt.Count}`)
             entity.kill();
             return;
           }
+          });
         }
 
         entity.setNbt(entity.nbt);

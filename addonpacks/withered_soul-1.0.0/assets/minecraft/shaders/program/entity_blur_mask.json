@@ -1,0 +1,7 @@
+{
+  "vertex":   "entity_blur_mask",
+  "fragment": "entity_blur_mask",
+  "samplers": [{ "name": "DiffuseSampler" }],
+  "attributes": ["Position"],
+  "blend": { "func": "add", "srcrgb": "one", "dstrgb": "zero" }
+}

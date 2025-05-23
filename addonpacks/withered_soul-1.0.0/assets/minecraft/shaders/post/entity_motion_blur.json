@@ -1,0 +1,22 @@
+{
+  "targets": [
+    "minecraft:main",
+    { "name": "mask" }
+  ],
+  "passes": [
+    {
+      "name": "entity_blur_mask",
+      "intarget": "minecraft:main",
+      "outtarget": "mask"
+    },
+    {
+      "name": "entity_blur_radial",
+      "intarget": "mask",
+      "outtarget": "minecraft:main",
+"uniforms": [
+  { "name": "uMotion",   "values": [0.0, 0.0] },
+  { "name": "uStrength", "values": [0.6]      }
+]
+    }
+  ]
+}
