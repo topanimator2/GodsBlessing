@@ -51,7 +51,8 @@
             "bar_color":"red",
             "commands": [
                 "effect give @s minecraft:strength 15 4 true",
-                "effect give @s minecraft:speed 20 2 true"
+                "effect give @s minecraft:speed 20 2 true",
+                "effect give @s minecraft:resistance 5 200"
             ],
             "conditions": {
                 "enabling": [
@@ -85,6 +86,30 @@
                         "ability": "kill_them_all"
                     }
          
+                ]
+            }
+        },
+        "bloodlust": {
+            "type":"palladium:command",
+            "title": "Bloodlust",
+            "icon":"minecraft:red_banner",
+            "description":"gives u rage",
+            "bar_color":"white",
+            "commands": [
+                "effect give @s minecraft:strength 15 1 true",
+                "scoreboard players add @s rage 25",
+                "playsound midnight:ambient.surface.howling ambient @s ~ ~ ~ 2 0.3"
+               
+            ],
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:action",
+                        "cooldown": 2200,
+                        "key_type": "key_bind",
+                        "needs_empty_hand": false,
+                        "allow_scrolling_when_crouching": true
+                    }
                 ]
             }
         }
