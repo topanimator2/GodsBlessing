@@ -1,0 +1,6 @@
+{
+  "vertex": "position",   
+  "fragment": "minecraft:edge_glow",
+  "attributes": [ "Position" ],
+  "samplers":  [ { "name": "DiffuseSampler" } ]
+}

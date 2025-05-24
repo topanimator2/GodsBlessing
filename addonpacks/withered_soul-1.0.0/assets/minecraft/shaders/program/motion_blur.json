@@ -1,0 +1,12 @@
+{
+  "vertex": "position",
+  "fragment": "minecraft:motion_blur",
+  "attributes": [ "Position" ],
+  "samplers": [
+    { "name": "DiffuseSampler" },
+    { "name": "PrevFrame" }
+  ],
+  "uniforms": [
+    { "name": "MixFactor", "type": "float", "count": 1, "values": [ 0.7 ] }
+  ]
+}

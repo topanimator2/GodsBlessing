@@ -1,0 +1,11 @@
+{
+  "targets": [
+    "minecraft:main",
+    { "name": "mask" }
+  ],
+  "vertex":   "test",
+  "fragment": "test",
+  "samplers": [{ "name": "DiffuseSampler" }],
+  "attributes": ["Position"],
+  "blend": { "func": "add", "srcrgb": "one", "dstrgb": "zero" }
+}

@@ -1,6 +1,6 @@
 /*
 // kubejs/client_scripts/entityMotionBlur.js
-const BLUR_ID = 'minecraft:shaders/post/entity_motion_blur.json';
+const BLUR_ID = 'minecraft:shaders/post/motion_blur.json';
 let shaderLoaded = false;
 const effectId  = new ResourceLocation(BLUR_ID);
 const $PostPass = Java.loadClass('net.minecraft.client.renderer.PostPass');
@@ -22,13 +22,6 @@ ClientEvents.tick(event => {
       mc.gameRenderer.loadEffect(effectId);
       shaderLoaded = true;
     }
-
-    // push uniforms every tick
-let pass = mc.gameRenderer.shader;      // field name in 1.20.x; use .shaderEffect on 1.19
-if (pass) {
-  pass.safeGetUniform('uMotion')   .set(vx, vy);
-  pass.safeGetUniform('uStrength') .set(Math.min(speed * 40, 1.0));
-}
   } else if (shaderLoaded) {          // entity gone → turn off
     mc.gameRenderer.shutdownEffect();
     shaderLoaded = false;

@@ -1,0 +1,28 @@
+{
+  "targets": [
+    "minecraft:main",
+    "swap",      
+    "prev_frame"  
+  ],
+
+  "passes": [
+    {
+      "name": "edge_glow",
+      "intarget": "minecraft:main",
+      "outtarget": "swap",
+      "fragshader": "minecraft:edge_glow"  
+    },
+    {
+      "name": "blend",
+      "intarget": "swap",
+      "outtarget": "minecraft:main",
+      "auxtargets": [
+        { "name": "PrevFrame", "id": "prev_frame" }
+      ],
+      "fragshader": "minecraft:motion_blur", 
+      "uniforms": [
+        { "name": "MixFactor", "values": [ 0.7 ] }
+      ]
+    }
+  ]
+}
