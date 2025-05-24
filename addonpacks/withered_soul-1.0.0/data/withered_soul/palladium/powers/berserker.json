@@ -75,6 +75,7 @@
             "hidden": true,
             "commands": [
                 "scoreboard players set @s rage 0",
+                "playsound born_in_chaos_v1:fallen_curse_mark ambient @a[distance=20..]",
                 "playsound born_in_chaos_v1:fallen_curse_mark ambient @s"
             ],
             
@@ -98,6 +99,7 @@
             "commands": [
                 "effect give @s minecraft:strength 15 1 true",
                 "scoreboard players add @s rage 25",
+                "playsound midnight:ambient.surface.howling ambient @a[distance=20..] ~ ~ ~ 2 0.3",
                 "playsound midnight:ambient.surface.howling ambient @s ~ ~ ~ 2 0.3"
                
             ],
@@ -110,6 +112,55 @@
                         "needs_empty_hand": false,
                         "allow_scrolling_when_crouching": true
                     }
+                ]
+            }
+        },
+        "scream":
+        {"type": "palladium:command",
+            "icon": "minecraft:textures/mob_effect/weakness.png",
+            "title": "Scream",
+            "bar_color": "white",
+            "commands":[
+                "effect give @e[distance=..20] minecraft:weakness 15 3 true",
+                "effect give @e[distance=..20] minecraft:nausea 10 3 true",
+                "effect clear @s minecraft:weakness",
+                "effect clear @s minecraft:nausea"
+                
+            ],
+
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:action",
+                        "cooldown": 700,
+                        "key_type": "key_bind",
+                        "needs_empty_hand": false,
+                        "allow_scrolling_when_crouching": true
+                    }, {
+                        "type": "palladium:objective_score",
+                        "objective": "rage",
+                        "min_score": 30,
+                        "max_score": 101
+                    }
+                ]
+            }
+        },"scream_drain":{
+            "type": "palladium:command",
+            "hidden": true,
+            "commands": [
+                "scoreboard players remove @s rage 30",
+                "playsound born_in_chaos_v1:charm_of_rage_use ambient @a[distance=20..] ~ ~ ~ 2 0.5",
+                "playsound born_in_chaos_v1:charm_of_rage_use ambient @s ~ ~ ~ 2 0.5"
+            ],
+            
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "power": "null",
+                        "ability": "scream"
+                    }
+         
                 ]
             }
         }
