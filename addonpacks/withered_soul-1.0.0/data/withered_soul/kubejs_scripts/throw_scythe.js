@@ -1,16 +1,22 @@
 let spinItems = [
-  ["withered_soul:chrono_scythe", 0.8, "return", 2, 15, "none", "none" /*<= clash // stick_in_ground*/, "dropped_model" /*<= dropped_model // basic_model*/, 0.8, 2.5, 15 /*<= Range*/, {
+  ["withered_soul:chrono_scythe", 0.8, "return", 2, 15, "none", "none" /*<= clash // stick_in_ground*/, "dropped_model" /*<= dropped_model // basic_model*/, 0.8, 2.5, 15 /*<= Range*/, 
+   {
     throwsound: ["minecraft:item.armor.equip_chain", 0.5, 0.7],
     flyingsound: ["minecraft:particle.soul_escape", 1, 0.7],
     hitsound: ["minecraft:block.anvil.place", 0.5, 0.7],
-    optionalentityhitsound: ["born_in_chaos_v1:dark_warlblade_atak", 0.5, 0.7]
-  }]
+    optionalentityhitsound: ["born_in_chaos_v1:dark_warlblade_atak", 0.5, 0.7],
+    boundingbox: [ 
+       -1.5, -0.3, -1.5,
+        1.5, 0.4, 1.5
+      ]
+    }
+  ]
 ];
-
+let $AABB = Java.loadClass(`net.minecraft.world.phys.AABB`)
+let $CompoundTag = Java.loadClass(`net.minecraft.nbt.CompoundTag`)
+let $DamageSource = Java.loadClass('net.minecraft.world.damagesource.DamageSource')
+let $DamageSources = Java.loadClass('net.minecraft.world.damagesource.DamageSources')
 // Define hitbox radii (in blocks)w
-const thrownHitboxRadius = 0.7;
-const playerHitboxRadius = 0.7;
-const mobHitboxRadius = 1.2; // Adjust as needed
 
 // Helper function to check collision between two entities based on their positions.
 function isColliding(entityA, entityB, hitboxA, hitboxB) {
@@ -34,16 +40,22 @@ spinItems.forEach(item => {
     let pos = { x: player.getX(), y: player.getY(), z: player.getZ() };
     // Calculate destination 12 blocks ahead (adjust multiplier as desired)
     let destX = pos.x + look.x() * item[10];
-    let destY = pos.y + look.y() * item[10];
+    let destY = pos.y+1.45 + look.y() * item[10];
     let destZ = pos.z + look.z() * item[10];
     let throwerUuid = player.getUuid();
+    let modifiers = player.getMainHandItem().getAttributeModifiers('mainhand').get('generic.attack_damage');
+  let attackDamage = item[4]
+
+if (modifiers) {
+  modifiers.forEach(modifier => {
+    attackDamage += modifier.amount;
+  });
+}
     // Summon the item_display with persistent data.
     // (The transformation values can be adjusted per model.)
     let command;
     if (item[7] === "dropped_model") {
-      command = `/execute in ${player.getLevel().dimension} run summon minecraft:item_display ${player.getX()} ${player.getY() + 1} ${player.getZ()} {item:{id:"${item[0]}",Count:1, tag:${player.getMainHandItem().nbt}},interpolation_duration:${INTERVAL},transformation:{left_rotation:[0f,-0.377f,0f,0.926f],right_rotation:[0f,0f,0.709f,0.706f],scale:[${item[8]}f,${item[8]}f,${item[8]}f],translation:[0f,0f,0f]},KubeJSPersistentData:{destination:[${destX}f,${destY}f,${destZ}f],thrower:"${throwerUuid}",state:"flying",rotation:0}}`;
-    } else if (item[7] === "basic_model") {
-      command = `/execute in ${player.getLevel().dimension} run summon minecraft:item_display ${player.getX()} ${player.getY() + 1} ${player.getZ()} {item:{id:"${item[0]}",Count:1, tag:${player.getMainHandItem().nbt}},interpolation_duration:${INTERVAL},transformation:{left_rotation:[0f,1f,1f,0f],right_rotation:[0f,1f,0f,0f],scale:[${item[8]}f,${item[8]}f,${item[8]}f],translation:[0f,0f,0f]},KubeJSPersistentData:{destination:[${destX}f,${destY}f,${destZ}f],thrower:"${throwerUuid}",state:"flying",rotation:0}}`;
+      command = `/execute in ${player.getLevel().dimension} run summon minecraft:item_display ${player.getX()} ${player.getY() + 1} ${player.getZ()} {item:{id:"${item[0]}",Count:1,tag:${player.getMainHandItem().nbt}},interpolation_duration:${INTERVAL},transformation:{left_rotation:[0f,-0.377f,0f,0.926f],right_rotation:[0f,0f,0.709f,0.706f],scale:[${item[8]}f,${item[8]}f,${item[8]}f],translation:[0f,0f,0f]},KubeJSPersistentData:{destination:[${destX}f,${destY}f,${destZ}f],attackdamage:${attackDamage},thrower:"${throwerUuid}",state:"flying",rotation:0}}`;
     }
     event.server.runCommandSilent(`/playsound ${item[11].throwsound[0]} master @a ${player.getX()} ${player.getY() + 1} ${player.getZ()} ${item[11].throwsound[1]} ${item[11].throwsound[2]}`)
     event.server.runCommandSilent(command);
@@ -67,44 +79,6 @@ spinItems.forEach(item => {
     })
   });
 });
-// kubejs/server_scripts/rotate_thrown_entities.js
-/*
-ServerEvents.loaded(e => {
-  const INTERVAL = 40        //   2 seconds (20 t = 1 s)
-  const HALF      = 20        //   1 second
-
-  // the callback that actually runs every INTERVAL ticks
-  function tick(cb) {
-    const server = cb.server
-
-    // find entities that were “thrown” and still have a destination tag
-    const targets = server.getEntities().filter(en =>
-      en.nbt?.KubeJSPersistentData?.destination
-    )
-
-    targets.forEach(en => {
-      server.runCommandSilent(
-        `execute as ${en.getUuid()} run data merge entity @s ` +
-        `{start_interpolation:0,transformation:{left_rotation:[0f,1.7f,1f,0.714f]}}`
-      )
-
-      // undo half a second later
-      server.scheduleInTicks(HALF, null, () => {
-        server.runCommandSilent(
-          `execute as ${en.getUuid()} run data merge entity @s ` +
-          `{start_interpolation:0,transformation:{left_rotation:[0f,1f,1f,0f]}}`
-        )
-      })
-    })
-
-    // queue the next loop
-    cb.reschedule(INTERVAL)
-  }
-
-  // fire the first one
-  e.server.scheduleInTicks(INTERVAL, null, tick)
-})
-*/
 
 function alignQuat(qPrev, qNext) {
   // q = [x, y, z, w]  (left or right_rotation order)
@@ -158,7 +132,6 @@ LevelEvents.tick(event => {
   })
 })
 
-
 LevelEvents.tick(event => {
   // Process each thrown entity that has our custom persistent data.
   let thrownEntities = event.level.getEntities().filter(e => {
@@ -170,31 +143,34 @@ LevelEvents.tick(event => {
   thrownEntities.forEach(entity => {
     spinItems.forEach(item => {
       if (entity.nbt.item.id === item[0]) {
+        let BoundingBox = new $AABB(item[11].boundingbox)
         let data = entity.nbt.KubeJSPersistentData;
-
-
-
-        /*
-                let t = event.server.tickCount
-        
-                if (t % INTERVAL === 0) {
-                  console.log(INTERVAL)
-                  let qPrev = Q90;
-                  [Q180, Q270, Q90].forEach(qNext => {
-                    qNext = alignQuat(qPrev, qNext);     // <<— key step
-                    event.server.runCommandSilent(
-                      `execute as ${entity.getUuid()} run data merge entity @s ` +
-                      `{start_interpolation:0,` +
-                      `transformation:{left_rotation:[${qNext.join('f,')}f]}}`
-                    );
-                    qPrev = qNext;
-                  });
-                }
-        */
+          entity.setBoundingBox(BoundingBox.move(entity.getBlockX(),entity.getBlockY(),entity.getBlockZ()))
+          event.server.schedule(2, () => {entity.setBoundingBox(BoundingBox.move(entity.getBlockX(),entity.getBlockY(),entity.getBlockZ()))})
+          //Send Data To Client
+          let players = event.level.getPlayers();
+          players.forEach(player => {
+            let data = ConvertAABBAndEntityToTag(item[11].boundingbox, entity)
+            player.sendData('entity_hitboxes', data)
+          
+          })
         // --- Movement Update ---
         // Use precise coordinates.
         let pos = { x: entity.getX(), y: entity.getY(), z: entity.getZ() };
         let target;
+        let player = event.level.getPlayerByUUID(data.thrower)
+        if(data.state === "flying" && !((player.getOffHandItem() && player.getMainHandItem()) === "minecraft:air")) {
+          event.server.runCommandSilent(`/playsound ${item[11].flyingsound[0]} master @a ${entity.getX()} ${entity.getY() + 1} ${entity.getZ()} ${item[11].flyingsound[1]+2} ${item[11].flyingsound[2]}`)
+              let look = player.getLookAngle(); // Returns a vector with x(), y(), z()
+               // Use precise positions:
+              let ppos = { x: player.getX(), y: player.getY(), z: player.getZ() };
+          let destX = ppos.x + look.x() * item[10];
+          let destY = ppos.y+1.5 + look.y() * item[10];
+          let destZ = ppos.z + look.z() * item[10];
+          event.server.runCommandSilent(
+          `execute as ${entity.getUuid()} run data merge entity @s ` +
+          `{KubeJSPersistentData:{destination:[${destX}f,${destY}f,${destZ}f]}}`
+        );}
         if (data.state === "flying") {
           event.server.runCommandSilent(`/playsound ${item[11].flyingsound[0]} master @a ${entity.getX()} ${entity.getY() + 1} ${entity.getZ()} ${item[11].flyingsound[1]} ${item[11].flyingsound[2]}`)
           target = { x: data.destination[0], y: data.destination[1], z: data.destination[2] };
@@ -215,15 +191,16 @@ LevelEvents.tick(event => {
         }
 
         // --- State Transition ---
-        if (data.state === "flying") {
+        if (data.state === "flying" && target) {
           // Check block collision: use Math.floor on each coordinate.
+          
           let blockAtPos = entity.getLevel().getBlock(
             Math.floor(pos.x),
             Math.floor(pos.y + 0.12),
             Math.floor(pos.z)
           );
           // If colliding with a solid block:
-          if (blockAtPos && blockAtPos.id !== "minecraft:air") {
+          if (blockAtPos && blockAtPos.getBlockState().isSolid()) {
             // For items meant to stick in ground:
             if (item[6] === "stick_in_ground") {
               data.state = "stuck";
@@ -239,7 +216,7 @@ LevelEvents.tick(event => {
                 mobs.forEach(mob => {
                   let players = event.level.getPlayers();
                   let thrower = players.find(p => p.getUuid() === data.thrower);
-                  if (isColliding(entity, mob, thrownHitboxRadius * 10, mobHitboxRadius)) {
+                  if ((entity.getBoundingBox()*10).intersects(mob.getBoundingBox)) {
                     if (data.state !== "stuck") {
                       event.server.runCommandSilent(`/damage ${mob.getUuid()} ${item[4]} minecraft:player_attack by ${thrower.getUuid()}`);
                       if (item[11].optionalentityhitsound) {
@@ -257,14 +234,22 @@ LevelEvents.tick(event => {
               } else if (item[2] === "return") {
                 event.server.runCommandSilent(`/playsound ${item[11].hitsound[0]} master @a ${entity.getX()} ${entity.getY() + 1} ${entity.getZ()} ${item[11].hitsound[1]} ${item[11].hitsound[2]}`)
                 data.state = "returning";
+                entity.setNbt(entity.nbt);
               }
             entity.setNbt(entity.nbt);
           }
           // Also, if nearly at destination, switch state to returning (if not stick_in_ground).
+          if(!((player.getOffHandItem() && player.getMainHandItem()) === "minecraft:air")) {
+          if (data.state === "flying" && item[2] === "return" && dist < 5) {
+            data.state = "returning";
+            entity.setNbt(entity.nbt);
+          }
+          } else {
           if (data.state === "flying" && item[2] === "return" && dist < 1.0) {
             data.state = "returning";
             entity.setNbt(entity.nbt);
           }
+        }
         }
 
         // --- Movement Calculation ---
@@ -278,23 +263,51 @@ LevelEvents.tick(event => {
           let newY = pos.y + ndy * speed;
           let newZ = pos.z + ndz * speed;
           entity.setPosition(newX, newY, newZ);
+          entity.setBoundingBox(BoundingBox.move(newX,newY,newZ))
+          //Send Data To Client
+          let players = event.level.getPlayers();
+          players.forEach(player => {
+            let data = ConvertAABBAndEntityToTag(item[11].boundingbox, entity)
+            player.sendData('entity_hitboxes', data)
+          
+          })
         } else if (data.state === "stuck") {
           // In the stuck state, the entity does not update its position.
           // It remains at its collision point.
+        } else {
+                      //Send Data To Client
+          let players = event.level.getPlayers();
+          players.forEach(player => {
+            let data = ConvertAABBAndEntityToTag(item[11].boundingbox, entity)
+            player.sendData('entity_hitboxes', data)
+          
+          })
         }
+
 
         // --- Simulated Hitbox for Mobs ---
         let mobs = event.level.getEntities().filter(e => {
           let players = event.level.getPlayers();
           let thrower = players.find(p => p.getUuid() === data.thrower);
-          return e.getUuid() !== thrower.getUuid() && e !== entity && e.getType() !== "minecraft:item";
+          return e.getUuid() !== thrower.getUuid() && e !== entity && (e.isLiving());
         });
         mobs.forEach(mob => {
           let players = event.level.getPlayers();
           let thrower = players.find(p => p.getUuid() === data.thrower);
-          if (isColliding(entity, mob, thrownHitboxRadius, mobHitboxRadius)) {
+          if (entity.getBoundingBox().intersects(mob.getBoundingBox())) {
             if (data.state !== "stuck") {
-              event.server.runCommandSilent(`/damage ${mob.getUuid()} ${item[4]} minecraft:player_attack by ${thrower.getUuid()}`);
+              let registryAccess = event.server.registryAccess()
+              let asItem = Item.of(item[0]).withNBT(entity.nbt.item.tag)
+              let player = event.level.getPlayerByUUID(thrower.getUuid())
+              let sharpness = asItem.getEnchantments().get("minecraft:sharpness")
+              let attackbonus = 1+((sharpness-1)/2)
+              event.server.runCommandSilent(`/damage ${mob.getUuid()} ${entity.getNbt().KubeJSPersistentData.attackdamage + attackbonus} minecraft:player_attack by ${player.getUuid()}`)
+              let fireaspect = asItem.getEnchantments().get("minecraft:fire_aspect")
+                mob.setRemainingFireTicks(80*fireaspect)
+              
+              /*let damageSource = $DamageSources(registryAccess).playerAttack(player) 
+              mob.actuallyHurt(damageSource, entity.getNbt().KubeJSPersistentData.attackdamage)
+              mob.markHurt()*/
               if (item[11].optionalentityhitsound) {
                 event.server.runCommandSilent(`/playsound ${item[11].optionalentityhitsound[0]} master @a ${mob.getX()} ${mob.getY() + 1} ${mob.getZ()} ${item[11].optionalentityhitsound[1]} ${item[11].optionalentityhitsound[2]}`)
               } else {
@@ -315,7 +328,7 @@ LevelEvents.tick(event => {
           players.forEach(p => {
           let enbt = entity.getNbt()
           let inbt = enbt.item
-            let collision = isColliding(entity, p, thrownHitboxRadius, playerHitboxRadius)
+            let collision = p.getBoundingBox().intersects(entity.getBoundingBox())
           if (collision) {
             event.server.runCommandSilent(`give ${p.getDisplayName().getString()} ${inbt.id}${inbt.tag} ${inbt.Count}`)
             entity.kill();
@@ -323,9 +336,21 @@ LevelEvents.tick(event => {
           }
           });
         }
-
         entity.setNbt(entity.nbt);
       }
     });
   });
 });
+
+function ConvertAABBAndEntityToTag(AABBasList, entity) {
+let Tag = new $CompoundTag()
+Tag.putDouble("minx", AABBasList[0])
+Tag.putDouble("miny", AABBasList[1])
+Tag.putDouble("minz", AABBasList[2])
+
+Tag.putDouble("maxx", AABBasList[3])
+Tag.putDouble("maxy", AABBasList[4])
+Tag.putDouble("maxz", AABBasList[5])
+Tag.putUUID("entityUUId", entity.getUuid())
+return Tag
+}
