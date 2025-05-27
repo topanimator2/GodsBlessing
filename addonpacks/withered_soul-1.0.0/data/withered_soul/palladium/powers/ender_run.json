@@ -158,20 +158,15 @@
             }
         },
         "panic": {
-            "type":"palladium:command",
+            "type":"godsblessing:toggle_tp_standpoint",
             "title": "Panik Knopf",
             "icon":"minecraft:textures/mob_effect/speed.png",
             "description":"run",
-            "bar_color":"red",
-            "commands": [
-                "effect give @s minecraft:speed 10 20 true",
-                "effect give @s minecraft:jump_boost 10 2 true"
-            ],
             "conditions": {
                 "enabling": [
                     {
                         "type": "palladium:action",
-                        "cooldown": 2200,
+                        "cooldown": 10,
                         "key_type": "key_bind",
                         "needs_empty_hand": false,
                         "allow_scrolling_when_crouching": true
