@@ -21,7 +21,7 @@
             "type": "palladium:command",
             "icon": "minecraft:soul_sand",
             "hidden":true,
-            "title": "Soul Eater",
+            "title": "Scoreboards",
             "first_tick_commands": [
                 "scoreboard objectives add rage.got_kill totalKillCount",
                 "scoreboard objectives add rage.deaths deathCount",
