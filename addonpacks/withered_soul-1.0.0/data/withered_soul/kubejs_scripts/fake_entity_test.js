@@ -10,6 +10,7 @@ ItemEvents.rightClicked("minecraft:stick", event => {
 						vec.putDouble("y", entity.blockPosition().y)
 						vec.putDouble("z", entity.blockPosition().z)
                         vec.putString("id", entity.getType())
+						vec.putString("name", entity.getDisplayName().getString())
 						
 						let clientdata = new $CompoundTag()
                         clientdata.putBoolean("remove", false)

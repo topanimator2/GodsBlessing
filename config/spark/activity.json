@@ -1,0 +1,54 @@
+[
+  {
+    "user": {
+      "type": "player",
+      "name": "SpySneeky",
+      "uniqueId": "1283286a-8f1d-4e23-a3ac-3d5757d7f098"
+    },
+    "time": 1749050051132,
+    "type": "Profiler (live)",
+    "data": {
+      "type": "url",
+      "value": "https://spark.lucko.me/PJYJfNMHyX"
+    }
+  },
+  {
+    "user": {
+      "type": "player",
+      "name": "SpySneeky",
+      "uniqueId": "1283286a-8f1d-4e23-a3ac-3d5757d7f098"
+    },
+    "time": 1748977942064,
+    "type": "Profiler (live)",
+    "data": {
+      "type": "url",
+      "value": "https://spark.lucko.me/hYgy34BQYP"
+    }
+  },
+  {
+    "user": {
+      "type": "player",
+      "name": "SpySneeky",
+      "uniqueId": "1283286a-8f1d-4e23-a3ac-3d5757d7f098"
+    },
+    "time": 1748976688970,
+    "type": "Profiler (live)",
+    "data": {
+      "type": "url",
+      "value": "https://spark.lucko.me/OVsYagDuII"
+    }
+  },
+  {
+    "user": {
+      "type": "player",
+      "name": "SpySneeky",
+      "uniqueId": "1283286a-8f1d-4e23-a3ac-3d5757d7f098"
+    },
+    "time": 1748972127819,
+    "type": "Profiler (live)",
+    "data": {
+      "type": "url",
+      "value": "https://spark.lucko.me/jbtb9YMQkj"
+    }
+  }
+]
