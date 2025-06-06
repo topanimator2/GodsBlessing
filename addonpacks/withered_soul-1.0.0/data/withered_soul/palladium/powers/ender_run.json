@@ -157,16 +157,17 @@
                 ]
             }
         },
-        "panic": {
+        "tp_point": {
             "type":"godsblessing:toggle_tp_standpoint",
-            "title": "Panik Knopf",
-            "icon":"minecraft:textures/mob_effect/speed.png",
-            "description":"run",
+            "title": "Teleporter",
+            "icon":"minecraft:ender_eye",
+            "description":"places a teleporter that works 1 time also through dimensions",
+            "bar_color": "red",
             "conditions": {
                 "enabling": [
                     {
                         "type": "palladium:action",
-                        "cooldown": 10,
+                        "cooldown": 80,
                         "key_type": "key_bind",
                         "needs_empty_hand": false,
                         "allow_scrolling_when_crouching": true
