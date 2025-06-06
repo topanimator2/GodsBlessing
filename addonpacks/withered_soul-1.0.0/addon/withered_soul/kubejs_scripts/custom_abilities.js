@@ -13,12 +13,13 @@ StartupEvents.registry("palladium:abilities", event => {
 				if(Data.contains("StandpointTeleportationLocation")) {
 					global.BeginDialogue(entity, 'robot_assistant', 'Reconnecting to host...');
 					let Location = Data.getCompound("StandpointTeleportationLocation")
-					entity.teleportTo(Location.getString("dimension"), Location.getDouble("x"),Location.getDouble("y"),Location.getDouble("z"), Location.getDouble("xRot"), Location.getDouble("yRot"))
+					entity.teleportTo(Location.getString("dimension"), Location.getDouble("x"),Location.getDouble("y"),Location.getDouble("z"), Location.getDouble("yRot"), Location.getDouble("xRot"))
 					Data.remove("StandpointTeleportationLocation")
 				} else {
 					if(entity.getPersistentData()) {
 						global.BeginDialogue(entity, 'robot_assistant', 'No relative data found. Setting Null Point...');
 						let vec = new $CompoundTag()
+						vec.putString("name", entity.getDisplayName().getString())
 						vec.putString("dimension", entity.getLevel().dimension)
 						vec.putFloat("yRot", entity.getRotationVector().y)
 						vec.putFloat("xRot", entity.getRotationVector().x)
