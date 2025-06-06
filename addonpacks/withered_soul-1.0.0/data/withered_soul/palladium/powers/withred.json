@@ -63,7 +63,7 @@
                 "enabling": [
                     {
                         "type": "palladium:toggle",
-                        "cooldown": 2400,
+                        "cooldown": 1800,
                         "key_type": "key_bind",
                         "needs_empty_hand": false,
                         "allow_scrolling_when_crouching": true

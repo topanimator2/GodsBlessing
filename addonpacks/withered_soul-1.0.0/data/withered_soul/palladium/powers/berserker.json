@@ -30,6 +30,8 @@
                 "scoreboard objectives add rage.timer dummy",
                 "scoreboard players set @s rage.timer 300",
                 "scoreboard players set @s rage.got_kill 0",
+                "scoreboard objectives add slam.timer dummy",
+                "scoreboard players set @s slam.timer 0",
                 "scoreboard players set @s slam 0"
             ],
             "commands": [
@@ -39,6 +41,9 @@
                 "execute if score @s rage matches ..0 run scoreboard players set @s rage 0",
                 "execute if score @s slam matches ..-1 run scoreboard players set @s slam 0",
                 "execute if score @s rage.timer matches ..0 run scoreboard players set @s rage.timer 300",
+                "execute if score @s slam.timer matches ..0 run scoreboard players set @s slam.timer 22000",
+                "execute if score @s slam.timer matches 22200 run scoreboard players set @s slam 1",
+                "scoreboard players remove @s slam.timer 1",
                 "scoreboard players remove @s rage.timer 1",
                 
                 "scoreboard players operation @s rage += @s rage.got_kill",
@@ -52,7 +57,7 @@
             "type":"palladium:command",
             "title": "Kill them all",
             "icon":"minecraft:textures/mob_effect/strength.png",
-            "description":"run",
+            "description":"Makes u stronger/ cost 100% rage/can be automatically activated when u have 100% rage",
             "bar_color":"red",
             "commands": [
                 "effect give @s minecraft:strength 15 4 true",
@@ -62,16 +67,17 @@
             "conditions": {
                 "enabling": [
                     {
+                        "type": "palladium:objective_score",
+                        "objective": "rage",
+                        "min_score": 99,
+                        "max_score": 101
+                        
+                    }, {
                         "type": "palladium:action",
                         "cooldown": 2200,
                         "key_type": "key_bind",
                         "needs_empty_hand": false,
                         "allow_scrolling_when_crouching": true
-                    }, {
-                        "type": "palladium:objective_score",
-                        "objective": "rage",
-                        "min_score": 99,
-                        "max_score": 101
                     }
                 ]
             }
@@ -99,7 +105,7 @@
             "type":"palladium:command",
             "title": "Bloodlust",
             "icon":"minecraft:red_banner",
-            "description":"gives u rage",
+            "description":"Makes u angry/gives u 25% rage",
             "bar_color":"white",
             "commands": [
                 "effect give @s minecraft:strength 15 1 true",
@@ -112,7 +118,7 @@
                 "enabling": [
                     {
                         "type": "palladium:action",
-                        "cooldown": 2200,
+                        "cooldown": 1500,
                         "key_type": "key_bind",
                         "needs_empty_hand": false,
                         "allow_scrolling_when_crouching": true
@@ -124,6 +130,7 @@
         {"type": "palladium:command",
             "icon": "minecraft:textures/mob_effect/weakness.png",
             "title": "Scream",
+            "description":"Makes everybody weak around u/costs 30% rage",
             "bar_color": "white",
             "commands":[
                 "effect give @e[distance=..20] minecraft:weakness 15 3 true",
@@ -172,9 +179,11 @@
             "type": "palladium:command",
             "icon": "iron_axe",
             "hidden": false,
+            "title": "Smash",
+            "description":"u go up and smash the ground ;)",
             "commands": [
                 "tp @s ~ ~2 ~",
-                "scoreboard players set @s slam 1",
+                "scoreboard players set @s slam.timer 22215",
                 "effect give @s minecraft:slow_falling 2 2 true"
                 
             ],
@@ -183,7 +192,7 @@
                 "enabling": [
                     {
                         "type": "palladium:action",
-                        "cooldown": 300,
+                        "cooldown": 200,
                         "key_type": "key_bind",
                         "needs_empty_hand": false,
                         "allow_scrolling_when_crouching": true
@@ -229,6 +238,7 @@
             "icon": "iron_axe",
             "hidden": true,
             "commands": [
+                "scoreboard players set @s slam.timer 0",
                 "scoreboard players set @s slam 0"
                 
             ],
