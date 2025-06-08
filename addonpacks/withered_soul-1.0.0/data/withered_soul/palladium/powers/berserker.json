@@ -239,7 +239,9 @@
             "hidden": true,
             "commands": [
                 "scoreboard players set @s slam.timer 0",
-                "scoreboard players set @s slam 0"
+                "scoreboard players set @s slam 0",
+                "playsound minecraft:block.anvil.place ambient @s ~ ~ ~ 2 0.5"
+
                 
             ],
             

@@ -218,7 +218,23 @@
                 ]
             } 
             
-         }
+         },"sound_not_movin":{
+        "type":"palladium:command",
+        "hidden":true,
+        "commands":
+        "playsound minecraft:block.chain.break ambient @a ~ ~ ~ 2 0.5",
+
+
+      "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "u_not_movin"
+              
+            }
+        ]}  
+    }
 
         
 }                   
