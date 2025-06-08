@@ -1,6 +1,7 @@
 // client_scripts/fake_entities_event.js     –  NeoForge 1.20.1 + KubeJS 6.x
 // -------------------------------------------------------------------------
 // 1 ▸ imports
+/*
 const Minecraft = Java.loadClass('net.minecraft.client.Minecraft');
 const EntityType = Java.loadClass('net.minecraft.world.entity.EntityType');
 const Stage = Java.loadClass('net.minecraftforge.client.event.RenderLevelStageEvent$Stage');
@@ -49,3 +50,4 @@ ForgeEvents.onEvent('net.minecraftforge.client.event.RenderLevelStageEvent', ev 
     return;
 }
 )
+*/
