@@ -16,7 +16,7 @@ StartupEvents.registry("palladium:abilities", event => {
 				if (Data.contains("StandpointTeleportationLocation")) {
 					global.BeginDialogue(entity, 'robot_assistant', 'Reconnecting to host...');
 					let Location = Data.getCompound("StandpointTeleportationLocation")
-					//return transition
+					/*
 					let linetrans = global.generateLineWithTiming({x:entity.blockPosition().x,y:entity.blockPosition().y+1.5,z:entity.blockPosition().z}, {x:Location.getDouble("x"), y:Location.getDouble("y"), z:Location.getDouble("z")}, 0.1, 0.05)
 					let rottrans = global.generateYawPitchTransition({yaw:entity.getRotationVector().y, pitch:entity.getRotationVector().x}, {yaw:Location.getDouble("yRot"), pitch:Location.getDouble("xRot")},0.005, true)
 
@@ -27,6 +27,7 @@ StartupEvents.registry("palladium:abilities", event => {
 							entity.sendData("move_camera", camerapackage)
 						})
 					});
+					*/
 					entity.teleportTo(Location.getString("dimension"), Location.getDouble("x"), Location.getDouble("y"), Location.getDouble("z"), Location.getDouble("yRot"), Location.getDouble("xRot"))
 					Data.remove("StandpointTeleportationLocation")
 				} else {

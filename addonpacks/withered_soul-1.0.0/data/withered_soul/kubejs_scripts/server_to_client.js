@@ -50,6 +50,8 @@ PlayerEvents.tick(event => {
 EntityEvents.hurt(event => {
     let player = event.getEntity();
     if (player.getType().toString() === "minecraft:player") {
+        // print out all available instance methods on the entry class
+
         let dimension = player.getLevel().dimension
         let Data = player.getPersistentData()
         if (Data.contains("StandpointTeleportationLocation")) {
@@ -85,7 +87,7 @@ EntityEvents.hurt(event => {
                     line.filter(pos => player.getDistance(pos.pos.x, pos.pos.y - 1.5, pos.pos.z) <= event.getDamage() * 5).forEach(pos => {
                         player.getServer().scheduleInTicks(pos.time, () => {
                             let pospackage = global.packageRenderParticleData("minecraft:small_flame", pos.pos.x, pos.pos.y, pos.pos.z, 0.01, 0.02, 0.01, 1, 0.00001)
-                            player.sendData("render_particle", pospackage)
+                            playerstandpoint.sendData("render_particle", pospackage)
                         })
                     })
                 }
@@ -93,3 +95,4 @@ EntityEvents.hurt(event => {
         }
     }
 })
+
