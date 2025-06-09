@@ -20,8 +20,6 @@ EntityEvents.hurt(event => {
                         score.add(-event.getDamage())
                     }
                 event.cancel()
-                } else {
-                   player.actuallyHurt(source, event.getDamage())
                 }
             }
     }

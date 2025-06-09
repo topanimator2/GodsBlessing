@@ -325,7 +325,7 @@ LevelEvents.tick(event => {
         // In both returning and stuck states, if the thrown item collides with its thrower, remove it.
         if (data.state === "returning" || data.state === "stuck") {
           let players = event.level.getPlayers();
-          players.forEach(p => {
+          players.filter(p => p.getUuid().toString() === data.thrower).forEach(p => {
           let enbt = entity.getNbt()
           let inbt = enbt.item
             let collision = p.getBoundingBox().intersects(entity.getBoundingBox())
