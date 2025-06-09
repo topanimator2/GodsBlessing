@@ -76,70 +76,8 @@
                     }
                 ]
             }
-        },"dead seer":
-        {
-            "type": "palladium:entity_damage",
-            "icon": "minecraft:soul_torch",
-
-            "title": "dead seer",
-            "bar_color": "purple",
-            "hidden": false,
-            "hidden_in_bar": false,
-            "list_index": -1,
-            "gui_position": "null",
-            "description": "null",
-            "damage": 20,
-            "damage_type": "minecraft:player_attack",
-            "effect": "null",
-            "fire_seconds": 0,
-            "potion_seconds": 0,
-            "potion_amplifier": 0,
-            "hide_particles": false,
-            "range": 100,
-            "at": "null",
-            "by": "@s",
-            "from": "@s",
-            "command_as_entity": "null",
-            "excluded_tag": "damage_excluded_tag",
-
-            
-            "conditions":{
-            "enabling": [
-                {"type":"palladium:toggle",
-                "cooldown": 20,
-                "key_type":"key_bind",
-                "needs_empty_hand":false,
-                "allow_scrolling_when_crouching":true
-                },{
-                    "type": "palladium:objective_score",
-                    "objective": "withred_soul.souls",
-                    "min_score": 200,
-                    "max_score": 2147483647
-                }
-                  ]  }
-        },"dead seer drain":
-        {
-            "type": "palladium:command",
-            "hidden": true,
-            "commands": [
-                "scoreboard players remove @s withred_soul.souls 4"
-            ],
-            
-            "conditions": {
-                "enabling": [
-                    {
-                        "type": "palladium:ability_enabled",
-                        "power": "null",
-                        "ability": "dead seer"
-                    }
-         
-                ]
-            }
         },
 
-        
-
-    
 
             "soul death":{
 
@@ -237,6 +175,53 @@
                         "key_type": "key_bind",
                         "needs_empty_hand": false,
                         "allow_scrolling_when_crouching": true
+                    }
+                ]
+            }
+        },"death_wish":
+                    {"type": "palladium:command",
+                        "icon": "minecraft:textures/mob_effect/wither.png",
+                        "bar_color": "black",
+                        "title": "Death Wish",
+                        "list index":-1,
+                        "commands":[
+                    
+                            "effect give @e[distance=..20] minecraft:wither 40 40 true",
+                            "effect clear @s minecraft:wither"
+                            
+                        ],
+            
+                        "conditions": {
+                            "enabling": [
+                                {
+                                    "type": "palladium:action",
+                                    "cooldown": 0,
+                                    "key_type": "key_bind",
+                                    "needs_empty_hand": false,
+                                    "allow_scrolling_when_crouching": true
+                                }            
+                        
+
+                    
+                ]
+            }
+        }, 
+
+        "death_wish_drain":
+
+        {
+            "type": "palladium:command",
+            "hidden": true,
+            "commands": [
+                "scoreboard players remove @s withred_soul.souls 80"
+            ],
+            
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "power": "null",
+                        "ability": "death_wish"
                     }
                 ]
             }
