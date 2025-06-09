@@ -1196,8 +1196,8 @@
                 "enabling": [
                {
                         "type": "palladium:activation",
-                        "cooldown": 80,
-                        "ticks": 120,
+                        "cooldown": 100,
+                        "ticks": 60,
                         "key_type": "key_bind"
                }
             ]

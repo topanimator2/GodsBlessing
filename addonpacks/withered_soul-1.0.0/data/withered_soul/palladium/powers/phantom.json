@@ -46,7 +46,7 @@
             "commands": [
             "execute as @s at @s run execute as @e[distance=..40] at @e[distance=3..40] run summon minecraft:lightning_bolt",
             "weather thunder",
-            "playsound minecraft:block.chain.hit weather @s"
+            "playsound minecraft:block.chain.hit weather @a"
             
             
 
@@ -414,7 +414,7 @@
     "gui_position": "null",
     "description": "usable while a storm is active",
     "radius": 8,
-    "damage": 10,
+    "damage": 12,
     "fire_seconds": 1,
     "tag_ex": "exclusion_tag",
 
@@ -458,7 +458,7 @@
     "gui_position": "null",
     "description": "usable while a storm is active",
     "radius": 8,
-    "damage": 10,
+    "damage": 14,
     "fire_seconds": 2,
     "tag_ex": "exclusion_tag",
 
@@ -502,7 +502,7 @@
     "gui_position": "null",
     "description": "usable while a storm is active",
     "radius": 6,
-    "damage": 8,
+    "damage": 18,
     "fire_seconds": 0,
     "tag_ex": "exclusion_tag",
 
@@ -647,7 +647,7 @@
            "commands": [
                 "effect give @s minecraft:speed 15 5 true",
                 "effect give @s minecraft:strength 15 1 true",
-                "damage @s 18 minecraft:lightning_bolt"
+                "damage @s 12 minecraft:lightning_bolt"
                 
             ],
              "conditions":{

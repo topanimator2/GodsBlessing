@@ -9,6 +9,7 @@
         "give": {
             "type": "palladium:command",
             "icon": "minecraft:wither_skeleton_skull",
+            "title":"delete ability",
 
             "commands": [
                 "superpower remove withered_soul:all @s",
@@ -28,45 +29,6 @@
                    
                 ]
             }
-        },"u_not_movin":
-        {
-            "type": "palladium:entity_damage",
-            "icon": "minecraft:wither_skeleton_skull",
-
-            "title": "U not movin",
-            "bar_color": "black",
-            "hidden": false,
-            "hidden_in_bar": false,
-            "list_index": -1,
-            "gui_position": "null",
-            "description": "slows the enemy u are looking at",
-            "damage": 4,
-            "damage_type": "minecraft:magic",
-            "effect": "minecraft:slowness",
-            "fire_seconds": 0,
-            "potion_seconds": 6,
-            "potion_amplifier": 10,
-            "hide_particles": false,
-            "range": 50,
-            "at": "null",
-            "by": "@s",
-            "from": "@s",
-            "command_as_entity": "null",
-            "excluded_tag": "damage_excluded_tag",
-
-            "conditions":{
-            "enabling": [
-                {"type":"palladium:action",
-                "cooldown": 18000,
-                "key_type":"key_bind",
-                "needs_empty_hand":false,
-                "allow_scrolling_when_crouching":true
-
-
-                }
-                
-            ]
-             }
         }
     }
 }

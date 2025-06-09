@@ -51,6 +51,7 @@
                 "execute if score @s rage matches 100.. run scoreboard players set @s rage 100"
                 
                 
+                
             ]
         },
         "kill_them_all": {
@@ -60,7 +61,7 @@
             "description":"Makes u stronger/ cost 100% rage/can be automatically activated when u have 100% rage",
             "bar_color":"red",
             "commands": [
-                "effect give @s minecraft:strength 15 4 true",
+                "effect give @s born_in_chaos_v1:rampant_rampage 10 1 true",
                 "effect give @s minecraft:speed 20 2 true",
                 "effect give @s minecraft:resistance 5 200"
             ],
@@ -108,7 +109,7 @@
             "description":"Makes u angry/gives u 25% rage",
             "bar_color":"white",
             "commands": [
-                "effect give @s minecraft:strength 15 1 true",
+                "effect give @s born_in_chaos_v1:rampant_rampage 10 1 true",
                 "scoreboard players add @s rage 25",
                 "playsound midnight:ambient.surface.howling ambient @a[distance=20..] ~ ~ ~ 2 0.3",
                 "playsound midnight:ambient.surface.howling ambient @s ~ ~ ~ 2 0.3"

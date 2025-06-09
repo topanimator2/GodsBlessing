@@ -12,6 +12,7 @@
             "icon": "palladium:textures/icon/invisibility.png",
             "bar_color": "white",
             "title": "He is always watching",
+            "description":"makes u 100% invisible except ur shadow ur noise and ur particles",
 
             "conditions": {
                 "enabling": [
@@ -34,7 +35,7 @@
             "hidden_in_bar": false,
             "list_index": -1,
             "gui_position": "null",
-            "description": "With this u can ripp time and space appart",
+            "description": "With this u can ripp time and space appart/go through blocks",
             "vertical": false,
             "whitelist": "null",
             "blacklist": "palladium:prevents_intangibility",
@@ -85,7 +86,7 @@
             "hidden": false,
             "icon": "minecraft:chain",
             "title":"shackels",
-            "description":"shackles the enemy to the ground",
+            "description":"shackles the enemys near u to the ground",
             "bar_color": "red",
             "commands": [
                 
@@ -234,7 +235,20 @@
               
             }
         ]}  
-    }
+    },
+        "sculk_immu":{
+    "type": "palladium:sculk_immunity",
+    "icon": "minecraft:sculk",
+    "title": "sculk immunity",
+    "bar_color": "light_gray",
+    "hidden": false,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "sculk immunity duh"
+
+
+}
 
         
 }                   
