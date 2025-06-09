@@ -241,55 +241,6 @@
                 ]
             }
         },
-                     
-                    "death_wish":
-                    {"type": "palladium:command",
-                        "icon": "minecraft:textures/mob_effect/wither.png",
-                        "bar_color": "black",
-                        "title": "Death Wish",
-                        "list index":-1,
-                        "commands":[
-                    
-                            "effect give @e[distance=..20] minecraft:wither 40 40 true",
-                            "effect clear @s minecraft:wither"
-                            
-                        ],
-            
-                        "conditions": {
-                            "enabling": [
-                                {
-                                    "type": "palladium:action",
-                                    "cooldown": 0,
-                                    "key_type": "key_bind",
-                                    "needs_empty_hand": false,
-                                    "allow_scrolling_when_crouching": true
-                                }            
-                        
-
-                    
-                ]
-            }
-        }, 
-
-        "death_wish_drain":
-
-        {
-            "type": "palladium:command",
-            "hidden": true,
-            "commands": [
-                "scoreboard players remove @s withred_soul.souls 80"
-            ],
-            
-            "conditions": {
-                "enabling": [
-                    {
-                        "type": "palladium:ability_enabled",
-                        "power": "null",
-                        "ability": "death_wish"
-                    }
-                ]
-            }
-        },
               
         "death_incoming":
         {
@@ -1251,6 +1202,21 @@
             ]
         } 
      
+    },
+    "soul_barrier":{
+    "type": "godsblessing:soul_barrier",
+           "icon": "minecraft:shield",
+           "title":"Soul Barrier",
+           "conditions": {
+                "enabling": [
+               {
+                        "type": "palladium:activation",
+                        "cooldown": 80,
+                        "ticks": 120,
+                        "key_type": "key_bind"
+               }
+            ]
+        }
     }
 }
 }                   

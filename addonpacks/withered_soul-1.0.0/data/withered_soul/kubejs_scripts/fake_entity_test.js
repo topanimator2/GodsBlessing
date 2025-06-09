@@ -1,5 +1,6 @@
-let $CompoundTag = Java.loadClass(`net.minecraft.nbt.CompoundTag`)
 /*
+let $CompoundTag = Java.loadClass(`net.minecraft.nbt.CompoundTag`)
+
 ItemEvents.rightClicked("minecraft:stick", event => { 
     let entity = event.getPlayer()
 						let vec = new $CompoundTag()
