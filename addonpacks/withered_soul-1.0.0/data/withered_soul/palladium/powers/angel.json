@@ -131,7 +131,20 @@
                 "allow_scrolling_when_crouching":true
                 }
                   ]  }
-        }
+        },"fall_damage":{
+    "type": "palladium:damage_immunity",
+    "icon": "minecraft:feather",
+    "title": "light as a feather",
+    "bar_color": "light_gray",
+    "hidden": false,
+    "hidden_in_bar": false,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "no fall damage",
+    "damage_sources": [
+        "minecraft:is_fall"
+    ]
+}
 }
            
               
