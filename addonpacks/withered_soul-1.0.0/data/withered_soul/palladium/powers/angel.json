@@ -1,0 +1,56 @@
+{
+    "name": "angel",
+    "background": "minecraft:textures/block/white_concrete.png",
+    "icon": "minecraft:feather",
+    "gui_display_type": "tree",
+   
+    "abilities": 
+    {
+        "undead_death": {
+            "type": "palladium:command",
+            "icon": "minecraft:spectral_arrow",
+            "title": "Cleanse the world",
+            "first_tick_commands": [
+
+                "scoreboard objectives add undead_death dummy"
+                
+            ],
+            "commands": [
+                "execute if score @s undead_death matches 600.. run give @s minecraft:book",
+                "execute if score @s undead_death matches 600.. run scoreboard players set @s undead_death 0"
+            ]
+        },
+        "heal_all":
+                    {"type": "palladium:command",
+                        "icon": "minecraft:textures/mob_effect/regeneration.png",
+                        "bar_color": "white",
+                        "title": "Heal all",
+                        "description":"heals everybody around u",
+                        "list index":-1,
+                        "commands":[
+                    
+                            "effect give @e[distance=..20] minecraft:regeneration 15 3 true"
+                            
+                            
+                        ],
+            
+                        "conditions": {
+                            "enabling": [
+                                {
+                                    "type": "palladium:action",
+                                    "cooldown": 600,
+                                    "key_type": "key_bind",
+                                    "needs_empty_hand": false,
+                                    "allow_scrolling_when_crouching": true
+                                }            
+                        
+
+                    
+                ]
+            }
+        }
+}
+           
+              
+       
+}

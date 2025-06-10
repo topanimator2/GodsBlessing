@@ -1,9 +1,9 @@
 EntityEvents.death(event => {
-  let OBJECTIVE_ID = 'rage'
+  let OBJECTIVE_ID = 'undead_death'
   let entity = event.getEntity();
   let attacker
   if (attacker = event.getSource().getPlayer()) {
-    if (palladium.superpowers.hasSuperpower(attacker, "withered_soul:berserker")) {
+    if (palladium.superpowers.hasSuperpower(attacker, "withered_soul:angel")) {
       let board = attacker.getScoreboard();
       let objective = board.getObjective(OBJECTIVE_ID);
       if (attacker) {
