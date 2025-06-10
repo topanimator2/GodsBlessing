@@ -1,0 +1,22 @@
+{
+  "chosenPreset": 0,
+  "apiPreset": 0,
+  "loadedPresets": [
+    {
+      "skin": {
+        "skin_name": "207192045",
+        "model": "classic",
+        "type": "skinshuffle:config"
+      },
+      "name": "SpySneeky With bunny ears"
+    },
+    {
+      "skin": {
+        "skin_name": "426076069",
+        "model": "classic",
+        "type": "skinshuffle:config"
+      },
+      "name": "Unnamed Preset"
+    }
+  ]
+}
