@@ -49,12 +49,63 @@ StartupEvents.registry("palladium:abilities", event => {
 				global.BeginDialogue(entity, 'robot_assistant', "Greetings explorer, it seems you have acquired my assistance.");
 			}
 		})
+	
+	event.create("godsblessing:circle_effect")
+	.addProperty("radius", "double", 5, "the radius.")
+	.addProperty("spawn_animation", "bool", false, "spawn animation.")
+	.addProperty("all_players", "bool", true, "show to all player.")
+	.addProperty("particle", "string", "minecraft:small_flame", "the particle.")
+	.addProperty("loop", "bool", true, "If the circle keeps looping.")
+	.addProperty("force_up", "double", 0, "the force upwards.")
+	.firstTick((entity, entry, holder, enabled) => {
+		let radius = entry.getPropertyByName('radius');
+		let spawn_animation = entry.getPropertyByName('spawn_animation');
+		let all_players = entry.getPropertyByName('all_players');
+		let particle = entry.getPropertyByName('particle');
+		let force_up = entry.getPropertyByName('force_up');
+		if(enabled) {
+		let circle = global.getCirclePositions(entity.blockPosition(), radius, 0.15);
+		entity.getLevel().getPlayers().forEach(player => {
+			if (player.getDistance(entity.blockPosition()) <= radius) {
+						circle.forEach(circlepos => {
+							if(all_players) {
+								player.sendData(`render_particle`, global.packageRenderParticleData(particle, circlepos.x,circlepos.y,circlepos.z, 0.1, force_up, 0.1, 2, 0.1 ))
+							} else {
+								entity.sendData(`render_particle`, global.packageRenderParticleData(particle, circlepos.x,circlepos.y,circlepos.z, 0.1, force_up, 0.1, 2, 0.1 ))
+							}
+						});
+			}
+		})
+	}
+	})
+	.tick((entity, entry, holder, enabled) => { 
+		let radius = entry.getPropertyByName('radius');
+		let spawn_animation = entry.getPropertyByName('spawn_animation');
+		let all_players = entry.getPropertyByName('all_players');
+
+		let circle = global.getCirclePositions(entity.blockPosition, radius, 0.15);
+		entity.getLevel().getPlayers().forEach(player => {
+			if (player.getDistance(entity.blockPosition) <= radius) {
+						circle.forEach(circlepos => {
+							if(all_players) {
+								player.sendData(`render_particle`, global.packageRenderParticleData(particle, circlepos.x,circlepos.y,circlepos.z, 0.1, force_up, 0.1, 2, 0.1 ))
+							} else {
+								entity.sendData(`render_particle`, global.packageRenderParticleData(particle, circlepos.x,circlepos.y,circlepos.z, 0.1, force_up, 0.1, 2, 0.1 ))
+							}
+						});
+			}
+		})
+	})
 
 	event.create("godsblessing:soul_barrier")
 		.icon(palladium.createItemIcon('minecraft:wither_skull'))
 		.documentationDescription('Blocks damage, takes souls doing so.')
 
-	event.create("palladium:entity_damage")
+		event.create("godsblessing:holy_touch")
+		.icon(palladium.createItemIcon('minecraft:gold_ingot'))
+		.documentationDescription('Everything Gold becomes holy.')	
+
+
 
 		// Preset icon, can also be changed individually in the power json
 		.icon(palladium.createItemIcon('palladium:vibranium_circuit'))
