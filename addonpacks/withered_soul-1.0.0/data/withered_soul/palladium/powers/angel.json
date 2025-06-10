@@ -3,6 +3,17 @@
     "background": "minecraft:textures/block/white_concrete.png",
     "icon": "minecraft:feather",
     "gui_display_type": "tree",
+    "energy_bars": {
+  "Soul": {
+    "color": "#f9ec72",
+    "max":300,
+    "synced_value": {
+      "type": "score",
+      "objective": "undead_death",
+      "fallback": 0
+    }
+  }
+},
    
     "abilities": 
     {
@@ -10,6 +21,7 @@
             "type": "palladium:command",
             "icon": "minecraft:spectral_arrow",
             "title": "Cleanse the world",
+            "description":"get 600 holy points to ascend to ur old self",
             "first_tick_commands": [
 
                 "scoreboard objectives add undead_death dummy"
@@ -29,7 +41,7 @@
                         "list index":-1,
                         "commands":[
                     
-                            "effect give @e[distance=..20] minecraft:regeneration 15 3 true"
+                            "effect give @e[distance=..15] minecraft:regeneration 15 2 true"
                             
                             
                         ],
@@ -48,6 +60,77 @@
                     
                 ]
             }
+        },"never_die":
+                    {"type": "palladium:command",
+                        "icon": "minecraft:potion",
+                        "bar_color": "red",
+                        "title": "Holy beings never die/cost 20 points",
+                        "description":"makes urself almost invulnerable for 6 sec",
+                        "list index":-1,
+                        "commands":[
+                    
+                            "effect give @s minecraft:instant_health 100 2 true"
+                            
+                            
+                        ],
+            
+                        "conditions": {
+                            "enabling": [
+                                {
+                                    "type": "palladium:action",
+                                    "cooldown": 600,
+                                    "key_type": "key_bind",
+                                    "needs_empty_hand": false,
+                                    "allow_scrolling_when_crouching": true
+                                },
+                    {
+                        "type": "palladium:objective_score",
+                        "objective": "undead_death",
+                        "min_score": 20,
+                        "max_score": 2147483647
+                    }           
+                        
+
+                    
+                ]
+            }
+        },
+
+        "never_die_drain":
+        {
+            "type": "palladium:command",
+            "hidden": true,
+            "commands": [
+                "scoreboard players remove @s undead_death 20"
+            ],
+            
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "power": "null",
+                        "ability": "never_die"
+                    }
+         
+                ]
+            }
+        }, "fly": {
+            "type": "palladium:attribute_modifier",
+            "icon": "minecraft:feather",
+            "attribute": "palladium:flight_speed",
+            "amount": 0.5,
+            "title": "Broken Angelwings",
+            "bar_color": "white",
+
+            "conditions":{
+            "enabling": [
+                {"type":"palladium:toggle",
+                "cooldown": 0,
+                "key_type":"key_bind",
+                "needs_empty_hand":false,
+                "allow_scrolling_when_crouching":true
+                }
+                  ]  }
         }
 }
            
