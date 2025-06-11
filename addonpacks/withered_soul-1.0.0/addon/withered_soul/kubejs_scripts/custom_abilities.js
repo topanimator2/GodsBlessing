@@ -103,6 +103,7 @@ StartupEvents.registry("palladium:abilities", event => {
 		.documentationDescription('Speed up, Record, Rewind, Play.')
 		.firstTick((entity, entry, holder, enabled) => {
 			if(enabled) {
+				let id = entry.getPropertyByName('name');
 				entity.getLevel().runCommand(`mocap recordings remove ${id}`)
 				entity.getLevel().runCommandSilent(`effect give ${entity.getUuid()} minecraft:haste infinite 5 true`)
 				entity.getLevel().runCommandSilent(`effect give ${entity.getUuid()} minecraft:speed infinite 5 true`)
