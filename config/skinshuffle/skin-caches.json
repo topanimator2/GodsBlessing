@@ -1,12 +1,4 @@
 {
-  "uploaded": {
-<<<<<<< HEAD
-    "bc728f12092102a1400a2609052402f436a7582b0bbc0e26a43035a0b7bbc76c": "http://textures.minecraft.net/texture/46acd06e8483b176e8ea39fc12fe105eb3a2a4970f5100057e9d84d4b60bdfa7",
-=======
-    "9f6a2e557e79acadf8483f575ae57e4e3921c9e8aeab2c5d781e5724e8a786c1": "http://textures.minecraft.net/texture/e8174be855497a5aad8e34d3f7ae9f6da2939e23ef1141019f41cf8b1952d681",
->>>>>>> 6b7f08266c789777fe4d6ccebcb97ff40c5b47d0
-    "582637d6ae64932bdcf0e611aed785538957ada918017ba7f09a3a78b9b33e17": "http://textures.minecraft.net/texture/5dd4abbfea9090ad45771ea699477246dff2b867c02b386a81342e2d2b820e35",
-    "5dd4abbfea9090ad45771ea699477246dff2b867c02b386a81342e2d2b820e35": "http://textures.minecraft.net/texture/5dd4abbfea9090ad45771ea699477246dff2b867c02b386a81342e2d2b820e35"
-  },
+  "uploaded": {},
   "downloaded": {}
 }

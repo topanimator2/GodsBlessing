@@ -131,7 +131,7 @@ StartupEvents.registry("palladium:abilities", event => {
 		.documentationDescription('Everything Gold becomes holy.')	
 
 
-
+	event.create("palladium:entity_damage")
 		// Preset icon, can also be changed individually in the power json
 		.icon(palladium.createItemIcon('palladium:vibranium_circuit'))
 
