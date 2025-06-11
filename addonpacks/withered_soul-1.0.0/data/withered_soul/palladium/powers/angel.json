@@ -15,6 +15,25 @@
         }
     },
     "abilities": {
+         "shit": {
+            "type": "godsblessing:circle_effect",
+            "icon": "minecraft:textures/mob_effect/regeneration.png",
+            "title": "Heal all Particles",
+            "particle": "minecraft:totem_of_undying",
+            "all_players": true,
+            "force_up": 0.2,
+            "radius": 20,
+            "list index": -2,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "power": "withered_soul:angel",
+                        "ability": "heal_all"
+                    }
+                ]
+            }
+            },
         "undead_death": {
             "type": "palladium:command",
             "icon": "minecraft:spectral_arrow",
@@ -101,40 +120,6 @@
             "amount": 0.5,
             "title": "Broken Angelwings",
             "bar_color": "white",
-<<<<<<< HEAD
-            "conditions": {
-                "enabling": [
-                    {
-                        "type": "palladium:toggle",
-                        "cooldown": 0,
-                        "key_type": "key_bind",
-                        "needs_empty_hand": false,
-                        "allow_scrolling_when_crouching": true
-                    }
-                ]
-            }
-        },
-        "shit": {
-            "type": "godsblessing:circle_effect",
-            "icon": "minecraft:textures/mob_effect/regeneration.png",
-            "title": "Heal all Particles",
-            "particle": "minecraft:totem_of_undying",
-            "all_players": true,
-            "force_up": 0.2,
-            "radius": 20,
-            "list index": -2,
-            "conditions": {
-                "enabling": [
-                    {
-                        "type": "palladium:ability_enabled",
-                        "power": "withered_soul:angel",
-                        "ability": "heal_all"
-                    }
-                ]
-            }
-        }
-    }
-=======
 
             "conditions":{
             "enabling": [
@@ -163,5 +148,4 @@
            
               
        
->>>>>>> 6b7f08266c789777fe4d6ccebcb97ff40c5b47d0
 }
