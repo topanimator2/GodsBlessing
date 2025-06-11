@@ -1,0 +1,25 @@
+{
+    "name": "rewind",
+    "background": "minecraft:textures/block/white_concrete.png",
+    "icon": "minecraft:feather",
+    "gui_display_type": "tree",
+    "abilities": {
+        "rewind": {
+            "type": "godsblessing:think_act_redo",
+            "icon": "minecraft:spectral_arrow",
+            "title": "",
+            "description": "",
+            "id": "rewind",
+            "conditions": {
+                "enabling": [
+               {
+                        "type": "palladium:activation",
+                        "cooldown": 0,
+                        "ticks": 300,
+                        "key_type": "key_bind"
+               }
+                ]
+            }
+        }
+    }
+}

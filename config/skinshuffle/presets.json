@@ -17,6 +17,14 @@
         "type": "skinshuffle:config"
       },
       "name": "Unnamed Preset"
+    },
+    {
+      "skin": {
+        "skin_name": "1920769122",
+        "model": "slim",
+        "type": "skinshuffle:config"
+      },
+      "name": "Unnamed Preset"
     }
   ]
 }

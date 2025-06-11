@@ -7,9 +7,9 @@ EntityEvents.death(event => {
       let board = attacker.getScoreboard();
       let objective = board.getObjective(OBJECTIVE_ID);
       if (attacker) {
-        if(entity.isUndead()) {
-        let score = board.getOrCreatePlayerScore(attacker.getName().getString(), objective);
-        score.add(1)
+        if (entity.isUndead()) {
+          let score = board.getOrCreatePlayerScore(attacker.getName().getString(), objective);
+          score.add(1)
         }
       }
     }
@@ -19,7 +19,7 @@ EntityEvents.death(event => {
 // server_scripts/gold_values.js
 
 // 0️⃣ Universal ingredient extractor
-global.getIngredients = function(json) {
+global.getIngredients = function (json) {
   switch (json.type) {
     case 'minecraft:crafting_shapeless':
       return json.ingredients || [];
@@ -42,8 +42,8 @@ global.getIngredients = function(json) {
     case 'minecraft:smithing':
     case 'minecraft:stonecutting':
       return json.ingredient ? [json.ingredient]
-           : json.input      ? [json.input]
-           : [];
+        : json.input ? [json.input]
+          : [];
     default:
       return json.ingredients || (json.input ? [json.input] : []);
   }
@@ -53,17 +53,17 @@ global.getIngredients = function(json) {
 global.goldValues = {};
 
 // 2️⃣ Recipe‐scanning event
-ServerEvents.recipes(function(event) {
+ServerEvents.recipes(function (event) {
   function parseJson(r) {
     return JSON.parse(r.json.toString());
   }
 
   function countRawGold(json) {
     var ings = global.getIngredients(json);
-    var sum  = 0;
+    var sum = 0;
     for (var i = 0; i < ings.length; i++) {
       var ing = ings[i];
-      var id  = ing.item || ing.tag;
+      var id = ing.item || ing.tag;
       var cnt = ing.count || 1;
       if (id === 'minecraft:gold_ingot') sum += cnt;
     }
@@ -71,8 +71,8 @@ ServerEvents.recipes(function(event) {
   }
 
   // 2.1 Seed direct gold recipes
-  event.forEachRecipe({}, function(r) {
-    var json    = parseJson(r);
+  event.forEachRecipe({}, function (r) {
+    var json = parseJson(r);
     var rawGold = countRawGold(json);
     if (rawGold <= 0) return;
 
@@ -84,12 +84,12 @@ ServerEvents.recipes(function(event) {
       }
     } else if (json.result) {
       outputs.push({
-        item:  json.result.item,
+        item: json.result.item,
         count: json.result.count || 1
       });
     }
 
-    outputs.forEach(function(o) {
+    outputs.forEach(function (o) {
       var cost = rawGold / o.count;
       var prev = global.goldValues[o.item];
       if (prev === undefined || cost < prev) {
@@ -102,13 +102,13 @@ ServerEvents.recipes(function(event) {
   var changed = true;
   while (changed) {
     changed = false;
-    event.forEachRecipe({}, function(r) {
-      var json  = parseJson(r);
-      var ings  = global.getIngredients(json);
+    event.forEachRecipe({}, function (r) {
+      var json = parseJson(r);
+      var ings = global.getIngredients(json);
       var total = 0;
       for (var i = 0; i < ings.length; i++) {
         var ing = ings[i];
-        var id  = ing.item || ing.tag;
+        var id = ing.item || ing.tag;
         var cnt = ing.count || 1;
         var val = global.goldValues[id];
         if (val === undefined) { total = NaN; break; }
@@ -116,8 +116,8 @@ ServerEvents.recipes(function(event) {
       }
       if (!isNaN(total) && total > 0) {
         var outs = json.results ||
-                   [{ item: json.result.item, count: json.result.count }];
-        outs.forEach(function(o) {
+          [{ item: json.result.item, count: json.result.count }];
+        outs.forEach(function (o) {
           var cost = total / o.count;
           var prev = global.goldValues[o.item];
           if (prev === undefined || cost < prev) {
@@ -133,38 +133,36 @@ ServerEvents.recipes(function(event) {
   console.log('=== Gold-value table ===');
   for (var item in global.goldValues) {
     console.log(item + ' requires ' +
-                global.goldValues[item] + ' gold_ingots');
+      global.goldValues[item] + ' gold_ingots');
   }
 });
 
 
 
 PlayerEvents.inventoryChanged(e => {
-  	let player = e.getPlayer()
-    let inv = player.getInventory()
-    if(palladium.superpowers.hasSuperpower(player, "withered_soul:angel")) {
+  let player = e.getPlayer()
+  let inv = player.getInventory()
+  if (palladium.superpowers.hasSuperpower(player, "withered_soul:angel")) {
     let mainhand = player.getMainHandItem()
     let invItems = []
     for (let slot = 0; slot <= inv.getSlots(); slot++) {
-         invItems.push([inv.getItem(slot), slot])
+      invItems.push([inv.getItem(slot), slot])
     }
     let goldItems = invItems.filter(i =>
       global.goldValues[i[0].getId()] !== undefined
     );
     goldItems.forEach(i => {
-      console.log(i[0].getDisplayName().getString())
-      if(!i[0].getTagElement("blessed")) {
+      if (!i[0].getTagElement("blessed")) {
         let name = i[0].getDisplayName().getString()
-        console.log(name)
-      let holyversion = i[0].copy().withName("Holy "+ name.replace("[", "").replace("]", ""))
-      let newTag = new $CompoundTag()
-      let blessamount = global.goldValues[i[0].getId()] || 1
-      newTag.putDouble("bless_amount", blessamount)
-      holyversion.addTagElement("blessed", newTag)
-      inv.setStackInSlot(i[1], holyversion)
+        let holyversion = i[0].copy().withName("Holy " + name.replace("[", "").replace("]", ""))
+        let newTag = new $CompoundTag()
+        let blessamount = global.goldValues[i[0].getId()] || 1
+        newTag.putDouble("bless_amount", blessamount)
+        holyversion.addTagElement("blessed", newTag)
+        inv.setStackInSlot(i[1], holyversion)
       }
     })
-    }
+  }
 })
 
 EntityEvents.hurt(event => {
@@ -173,35 +171,69 @@ EntityEvents.hurt(event => {
   let source = event.getSource()
   if (entity.isUndead()) {
     let attacker
-    if (attacker = event.getSource().getPlayer()) {
+    if (attacker = source.getPlayer()) {
 
-          let inv = attacker.getInventory()
-          let invItems = []
-    for (let slot = 0; slot <= inv.getSlots(); slot++) {
-         invItems.push([inv.getItem(slot), slot])
-    }
-    let goldblessednumb = 0
-        let goldItems = invItems.filter(i =>
-      global.goldValues[i[0].getId()] !== undefined
-    );
-    goldItems.forEach(i => {goldblessednumb + i.getTagElement("blessed").getDouble("bless_amount")})
+      let inv = attacker.getInventory()
+      let invItems = []
+      for (let slot = 0; slot <= inv.getSlots(); slot++) {
+        invItems.push([inv.getItem(slot), slot])
+      }
+      let goldblessednumb = 0
+      let goldItems = invItems.filter(i =>
+        global.goldValues[i[0].getId()] !== undefined
+      );
+      goldItems.forEach(i => { goldblessednumb + i[0].getTagElement("blessed").getDouble("bless_amount") })
 
-                let board = player.getScoreboard();
-                let objective = board.getObjective(OBJECTIVE_ID);
-                let score = board.getOrCreatePlayerScore(player.getName().getString(), objective);
-      if(palladium.superpowers.hasSuperpower(attacker, "withered_soul:angel")) {
-              let smite = attacker.getMainHandItem().getEnchantments().get("minecraft:smite") || 0
-              let smitebonus = smite(2.5)
-              let holysmitebonus = smitebonus+(goldblessednumb)/5
-              let angelholysmitebonus = 1.5(smitebonus + (goldblessednumb)/5)
+      let board = attacker.getScoreboard();
+      let objective = board.getObjective(OBJECTIVE_ID);
+      let score = board.getOrCreatePlayerScore(attacker.getName().getString(), objective);
+      if (palladium.superpowers.hasSuperpower(attacker, "withered_soul:angel")) {
+        let smite = attacker.getMainHandItem().getEnchantments().get("minecraft:smite") || 0
+        let smitebonus = 2.5 * smite
+        let holysmitebonus = smitebonus + (goldblessednumb) / 5
+        let angelholysmitebonus = event.getDamage() + 0.5 * (smitebonus + (score.getScore() / 3) +(goldblessednumb) / 5)
 
-              let mainhanddamage
-              if(mainhanddamage = attacker.getMainHandItem().getTagElement("blessed").getDouble("bless_amount")) {
-                let mainhandangelholysmitebonus = angelholysmitebonus + 1.5(mainhand)
-                entity.actuallyHurt(source, mainhandangelholysmitebonus)
-              } else {
-                entity.actuallyHurt(source, angelholysmitebonus)
-              }
+        let mainhand = attacker.getMainHandItem() || 0
+        if (global.goldValues[mainhand.getId()] !== undefined) {
+          let mainhanddamage = global.goldValues[mainhand.getId()]
+          let mainhandangelholysmitebonus = angelholysmitebonus + 1.5 * (mainhanddamage)
+
+
+          let parts = Math.ceil(mainhandangelholysmitebonus / 30);
+          for (let part = 1; part <= parts; part++) {
+            // How many items remain before this part?
+            let alreadyHandled = (part - 1) * 30;
+            let remaining = mainhandangelholysmitebonus - alreadyHandled;
+
+            // This part’s size is 30, except the last part may be smaller
+            let size = remaining >= 30 ? 30 : remaining;
+
+            if (mainhandangelholysmitebonus < 30) {
+              entity.server.runCommandSilent(`damage ${entity.getUuid()} ${mainhandangelholysmitebonus / 2 || 0} minecraft:player_attack`)
+            } else {
+              attacker.getServer().scheduleInTicks(40 * part, () => {
+                entity.server.runCommandSilent(`damage ${entity.getUuid()} ${size / part} minecraft:player_attack`)
+
+                //  entity.actuallyHurt(source, mainhandangelholysmitebonus)
+                let circle = global.getCirclePositions(entity.blockPosition(), 1.5, 0.4);
+                circle.forEach(pos => {
+                  let circlepackage = global.packageRenderParticleData("born_in_chaos_v1:stunstars", pos.x, pos.y, pos.z, 0.01, 0.02, 0.01, 1, 0.00001)
+                  attacker.sendData("render_particle", circlepackage)
+                })
+                attacker.getLevel().getEntities()
+                .filter(e1 => e1.getDistance(entity.blockPosition()) <= 1.5)
+                .filter(e2 => e2 !== entity)
+                .forEach(e3 => {
+                  attacker.server.runCommandSilent(`damage ${e3.getUuid()} ${(size/part)/2} minecraft:player_attack by ${attacker.getUuid()}`)
+                })
+              })
+            }
+          }
+        } else {
+          attacker.getServer().scheduleInTicks(10, () => {
+            attacker.server.runCommandSilent(`damage ${entity.getUuid()} ${angelholysmitebonus} minecraft:player_attack`)
+          })
+        }
       } else {
 
       }

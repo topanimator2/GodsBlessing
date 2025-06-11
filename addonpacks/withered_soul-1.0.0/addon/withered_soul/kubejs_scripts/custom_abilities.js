@@ -97,6 +97,31 @@ StartupEvents.registry("palladium:abilities", event => {
 		})
 	})
 
+	event.create("godsblessing:think_act_redo")
+		.addProperty("name", "string", "think_act_redo", "id.")
+		.icon(palladium.createItemIcon('minecraft:wither_skull'))
+		.documentationDescription('Speed up, Record, Rewind, Play.')
+		.firstTick((entity, entry, holder, enabled) => {
+			if(enabled) {
+				entity.getLevel().runCommand(`mocap recordings remove ${id}`)
+				entity.getLevel().runCommandSilent(`effect give ${entity.getUuid()} minecraft:haste infinite 5 true`)
+				entity.getLevel().runCommandSilent(`effect give ${entity.getUuid()} minecraft:speed infinite 5 true`)
+				entity.getLevel().runCommandSilent(`effect give ${entity.getUuid()} caverns_and_chasms:rewind infinite 1 true`)
+				entity.getLevel().runCommand(`mocap recording start ${entity.getDisplayName().getString()}`)
+			}
+		})
+		.lastTick((entity, entry, holder, enabled) => { 
+			if(enabled) {
+				let id = entry.getPropertyByName('name');
+				entity.getLevel().runCommandSilent(`effect clear ${entity.getUuid()} minecraft:haste`)
+				entity.getLevel().runCommandSilent(`effect clear ${entity.getUuid()} minecraft:speed`)
+				entity.getLevel().runCommandSilent(`effect clear ${entity.getUuid()} caverns_and_chasms:rewind`)
+				entity.getLevel().runCommand(`mocap recording stop ${id}`) 
+				entity.getLevel().runCommand(`mocap recording save ${id}`) 
+				entity.getLevel().runCommand(`mocap playing start ${id}`)
+			}
+		})
+
 	event.create("godsblessing:soul_barrier")
 		.icon(palladium.createItemIcon('minecraft:wither_skull'))
 		.documentationDescription('Blocks damage, takes souls doing so.')
