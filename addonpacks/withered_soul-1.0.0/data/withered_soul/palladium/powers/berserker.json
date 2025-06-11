@@ -256,27 +256,7 @@
          
                 ]
             }
-        },"shit": {
-            "type": "godsblessing:circle_effect",
-            "icon": "minecraft:textures/mob_effect/regeneration.png",
-            "title": "slam Particles",
-            "hidden":"true",
-            "particle": "minecraft:totem_of_undying",
-            "all_players": true,
-            "force_up": 0.2,
-            "radius": 10,
-            "list index": -2,
-            "conditions": {
-                "enabling": [
-                    {
-                        "type": "palladium:ability_enabled",
-                        "power": "withered_soul:angel",
-                        "ability": "slam_damage"
-                    }
-                ]
-            }
         }
-        
     
 }
            
