@@ -101,6 +101,7 @@
             "amount": 0.5,
             "title": "Broken Angelwings",
             "bar_color": "white",
+<<<<<<< HEAD
             "conditions": {
                 "enabling": [
                     {
@@ -133,4 +134,34 @@
             }
         }
     }
+=======
+
+            "conditions":{
+            "enabling": [
+                {"type":"palladium:toggle",
+                "cooldown": 0,
+                "key_type":"key_bind",
+                "needs_empty_hand":false,
+                "allow_scrolling_when_crouching":true
+                }
+                  ]  }
+        },"fall_damage":{
+    "type": "palladium:damage_immunity",
+    "icon": "minecraft:feather",
+    "title": "light as a feather",
+    "bar_color": "light_gray",
+    "hidden": false,
+    "hidden_in_bar": false,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "no fall damage",
+    "damage_sources": [
+        "minecraft:is_fall"
+    ]
+}
+}
+           
+              
+       
+>>>>>>> 6b7f08266c789777fe4d6ccebcb97ff40c5b47d0
 }
