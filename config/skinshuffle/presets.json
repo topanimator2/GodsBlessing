@@ -1,30 +1,14 @@
 {
-  "chosenPreset": 1,
-  "apiPreset": 1,
+  "chosenPreset": 0,
+  "apiPreset": 0,
   "loadedPresets": [
     {
       "skin": {
-        "skin_name": "207192045",
-        "model": "slim",
-        "type": "skinshuffle:config"
-      },
-      "name": "SpySneeky With bunny ears"
-    },
-    {
-      "skin": {
-        "skin_name": "1717851593",
+        "url": "http://textures.minecraft.net/texture/5dd4abbfea9090ad45771ea699477246dff2b867c02b386a81342e2d2b820e35",
         "model": "classic",
-        "type": "skinshuffle:config"
+        "type": "skinshuffle:url"
       },
-      "name": "Unnamed Preset"
-    },
-    {
-      "skin": {
-        "skin_name": "1920769122",
-        "model": "slim",
-        "type": "skinshuffle:config"
-      },
-      "name": "Unnamed Preset"
+      "name": "SpySneeky"
     }
   ]
 }
