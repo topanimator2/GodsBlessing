@@ -256,7 +256,26 @@
          
                 ]
             }
-        }
+        },"particle": {
+            "type": "godsblessing:circle_effect",
+            "icon": "minecraft:textures/mob_effect/regeneration.png",
+            "title": "slam Particles",
+            "hidden":"true",
+            "particle": "minecraft:damage_indicator",
+            "all_players": true,
+            "force_up": 1,
+            "radius": 10,
+            "list index": -2,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "power": "withered_soul:berserker",
+                        "ability": "slam_damage"
+                    }
+                ]
+            }
+            }
     
 }
            
