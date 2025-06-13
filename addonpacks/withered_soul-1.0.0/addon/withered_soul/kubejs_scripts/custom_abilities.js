@@ -117,7 +117,7 @@ StartupEvents.registry("palladium:abilities", event => {
 				entity.getLevel().runCommandSilent(`effect clear ${entity.getUuid()} minecraft:haste`)
 				entity.getLevel().runCommandSilent(`effect clear ${entity.getUuid()} minecraft:speed`)
 				entity.getLevel().runCommandSilent(`effect clear ${entity.getUuid()} caverns_and_chasms:rewind`)
-				entity.getLevel().runCommand(`mocap recording stop ${id}`) 
+				entity.getLevel().runCommand(`mocap recording stop`) 
 				entity.getLevel().runCommand(`mocap recording save ${id}`) 
 				entity.getLevel().runCommand(`mocap playing start ${id}`)
 			}
