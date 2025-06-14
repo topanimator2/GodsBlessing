@@ -4,9 +4,9 @@
   "loadedPresets": [
     {
       "skin": {
-        "url": "http://textures.minecraft.net/texture/5dd4abbfea9090ad45771ea699477246dff2b867c02b386a81342e2d2b820e35",
-        "model": "classic",
-        "type": "skinshuffle:url"
+        "skin_name": "1717851593",
+        "model": "slim",
+        "type": "skinshuffle:config"
       },
       "name": "SpySneeky"
     }
