@@ -147,7 +147,7 @@
 	#Format ["override type:mod id:item name"]
 	#Valid override types are: sword, shield, bow, pickaxe, axe, shovel, hoe and item
 	#example ["sword:minecraft:iron_sword","sword:minecraft:gold_sword"]
-	itemOverrides = ["item:withered_soul:chrono_scythe", "sword:withered_soul:chrono_scythe", "axe:withered_soul:chrono_scythe", "pickaxe:withered_soul:chrono_scythe"]
+	itemOverrides = ["item:withered_soul:chrono_scythe", "sword:withered_soul:chrono_scythe", "axe:withered_soul:chrono_scythe", "pickaxe:withered_soul:chrono_scythe", "bow:better_weaponry:diamond_shuriken"]
 	#Tries to automatically assign the correct type of skin type without config and tag.
 	enableMatchingByItemId = true
 	#If the matching system wrong, you can add the item id here to this ignore it.

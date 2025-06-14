@@ -1,4 +1,3 @@
-
 EntityEvents.hurt(event => {
     let OBJECTIVE_ID = 'withred_soul.souls'
     let player = event.getEntity();
@@ -9,6 +8,7 @@ EntityEvents.hurt(event => {
                 let objective = board.getObjective(OBJECTIVE_ID);
                 let score = board.getOrCreatePlayerScore(player.getName().getString(), objective);
                 if(score.getScore() >= 1) {
+                    event.server.runCommandSilent(`playsound`)
                     let typeId = source.type().msgId();
                     if(typeId.match(/magic|spell/)) {
                          score.add(-(event.getDamage()*3))
