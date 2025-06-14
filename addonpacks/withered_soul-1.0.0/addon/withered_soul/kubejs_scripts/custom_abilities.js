@@ -223,7 +223,7 @@ StartupEvents.registry("palladium:abilities", event => {
 							&& pd.contains('state')
 							&& pd.contains(`followSpeed`)
 						) {
-							e.runCommandSilent(`execute as @s run data modify entity @s KubeJSPersistentData.state set value "fall"`)
+							entity.server.runCommandSilent(`execute as ${e.getUuid()} run data modify entity @s KubeJSPersistentData.state set value "fall"`)
 							
 							//entity.runCommandSilent(`function magiccircle30:_/delete`)
 						}
