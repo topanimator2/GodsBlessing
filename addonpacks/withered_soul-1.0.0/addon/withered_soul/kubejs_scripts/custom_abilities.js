@@ -1,4 +1,47 @@
 let $CompoundTag = Java.loadClass(`net.minecraft.nbt.CompoundTag`)
+function spawnHoverOrb(level, target, itemId, hoverHeight, followSpeed, fallSpeed, damage) {
+  // raw coords
+  let x = target.getX();
+  let y = target.getY();
+  let z = target.getZ();
+  // your direct dimension string
+  let dim = level.dimension;
+
+  // 1) Summon the item_display _without_ KubeJSPersistentData
+  let summonSNBT = `{`
+    + `item:{id:"${itemId}",Count:1b},`
+    + `interpolation_duration:10,`
+    + `transformation:{`
+    + `left_rotation:[0.16f,0f,-0.73f,0.928f],`
+    + `right_rotation:[-0.278f,-0.306f,0.861f,-0.296f],`
+    + `scale:[1.2f,1.2f,1.2f],`
+    + `translation:[0f,0f,0f]`
+    + `}`
+    + `}`;
+  level.server.runCommandSilent(
+    `execute in ${dim} run summon minecraft:item_display `
+    + `${x} ${(y + hoverHeight)} ${z} `
+    + summonSNBT
+  );
+
+  // 2) Immediately tag the _nearest_ item_display at that spot with your persistent data
+  //    so you never have to fiddle with Java NBT APIs in JS.
+  let pdSNBT = `{`
+    + `KubeJSPersistentData:{`
+    + `target:"${target.getUuid().toString()}",`
+    + `state:"hover",`
+    + `hoverHeight:${hoverHeight}d,`
+    + `followSpeed:${followSpeed}d,`
+    + `fallSpeed:${fallSpeed}d,`
+    + `damage:${damage}d`
+    + `}`
+    + `}`;
+  level.server.runCommandSilent(
+    `execute in ${dim} positioned ${x} ${(y + hoverHeight)} ${z} `
+    + `run data merge entity @e[type=minecraft:item_display,limit=1,sort=nearest] `
+    + pdSNBT
+  );
+}
 
 StartupEvents.registry("palladium:abilities", event => {
 
@@ -130,6 +173,61 @@ StartupEvents.registry("palladium:abilities", event => {
 		event.create("godsblessing:holy_touch")
 		.icon(palladium.createItemIcon('minecraft:gold_ingot'))
 		.documentationDescription('Everything Gold becomes holy.')	
+		.firstTick((entity, entry, holder, enabled)=> {
+			if(enabled) {
+				let mainhand = entity.getMainHandItem()
+				if(mainhand.getId() === "minecraft:gold_ingot") {
+      if (!mainhand.getTagElement("blessed")) {
+        let name = mainhand.getDisplayName().getString()
+        let holyversion = mainhand.copy().withName("Holy " + name.replace("[", "").replace("]", ""))
+        let newTag = new $CompoundTag()
+        let blessamount =  1
+        newTag.putDouble("bless_amount", blessamount)
+        holyversion.addTagElement("blessed", newTag)
+        entity.setMainHandItem(holyversion)
+      }
+				}
+			}
+		})
+			
+		event.create("godsblessing:smite")
+		.icon(palladium.createItemIcon('minecraft:iron_sword'))
+		.documentationDescription('Entity you are looking at.')	
+		.firstTick((entity, entry, holder, enabled)=> {
+			if(enabled) {
+				let raycast = entity.rayTrace()
+				if(raycast?.entity) {
+					  spawnHoverOrb(
+    					event.level,
+    					hit.entity,
+    					'minecraft:iron_sword',
+    					3.0,   // hoverHeight
+    					0.2,   // followSpeed
+    					0.5,   // fallSpeed
+   						 8      // damage
+ 			 	);
+				raycast.entity.runCommandSilent(`function magiccircle30:_/create`)
+				raycast.entity.runCommandSilent(`function magiccircle30:a/magic_circle_spawning_1/play_loop`)
+				}
+			}
+		})
+			.lastTick((entity, entry, holder, enabled) => {
+				if (enabled) {
+					let entities = entity.getLevel().getEntities()
+					entities.forEach(e => {
+						let pd = e.getPersistentData();
+						if (e.getType() === 'minecraft:item_display'
+							&& pd
+							&& pd.contains('target')
+							&& pd.contains('state')
+							&& pd.contains(`followSpeed`)
+						) {
+							entity.runCommandSilent(`execute as @s run data modify entity @s KubeJSPersistentData.state set value "fall"`)
+							entity.runCommandSilent(`function magiccircle30:_/delete`)
+						}
+					})
+				}
+			})
 
 
 	event.create("palladium:entity_damage")
