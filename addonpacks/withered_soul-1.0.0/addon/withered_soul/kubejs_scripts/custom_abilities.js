@@ -1,5 +1,5 @@
 let $CompoundTag = Java.loadClass(`net.minecraft.nbt.CompoundTag`)
-function spawnHoverOrb(level, target, itemId, hoverHeight, followSpeed, fallSpeed, damage) {
+function spawnHoverOrb(level, target, itemId, hoverHeight, followSpeed, fallSpeed, damage, owner) {
   // raw coords
   let x = target.getX();
   let y = target.getY();
@@ -33,7 +33,8 @@ function spawnHoverOrb(level, target, itemId, hoverHeight, followSpeed, fallSpee
     + `hoverHeight:${hoverHeight}d,`
     + `followSpeed:${followSpeed}d,`
     + `fallSpeed:${fallSpeed}d,`
-    + `damage:${damage}d`
+    + `damage:${damage}d,`
+ + `owner:${owner}`
     + `}`
     + `}`;
   level.server.runCommandSilent(
@@ -195,24 +196,24 @@ StartupEvents.registry("palladium:abilities", event => {
 		.documentationDescription('Entity you are looking at.')	
 		.firstTick((entity, entry, holder, enabled)=> {
 			if(enabled) {
-				let raycast = entity.rayTrace()
+				let raycast = entity.rayTrace(100, true)
 				if(raycast?.entity) {
 					  spawnHoverOrb(
-    					event.level,
-    					hit.entity,
+    					entity.getLevel(),
+    					raycast.entity,
     					'minecraft:iron_sword',
     					3.0,   // hoverHeight
     					0.2,   // followSpeed
     					0.5,   // fallSpeed
-   						 8      // damage
+   						 0.05,     // damage
+						 entity.getUuid()
  			 	);
-				raycast.entity.runCommandSilent(`function magiccircle30:_/create`)
-				raycast.entity.runCommandSilent(`function magiccircle30:a/magic_circle_spawning_1/play_loop`)
+			//	raycast.entity.runCommandSilent(`function magiccircle30:_/create`)
+			//	raycast.entity.runCommandSilent(`function magiccircle30:a/magic_circle_spawning_1/play_loop`)
 				}
 			}
 		})
 			.lastTick((entity, entry, holder, enabled) => {
-				if (enabled) {
 					let entities = entity.getLevel().getEntities()
 					entities.forEach(e => {
 						let pd = e.getPersistentData();
@@ -222,11 +223,11 @@ StartupEvents.registry("palladium:abilities", event => {
 							&& pd.contains('state')
 							&& pd.contains(`followSpeed`)
 						) {
-							entity.runCommandSilent(`execute as @s run data modify entity @s KubeJSPersistentData.state set value "fall"`)
-							entity.runCommandSilent(`function magiccircle30:_/delete`)
+							e.runCommandSilent(`execute as @s run data modify entity @s KubeJSPersistentData.state set value "fall"`)
+							
+							//entity.runCommandSilent(`function magiccircle30:_/delete`)
 						}
 					})
-				}
 			})
 
 
