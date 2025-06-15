@@ -15,11 +15,11 @@
         }
     },
     "abilities": {
-         "shit": {
+        "shit": {
             "type": "godsblessing:circle_effect",
             "icon": "minecraft:textures/mob_effect/regeneration.png",
             "title": "Heal all Particles",
-            "hidden":"true",
+            "hidden": "true",
             "particle": "minecraft:totem_of_undying",
             "all_players": true,
             "force_up": 0.2,
@@ -34,7 +34,7 @@
                     }
                 ]
             }
-            },
+        },
         "undead_death": {
             "type": "palladium:command",
             "icon": "minecraft:spectral_arrow",
@@ -121,36 +121,55 @@
             "amount": 0.5,
             "title": "Broken Angelwings",
             "bar_color": "white",
-
-            "conditions":{
-            "enabling": [
-                {"type":"palladium:toggle",
-                "cooldown": 0,
-                "key_type":"key_bind",
-                "needs_empty_hand":false,
-                "allow_scrolling_when_crouching":true
-                }
-                  ]  }
-        },"fall_damage":{
-    "type": "palladium:damage_immunity",
-    "icon": "minecraft:feather",
-    "title": "light as a feather",
-    "bar_color": "light_gray",
-    "hidden": false,
-    "hidden_in_bar": false,
-    "list_index": -1,
-    "gui_position": "null",
-    "description": "no fall damage",
-    "damage_sources": [
-        "minecraft:is_fall"
-    ]
-},
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:toggle",
+                        "cooldown": 0,
+                        "key_type": "key_bind",
+                        "needs_empty_hand": false,
+                        "allow_scrolling_when_crouching": true
+                    }
+                ]
+            }
+        },
+        "fall_damage": {
+            "type": "palladium:damage_immunity",
+            "icon": "minecraft:feather",
+            "title": "light as a feather",
+            "bar_color": "light_gray",
+            "hidden": false,
+            "hidden_in_bar": false,
+            "list_index": -1,
+            "gui_position": "null",
+            "description": "no fall damage",
+            "damage_sources": [
+                "minecraft:is_fall"
+            ]
+        },
+        "holy_smite": {
+            "type": "godsblessing:smite",
+            "hidden": false,
+            "icon": "minecraft:iron_sword",
+            "description": "lets u change gold to holy gold that makes u mor powerfull",
+            "title": "Gold to kill",
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:activation",
+                        "cooldown": 100,
+                        "ticks": 60,
+                        "key_type": "key_bind"
+                    }
+                ]
+            }
+        },
         "holy_gold": {
             "type": "palladium:command",
             "hidden": false,
-            "icon":"gold_ingot",
-            "description":"lets u change gold to holy gold that makes u mor powerfull",
-            "title":"Gold to kill",
+            "icon": "gold_ingot",
+            "description": "lets u change gold to holy gold that makes u mor powerfull",
+            "title": "Gold to kill",
             "commands": [
                 "playsound minecraft:block.anvil.use ambient @s ~ ~ ~ 0.5 0.5"
             ],
@@ -158,14 +177,25 @@
                 "enabling": [
                     {
                         "type": "palladium:action",
-                        "cooldown":"40"
-                        
+                        "cooldown": "40"
+                    }
+                ]
+            }
+        },
+        "shitty_shit": {
+            "type": "godsblessing:holy_touch",
+            "icon": "minecraft:textures/mob_effect/regeneration.png",
+            "hidden": "true",
+            "list index": -2,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "power": "withered_soul:angel",
+                        "ability": "holy_gold"
                     }
                 ]
             }
         }
-}
-           
-              
-       
+    }
 }

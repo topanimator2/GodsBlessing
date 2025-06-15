@@ -138,7 +138,7 @@ ServerEvents.recipes(function (event) {
 });
 
 
-
+/*
 PlayerEvents.inventoryChanged(e => {
   let player = e.getPlayer()
   let inv = player.getInventory()
@@ -164,6 +164,7 @@ PlayerEvents.inventoryChanged(e => {
     })
   }
 })
+  */
 
 EntityEvents.hurt(event => {
   let OBJECTIVE_ID = 'undead_death'
@@ -191,7 +192,7 @@ EntityEvents.hurt(event => {
         let smite = attacker.getMainHandItem().getEnchantments().get("minecraft:smite") || 0
         let smitebonus = 2.5 * smite
         let holysmitebonus = smitebonus + (goldblessednumb) / 5
-        let angelholysmitebonus = event.getDamage() + 0.5 * (smitebonus + (score.getScore() / 3) +(goldblessednumb) / 5)
+        let angelholysmitebonus = event.getDamage() + 0.5 * (smitebonus + (score.getScore() / 3) + (goldblessednumb) / 5)
 
         let mainhand = attacker.getMainHandItem() || 0
         if (global.goldValues[mainhand.getId()] !== undefined) {
@@ -221,11 +222,11 @@ EntityEvents.hurt(event => {
                   attacker.sendData("render_particle", circlepackage)
                 })
                 attacker.getLevel().getEntities()
-                .filter(e1 => e1.getDistance(entity.blockPosition()) <= 1.5)
-                .filter(e2 => e2 !== entity)
-                .forEach(e3 => {
-                  attacker.server.runCommandSilent(`damage ${e3.getUuid()} ${(size/part)/2} minecraft:player_attack by ${attacker.getUuid()}`)
-                })
+                  .filter(e1 => e1.getDistance(entity.blockPosition()) <= 1.5)
+                  .filter(e2 => e2 !== entity)
+                  .forEach(e3 => {
+                    attacker.server.runCommandSilent(`damage ${e3.getUuid()} ${(size / part) / 2} minecraft:player_attack by ${attacker.getUuid()}`)
+                  })
               })
             }
           }
@@ -240,3 +241,182 @@ EntityEvents.hurt(event => {
     }
   }
 })
+
+// kubejs/server_scripts/hoverOrb.js
+
+// === SPAWN FUNCTION ===
+function spawnHoverOrb(level, target, itemId, hoverHeight, followSpeed, fallSpeed, damage, owner) {
+  // raw coords
+  let x = target.getX();
+  let y = target.getY();
+  let z = target.getZ();
+  // your direct dimension string
+  let dim = level.dimension;
+
+  // 1) Summon the item_display _without_ KubeJSPersistentData
+  let summonSNBT = `{`
+    + `item:{id:"${itemId}",Count:1b},`
+    + `interpolation_duration:10,`
+    + `transformation:{`
+    + `left_rotation:[0.16f,0f,-0.73f,0.928f],`
+    + `right_rotation:[-0.278f,-0.306f,0.861f,-0.296f],`
+    + `scale:[1.2f,1.2f,1.2f],`
+    + `translation:[0f,0f,0f]`
+    + `}`
+    + `}`;
+  level.server.runCommandSilent(
+    `execute in ${dim} run summon minecraft:item_display `
+    + `${x} ${(y + hoverHeight)} ${z} `
+    + summonSNBT
+  );
+
+  // 2) Immediately tag the _nearest_ item_display at that spot with your persistent data
+  //    so you never have to fiddle with Java NBT APIs in JS.
+  let pdSNBT = `{`
+    + `KubeJSPersistentData:{`
+    + `target:"${target.getUuid().toString()}",`
+    + `state:"hover",`
+    + `hoverHeight:${hoverHeight}d,`
+    + `followSpeed:${followSpeed}d,`
+    + `fallSpeed:${fallSpeed}d,`
+    + `damage:${damage}d,`
+    + `owner:${owner}`
+    + `}`
+    + `}`;
+  level.server.runCommandSilent(
+    `execute in ${dim} positioned ${x} ${(y + hoverHeight)} ${z} `
+    + `run data merge entity @e[type=minecraft:item_display,limit=1,sort=nearest] `
+    + pdSNBT
+  );
+}
+
+// === RIGHT-CLICK TO SPAWN ===
+ItemEvents.rightClicked('minecraft:diamond', function (event) {
+  let hit = event.entity.rayTrace(20, true);
+  if (!hit || !hit.entity) return;
+  spawnHoverOrb(
+    event.level,
+    hit.entity,
+    'minecraft:iron_sword',
+    3.0,   // hoverHeight
+    0.2,   // followSpeed
+    0.5,   // fallSpeed
+    0.05,      // damage
+    event.entity.getUuid()
+  );
+});
+
+// === SERVER TICK (uses getPersistentData()) ===
+LevelEvents.tick(function (event) {
+  let level = event.level
+  let orbs = level.getEntities()
+  orbs.forEach(orb => {
+    try {
+      let pd = orb.getPersistentData();
+      if (orb.getType() === 'minecraft:item_display'
+        && pd
+        && pd.contains('target')
+        && pd.contains('state')
+        && pd.contains(`followSpeed`)
+      ) {
+        let state = pd.getString('state');
+        let hoverH = pd.getDouble('hoverHeight');
+        let followSpd = pd.getDouble('followSpeed');
+        let fallSpd = pd.getDouble('fallSpeed');
+        let dmg = pd.getDouble('damage');
+        let targetUUID = pd.getString('target');
+        let owner = event.level.getPlayerByUUID(pd.getString('owner'))
+          let OBJECTIVE_ID = 'undead_death'
+        let board = owner.getScoreboard();
+      let objective = board.getObjective(OBJECTIVE_ID);
+      let score = board.getOrCreatePlayerScore(owner.getName().getString(), objective);
+        // find your living target
+        let target = level.getEntities().find(function (e) {
+          return e.getUuid().toString() === targetUUID && e.isAlive();
+        });
+        if (!target) return orb.kill();
+        if(target.isUndead()) {
+          dmg = dmg*2
+        }
+        // safe position fetch
+        let pos = orb.position();
+        if (!pos) return orb.kill();
+
+        if (state === 'hover') {
+          // current orb coords
+          let ox = orb.getX();
+          let oy = orb.getY();
+          let oz = orb.getZ();
+
+          // where we want it
+          let desiredY = target.getY() + hoverH;
+
+          // lerp each axis
+          let newX = ox + (target.getX() - ox) * followSpd;
+          let newY = oy + (desiredY - oy) * followSpd;
+          let newZ = oz + (target.getZ() - oz) * followSpd;
+
+          orb.setPosition(newX, newY, newZ);
+        }
+        else
+          if (state === 'fall') {
+            // 1) Get each axis from the orb itself
+            let ox = orb.getX();
+            let oy = orb.getY();
+            let oz = orb.getZ();
+/*
+            // 2) Compute the new Y
+            let newY = oy - fallSpd;
+
+            // 3) Move it
+            orb.setPosition(ox, newY, oz);
+*/  
+          event.server.runCommandSilent(
+          `execute as ${orb.getUuid()} run data merge entity @s ` +
+          `{start_interpolation:0,interpolation_duration:10,` +  // -1 = restart next frame  :contentReference[oaicite:3]{index=3}
+          `transformation:{translation:[${ target.getX() -ox}f,${target.getY() -oy}f,${target.getZ() -oz}f]}}`
+        );
+            // 4) Check ground collision
+           /* let bx = Math.floor(ox),
+              by = Math.floor(newY),
+              bz = Math.floor(oz);
+            let block = level.getBlock(bx, by, bz);
+            
+            if (block && block.getBlockState().isSolid()) {
+            */
+             level.server.scheduleInTicks(10, () => {
+                let circle = global.getCirclePositions(target.blockPosition(), 1.5, 0.4);
+                circle.forEach(pos => {
+                  let circlepackage = global.packageRenderParticleData("born_in_chaos_v1:stunstars", pos.x, pos.y, pos.z, 0.01, 0.02, 0.01, 1, 0.00001)
+                  owner.sendData("render_particle", circlepackage)
+                })
+                owner.getLevel().getEntities()
+                  .filter(e1 => e1.getDistance(target.blockPosition()) <= 1.5)
+                  .filter(e2 => e2 !== target)
+                  .filter(e2 => e2 !== owner)
+                  .forEach(e3 => {
+                    owner.server.runCommandSilent(`damage ${e3.getUuid()} ${dmg*score.getScore()} minecraft:player_attack by ${owner.getUuid()}`)
+                  })
+            event.server.runCommandSilent(
+                'damage ' + target.getUuid() + ' ' + dmg*score.getScore() + ' minecraft:magic'
+             );
+                             //  entity.actuallyHurt(source, mainhandangelholysmitebonus
+              orb.kill();
+             })
+          //  }
+          }
+
+      }
+    } catch (orb) {
+      let pd = orb.getPersistentData();
+      console.error(`Tick handler NPE at state=${pd?.getString('state')}`, e);
+    }
+  });
+});
+
+// === MAKE ANY ORB FALL ===
+function makeOrbFall(orb) {
+  let pd = orb.getPersistentData();
+  pd.putString('state', 'fall');
+  orb.mergeNbt(orb.getNbt().put('KubeJSPersistentData', pd));
+}
