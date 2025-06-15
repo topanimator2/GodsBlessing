@@ -4,11 +4,11 @@
   "loadedPresets": [
     {
       "skin": {
-        "skin_name": "207192045",
-        "model": "classic",
-        "type": "skinshuffle:config"
+        "url": "http://textures.minecraft.net/texture/e8174be855497a5aad8e34d3f7ae9f6da2939e23ef1141019f41cf8b1952d681",
+        "model": "slim",
+        "type": "skinshuffle:url"
       },
-      "name": "SpySneeky"
+      "name": "Hollow_ey3"
     }
   ]
 }

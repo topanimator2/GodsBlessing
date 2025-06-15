@@ -151,8 +151,8 @@
             "type": "godsblessing:smite",
             "hidden": false,
             "icon": "minecraft:iron_sword",
-            "description": "lets u change gold to holy gold that makes u mor powerfull",
-            "title": "Gold to kill",
+            "description": "spawns a sword above the enemy that falls down after some time",
+            "title": "Holy judgement",
             "conditions": {
                 "enabling": [
                     {
@@ -182,7 +182,7 @@
                 ]
             }
         },
-        "shitty_shit": {
+        "holy_gold_change": {
             "type": "godsblessing:holy_touch",
             "icon": "minecraft:textures/mob_effect/regeneration.png",
             "hidden": "true",
