@@ -4,9 +4,9 @@
   "loadedPresets": [
     {
       "skin": {
-        "url": "http://textures.minecraft.net/texture/e8174be855497a5aad8e34d3f7ae9f6da2939e23ef1141019f41cf8b1952d681",
+        "skin_name": "753973426",
         "model": "slim",
-        "type": "skinshuffle:url"
+        "type": "skinshuffle:config"
       },
       "name": "Hollow_ey3"
     }

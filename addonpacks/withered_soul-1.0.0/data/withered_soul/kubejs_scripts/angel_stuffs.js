@@ -373,8 +373,8 @@ LevelEvents.tick(function (event) {
 */  
           event.server.runCommandSilent(
           `execute as ${orb.getUuid()} run data merge entity @s ` +
-          `{start_interpolation:0,interpolation_duration:10,` +  // -1 = restart next frame  :contentReference[oaicite:3]{index=3}
-          `transformation:{translation:[${ target.getX() -ox}f,${target.getY() -oy}f,${target.getZ() -oz}f]}}`
+          `{start_interpolation:0,interpolation_duration:20,` +  // -1 = restart next frame  :contentReference[oaicite:3]{index=3}
+          `transformation:{translation:[${ target.getX() -ox}f,${target.getY() +oy}f,${target.getZ() -oz}f]}}`
         );
             // 4) Check ground collision
            /* let bx = Math.floor(ox),
@@ -384,7 +384,14 @@ LevelEvents.tick(function (event) {
             
             if (block && block.getBlockState().isSolid()) {
             */
-             level.server.scheduleInTicks(10, () => {
+           level.server.scheduleInTicks(20, () => { 
+                      event.server.runCommandSilent(
+          `execute as ${orb.getUuid()} run data merge entity @s ` +
+          `{start_interpolation:0,interpolation_duration:10,` +  // -1 = restart next frame  :contentReference[oaicite:3]{index=3}
+          `transformation:{translation:[${ target.getX() -ox}f,${target.getY() -oy}f,${target.getZ() -oz}f]}}`
+        );
+           })
+             level.server.scheduleInTicks(30, () => {
                 let circle = global.getCirclePositions(target.blockPosition(), 1.5, 0.4);
                 circle.forEach(pos => {
                   let circlepackage = global.packageRenderParticleData("born_in_chaos_v1:stunstars", pos.x, pos.y, pos.z, 0.01, 0.02, 0.01, 1, 0.00001)
