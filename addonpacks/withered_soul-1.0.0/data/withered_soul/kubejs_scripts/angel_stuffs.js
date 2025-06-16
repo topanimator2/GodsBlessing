@@ -374,7 +374,7 @@ LevelEvents.tick(function (event) {
           event.server.runCommandSilent(
           `execute as ${orb.getUuid()} run data merge entity @s ` +
           `{start_interpolation:0,interpolation_duration:20,` +  // -1 = restart next frame  :contentReference[oaicite:3]{index=3}
-          `transformation:{translation:[${ target.getX() -ox}f,${target.getY() +oy}f,${target.getZ() -oz}f]}}`
+          `transformation:{translation:[${ target.getX() -ox}f,${(target.getY() -oy)  +5}f,${target.getZ() -oz}f]}}`
         );
             // 4) Check ground collision
            /* let bx = Math.floor(ox),
@@ -384,13 +384,25 @@ LevelEvents.tick(function (event) {
             
             if (block && block.getBlockState().isSolid()) {
             */
+           
            level.server.scheduleInTicks(20, () => { 
+            let pos = { x: orb.getX(), y: orb.getY(), z: orb.getZ() };
+            let blockAtPos = orb.getLevel().getBlock(
+            Math.floor(pos.x),
+            Math.floor(pos.y+5),
+            Math.floor(pos.z)
+          );
+            if (blockAtPos.getBlockState().isSolid()) {
+              orb.kill();
+            } else 
+            if(!blockAtPos.getBlockState().isSolid()){
                       event.server.runCommandSilent(
           `execute as ${orb.getUuid()} run data merge entity @s ` +
           `{start_interpolation:0,interpolation_duration:10,` +  // -1 = restart next frame  :contentReference[oaicite:3]{index=3}
           `transformation:{translation:[${ target.getX() -ox}f,${target.getY() -oy}f,${target.getZ() -oz}f]}}`
         );
-           })
+      }
+          })
              level.server.scheduleInTicks(30, () => {
                 let circle = global.getCirclePositions(target.blockPosition(), 1.5, 0.4);
                 circle.forEach(pos => {
@@ -427,3 +439,33 @@ function makeOrbFall(orb) {
   pd.putString('state', 'fall');
   orb.mergeNbt(orb.getNbt().put('KubeJSPersistentData', pd));
 }
+
+const ProxyArray    = Java.loadClass('io.github.douira.glsl_transformer.ast.data.ProxyArrayList');
+// Fires on every craft, for every output
+
+ItemEvents.crafted(/.*/, event => {
+  // Wrap the Java list of ItemStacks in a JS‐array proxy
+ let stacks = []
+  stacks = event.inventory.getItems()
+  let totalBless = 0;
+
+  // Sum all bless_amount from each input slot
+  for (let i = 0; i < stacks.length; i++) {
+    let stack = stacks[i];
+    let tag   = stack.getTagElement('blessed');
+    if (tag) {
+      totalBless += tag.getDouble('bless_amount');
+    }
+    console.log(stack)
+  }
+
+  // If no inputs were blessed, do nothing
+  if (totalBless <= 0) return;
+
+  // Otherwise, attach the combined bless_amount to the output
+  const result = event.getItem();
+  const newTag = new $CompoundTag();
+  newTag.putDouble('bless_amount', totalBless);
+  result.addTagElement('blessed', newTag);
+  event.getPlayer().give(result)
+});
