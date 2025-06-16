@@ -1,12 +1,12 @@
 {
-    "name": "angel",
+    "name": "arch angel",
     "background": "minecraft:textures/block/white_concrete.png",
     "icon": "minecraft:feather",
     "gui_display_type": "tree",
     "energy_bars": {
         "Soul": {
             "color": "#f9ec72",
-            "max": 300,
+            "max": 500,
             "synced_value": {
                 "type": "score",
                 "objective": "undead_death",
@@ -39,14 +39,12 @@
             "type": "palladium:command",
             "icon": "minecraft:spectral_arrow",
             "title": "Cleanse the world",
-            "description": "get 600 holy points to ascend to ur old self",
+            "description": "U still haven't killed all evil",
             "first_tick_commands": [
                 "scoreboard objectives add undead_death dummy"
             ],
             "commands": [
-                "execute if score @s undead_death matches 600.. run superpower replace withered_soul:all withered_soul:arch_angel",
-                "execute if score @s undead_death matches 600.. run summon minecraft:lightning_bolt"
-                
+                "execute if score @s undead_death matches 10000000000.. run kill @s"
             ]
         },
         "heal_all": {
@@ -57,7 +55,7 @@
             "description": "heals everybody around u",
             "list index": -1,
             "commands": [
-                "effect give @e[distance=..15] minecraft:regeneration 15 2 true"
+                "effect give @a[distance=..15] minecraft:regeneration 25 2 true"
             ],
             "conditions": {
                 "enabling": [
@@ -75,17 +73,17 @@
             "type": "palladium:command",
             "icon": "minecraft:potion",
             "bar_color": "red",
-            "title": "Holy beings never die/cost 20 points",
-            "description": "makes urself almost invulnerable for 6 sec",
+            "title": "Holy beings never die/cost 30 points",
+            "description": "makes urself almost invulnerable for 10 sec",
             "list index": -1,
             "commands": [
-                "effect give @s minecraft:instant_health 100 2 true"
+                "effect give @s minecraft:instant_health 200 2 true"
             ],
             "conditions": {
                 "enabling": [
                     {
                         "type": "palladium:action",
-                        "cooldown": 600,
+                        "cooldown": 500,
                         "key_type": "key_bind",
                         "needs_empty_hand": false,
                         "allow_scrolling_when_crouching": true
@@ -93,7 +91,7 @@
                     {
                         "type": "palladium:objective_score",
                         "objective": "undead_death",
-                        "min_score": 20,
+                        "min_score": 30,
                         "max_score": 2147483647
                     }
                 ]
@@ -103,7 +101,7 @@
             "type": "palladium:command",
             "hidden": true,
             "commands": [
-                "scoreboard players remove @s undead_death 20"
+                "scoreboard players remove @s undead_death 30"
             ],
             "conditions": {
                 "enabling": [
@@ -119,8 +117,8 @@
             "type": "palladium:attribute_modifier",
             "icon": "minecraft:feather",
             "attribute": "palladium:flight_speed",
-            "amount": 0.5,
-            "title": "Broken Angelwings",
+            "amount": 1.2,
+            "title": "Angelwings",
             "bar_color": "white",
             "conditions": {
                 "enabling": [
@@ -158,8 +156,8 @@
                 "enabling": [
                     {
                         "type": "palladium:activation",
-                        "cooldown": 500,
-                        "ticks": 60,
+                        "cooldown": 400,
+                        "ticks": 20,
                         "key_type": "key_bind"
                     }
                 ]
@@ -178,7 +176,7 @@
                 "enabling": [
                     {
                         "type": "palladium:action",
-                        "cooldown": "40"
+                        "cooldown": "20"
                     }
                 ]
             }
