@@ -448,8 +448,7 @@
                     
                     "hidden":true,
                     "commands":[
-                    "effect give @s speed 20 6 true",
-                    "effect give @s fire_resistance 1 1 true"
+                    "effect give @s speed 20 6 true"
                 ],
 
                     "conditions":{
@@ -460,25 +459,7 @@
                     }]
                 }
                     
-            },"nether":{
-                    "type":"palladium:command",
-                    
-                    
-                    "hidden":true,
-                    "commands":[
-                    
-                    "effect give @s fire_resistance 1 1 true"
-                    
-                ],
-                    "conditions":{
-                        "enabling": [
-                    {
-                       "type": "palladium:dimension",
-                       "dimension":"minecraft:the_nether" 
-                    }]
-                }
-                    
-          },"effect_death_seer":{
+            },"effect_death_seer":{
             "type":"palladium:command",
             "hidden":true,
             "commands":
@@ -1181,7 +1162,21 @@
                }
             ]
         }
-    }
+    },
+        "fire_damage": {
+            "type": "palladium:damage_immunity",
+            "icon": "minecraft:tnt",
+            "title": "explosion resisstance",
+            "bar_color": "light_gray",
+            "hidden": false,
+            "hidden_in_bar": true,
+            "list_index": -1,
+            "gui_position": "null",
+            "description": "no fire damage",
+            "damage_sources": [
+                "minecraft:is_fire"
+            ]
+        }
 }
 }                   
 
