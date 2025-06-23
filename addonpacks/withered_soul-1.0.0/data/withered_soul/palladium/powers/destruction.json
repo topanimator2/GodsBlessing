@@ -1,0 +1,123 @@
+{  
+    
+
+    "name": "Destruction",
+    "background": "minecraft:textures/block/magma.png",
+    "icon": "minecraft:tnt",
+    "gui_display_type": "tree",
+    "abilities":{
+       "explode": {
+    "type": "palladium:projectile",
+    "icon": "minecraft:fire_charge",
+    "title": "Flame of doom",
+    "bar_color": "light_gray",
+    "hidden": false,
+    "hidden_in_bar": false,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "shoots a fireball",
+    "entity_type": "minecraft:fireball",
+    "entity_data": "null",
+    "inaccuracy": 2,
+    "velocity": 1.5,
+    "swinging_arm": "main_arm",
+    "damage_from_player": true,
+    "ignore_player_movement": false,
+
+    "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:action",
+                        "cooldown": 5,
+                        "key_type": "key_bind",
+                        "needs_empty_hand": false,
+                        "allow_scrolling_when_crouching": true
+                    }
+                ]
+            }
+
+     
+       },
+        "explosion_damage": {
+            "type": "palladium:damage_immunity",
+            "icon": "minecraft:tnt",
+            "title": "explosion resistance",
+            "bar_color": "light_gray",
+            "hidden": false,
+            "hidden_in_bar": true,
+            "list_index": -1,
+            "gui_position": "null",
+            "description": "no explosion damage",
+            "damage_sources": [
+                "minecraft:is_fire",
+                "minecraft:is_explosion"
+            ]
+        },"yeet": {
+            "type": "palladium:command",
+            "icon": "withered_soul:textures/icon/wind_charged.png",
+            "title": "Yeet",
+            "description": "Yeets u up in to the air and destroys the ground beneath u",
+            "list index": -1,
+            "commands": [
+                "summon minecraft:tnt ~ ~-1 ~",
+                "summon minecraft:tnt ~ ~-1 ~",
+                "summon minecraft:tnt ~ ~-1 ~",
+                "summon minecraft:tnt ~ ~-1 ~"
+            ],
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:action",
+                        "cooldown": 400,
+                        "key_type": "key_bind",
+                        "needs_empty_hand": false,
+                        "allow_scrolling_when_crouching": true
+                    }
+                ]
+            }
+        },"armageddon": {
+            "type": "palladium:command",
+            "icon": "minecraft:fire_charge",
+            "title": "Armagedon",
+            "bar_color":"red",
+            "description": "spawns a meteorshower above u",
+            "list index": -1,
+            "commands": [
+                "summon minecraft:fireball ~ ~40 ~ {ExplosionPower:6,Motion:[0d,-3d,0d]}",
+                "summon minecraft:fireball ~20 ~40 ~ {ExplosionPower:6,Motion:[0d,-3d,0d]}",
+                "summon minecraft:fireball ~-20 ~40 ~ {ExplosionPower:6,Motion:[0d,-3d,0d]}",
+                "summon minecraft:fireball ~ ~40 ~20 {ExplosionPower:6,Motion:[0d,-3d,0d]}",
+                "summon minecraft:fireball ~ ~40 ~-20 {ExplosionPower:6,Motion:[0d,-3d,0d]}",
+                "summon minecraft:fireball ~-20 ~40 ~-20 {ExplosionPower:6,Motion:[0d,-3d,0d]}",
+                "summon minecraft:fireball ~20 ~40 ~20 {ExplosionPower:6,Motion:[0d,-3d,0d]}",
+                "summon minecraft:fireball ~1 ~80 ~1 {ExplosionPower:6,Motion:[0d,-5d,0d]}",
+                "summon minecraft:fireball ~10 ~80 ~ {ExplosionPower:6,Motion:[0d,-5d,0d]}",
+                "summon minecraft:fireball ~-10 ~80 ~ {ExplosionPower:6,Motion:[0d,-5d,0d]}",
+                "summon minecraft:fireball ~ ~80 ~10 {ExplosionPower:6,Motion:[0d,-5d,0d]}",
+                "summon minecraft:fireball ~ ~80 ~-10 {ExplosionPower:6,Motion:[0d,-5d,0d]}",
+                "summon minecraft:fireball ~-10 ~80 ~-10 {ExplosionPower:6,Motion:[0d,-5d,0d]}",
+                "summon minecraft:fireball ~10 ~80 ~10 {ExplosionPower:6,Motion:[0d,-5d,0d]}",
+                "summon minecraft:fireball ~2 ~100 ~2 {ExplosionPower:10,Motion:[0d,-6d,0d]}",
+                "summon minecraft:fireball ~40 ~100 ~ {ExplosionPower:10,Motion:[0d,-6d,0d]}",
+                "summon minecraft:fireball ~-40 ~100 ~ {ExplosionPower:10,Motion:[0d,-6d,0d]}",
+                "summon minecraft:fireball ~ ~100 ~40 {ExplosionPower:10,Motion:[0d,-6d,0d]}",
+                "summon minecraft:fireball ~ ~100 ~-40 {ExplosionPower:10,Motion:[0d,-6d,0d]}",
+                "summon minecraft:fireball ~-40 ~100 ~-40 {ExplosionPower:10,Motion:[0d,-6d,0d]}",
+                "summon minecraft:fireball ~40 ~100 ~40 {ExplosionPower:10,Motion:[0d,-6d,0d]}",
+                "summon minecraft:fireball ~40 ~110 ~40 {ExplosionPower:10,Motion:[0d,-4d,0d]}"               
+                
+            ],
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:action",
+                        "cooldown": 3000,
+                        "key_type": "key_bind",
+                        "needs_empty_hand": false,
+                        "allow_scrolling_when_crouching": true
+                    }
+                ]
+            }
+        }
+    }
+}

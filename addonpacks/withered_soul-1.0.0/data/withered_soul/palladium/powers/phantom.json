@@ -96,7 +96,6 @@
     "type": "palladium:activation",
     "cooldown": 30,
     "ticks": 5,
-    "key_type": "left_click",
     "needs_empty_hand": false,
     "allow_scrolling_when_crouching": true
 }
@@ -174,9 +173,10 @@
     "hidden_in_bar": false,
     "list_index": -1,
     "gui_position": "null",
-    "description": "no fall damage",
+    "description": "no fall damage,lightning damage",
     "damage_sources": [
-        "minecraft:is_fall"
+        "minecraft:is_fall",
+        "minecraft:is_lightning"
     ]
 },"Aoe_lvl2":{ 
         "type": "gravestone:aoe_damage",
@@ -627,7 +627,8 @@
             "hidden":true,
             "hidden_in_bar":true,
            "commands": [
-                "effect give @s minecraft:speed 1 5 true"
+                "effect give @s minecraft:speed 1 5 true",
+                "effect give @s minecraft:strength 1 1 true"
                 
             ],
              "conditions":{
