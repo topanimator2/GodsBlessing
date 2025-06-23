@@ -243,9 +243,8 @@ EntityEvents.hurt(event => {
         if(entity.isUndead()) { multiplier = 2}
         let angelholysmitebonus = event.getDamage() + multiplier * (smitebonus + (score.getScore() / 3) + (goldblessednumb) / 5)
 
-        let mainhand = attacker.getMainHandItem() || 0
-        if (global.goldValues[mainhand.getId()] !== undefined) {
-          let mainhanddamage = global.goldValues[mainhand.getId()]
+        let mainhand = attacker.getMainHandItem() || 0.5
+          let mainhanddamage = global?.goldValues[mainhand.getId()] || 0.5
           let mainhandangelholysmitebonus = angelholysmitebonus + 1.5 * (mainhanddamage)
 
 
@@ -256,8 +255,8 @@ EntityEvents.hurt(event => {
             let remaining = mainhandangelholysmitebonus - alreadyHandled;
 
             // This part’s size is 30, except the last part may be smaller
-            let size = remaining >= 50 ? 30 : remaining;
-
+            let size = remaining >= 50 ? 50 : remaining;
+              if(palladium.superpowers.hasSuperpower(entity, "withered_soul:arch_angel") ||palladium.superpowers.hasSuperpower(entity, "withered_soul:angel")) return
             if (mainhandangelholysmitebonus < 50) {
               entity.server.runCommandSilent(`damage ${entity.getUuid()} ${mainhandangelholysmitebonus / 2 || 0} minecraft:player_attack`)
             } else {
@@ -265,13 +264,13 @@ EntityEvents.hurt(event => {
                 entity.server.runCommandSilent(`damage ${entity.getUuid()} ${size / part} minecraft:player_attack`)
 
                 //  entity.actuallyHurt(source, mainhandangelholysmitebonus)
-                let circle = global.getCirclePositions(entity.blockPosition(), 1.5, 0.4);
+                let circle = global.getCirclePositions(entity.blockPosition(), 2.4, 0.3);
                 circle.forEach(pos => {
                   let circlepackage = global.packageRenderParticleData("born_in_chaos_v1:stunstars", pos.x, pos.y, pos.z, 0.01, 0.02, 0.01, 1, 0.00001)
                   attacker.sendData("render_particle", circlepackage)
                 })
                 attacker.getLevel().getEntities()
-                  .filter(e1 => e1.getDistance(entity.blockPosition()) <= 1.5)
+                  .filter(e1 => e1.getDistance(entity.blockPosition()) <= 2.4)
                   .filter(e2 => e2 !== entity)
                   .forEach(e3 => {
                     attacker.server.runCommandSilent(`damage ${e3.getUuid()} ${(size / part) / 2} minecraft:player_attack by ${attacker.getUuid()}`)
@@ -279,7 +278,7 @@ EntityEvents.hurt(event => {
               })
             }
           }
-        }
+
     }}
 })
 

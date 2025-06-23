@@ -2,10 +2,6 @@ type = last_world
 
 last_world {
   is_server = false
-<<<<<<< Updated upstream
   world = C:/Users/julia/AppData/Roaming/ATLauncher/instances/GodsBlessing/saves/New World
-=======
-  world = C:/Users/benha/AppData/Roaming/ATLauncher/instances/godsblessing/saves/New World (7)
->>>>>>> Stashed changes
 }
 
