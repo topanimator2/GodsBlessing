@@ -3,7 +3,7 @@ EntityEvents.death(event => {
   let entity = event.getEntity();
   let attacker
   if (attacker = event.getSource().getPlayer()) {
-    if (palladium.superpowers.hasSuperpower(attacker, "withered_soul:angel")) {
+    if (palladium.superpowers.hasSuperpower(attacker, "withered_soul:angel") || palladium.superpowers.hasSuperpower(attacker, "withered_soul:arch_angel")) {
       let board = attacker.getScoreboard();
       let objective = board.getObjective(OBJECTIVE_ID);
       if (attacker) {
@@ -170,7 +170,6 @@ EntityEvents.hurt(event => {
   let OBJECTIVE_ID = 'undead_death'
   let entity = event.getEntity();
   let source = event.getSource()
-  if (entity.isUndead()) {
     let attacker
     if (attacker = source.getPlayer()) {
 
@@ -188,7 +187,7 @@ EntityEvents.hurt(event => {
       let board = attacker.getScoreboard();
       let objective = board.getObjective(OBJECTIVE_ID);
       let score = board.getOrCreatePlayerScore(attacker.getName().getString(), objective);
-      if (palladium.superpowers.hasSuperpower(attacker, "withered_soul:angel")) {
+      if (palladium.superpowers.hasSuperpower(attacker, "withered_soul:angel") && entity.isUndead()) {
         let smite = attacker.getMainHandItem().getEnchantments().get("minecraft:smite") || 0
         let smitebonus = 2.5 * smite
         let holysmitebonus = smitebonus + (goldblessednumb) / 5
@@ -235,11 +234,53 @@ EntityEvents.hurt(event => {
             attacker.server.runCommandSilent(`damage ${entity.getUuid()} ${angelholysmitebonus} minecraft:player_attack`)
           })
         }
-      } else {
+      } else 
+        if(palladium.superpowers.hasSuperpower(attacker, "withered_soul:arch_angel")) {
+                  let smite = attacker.getMainHandItem().getEnchantments().get("minecraft:smite") || 0
+        let smitebonus = 2.5 * smite
+        let holysmitebonus = smitebonus + (goldblessednumb) / 5
+        let multiplier = 1.2
+        if(entity.isUndead()) { multiplier = 2}
+        let angelholysmitebonus = event.getDamage() + multiplier * (smitebonus + (score.getScore() / 3) + (goldblessednumb) / 5)
 
-      }
-    }
-  }
+        let mainhand = attacker.getMainHandItem() || 0
+        if (global.goldValues[mainhand.getId()] !== undefined) {
+          let mainhanddamage = global.goldValues[mainhand.getId()]
+          let mainhandangelholysmitebonus = angelholysmitebonus + 1.5 * (mainhanddamage)
+
+
+          let parts = Math.ceil(mainhandangelholysmitebonus / 50);
+          for (let part = 1; part <= parts; part++) {
+            // How many items remain before this part?
+            let alreadyHandled = (part - 1) * 50;
+            let remaining = mainhandangelholysmitebonus - alreadyHandled;
+
+            // This part’s size is 30, except the last part may be smaller
+            let size = remaining >= 50 ? 30 : remaining;
+
+            if (mainhandangelholysmitebonus < 50) {
+              entity.server.runCommandSilent(`damage ${entity.getUuid()} ${mainhandangelholysmitebonus / 2 || 0} minecraft:player_attack`)
+            } else {
+              attacker.getServer().scheduleInTicks(60 * part, () => {
+                entity.server.runCommandSilent(`damage ${entity.getUuid()} ${size / part} minecraft:player_attack`)
+
+                //  entity.actuallyHurt(source, mainhandangelholysmitebonus)
+                let circle = global.getCirclePositions(entity.blockPosition(), 1.5, 0.4);
+                circle.forEach(pos => {
+                  let circlepackage = global.packageRenderParticleData("born_in_chaos_v1:stunstars", pos.x, pos.y, pos.z, 0.01, 0.02, 0.01, 1, 0.00001)
+                  attacker.sendData("render_particle", circlepackage)
+                })
+                attacker.getLevel().getEntities()
+                  .filter(e1 => e1.getDistance(entity.blockPosition()) <= 1.5)
+                  .filter(e2 => e2 !== entity)
+                  .forEach(e3 => {
+                    attacker.server.runCommandSilent(`damage ${e3.getUuid()} ${(size / part) / 2} minecraft:player_attack by ${attacker.getUuid()}`)
+                  })
+              })
+            }
+          }
+        }
+    }}
 })
 
 // kubejs/server_scripts/hoverOrb.js
