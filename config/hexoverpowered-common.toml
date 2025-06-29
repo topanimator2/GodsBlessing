@@ -40,4 +40,7 @@ AmethystCircleFullPowerLevel = 15
 #How many media points each FE point equals
 #Range: 0.0 ~ 1.0E10
 MekasuitConversionRatio = 1.0
+#<Display>
+#Displays the hex inside readonly casting items; working client-side
+RevealsHexInsideCastingItems = true
 

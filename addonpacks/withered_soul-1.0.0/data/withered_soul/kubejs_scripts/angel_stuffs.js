@@ -207,7 +207,7 @@ EntityEvents.hurt(event => {
 
             // This part’s size is 30, except the last part may be smaller
             let size = remaining >= 30 ? 30 : remaining;
-
+              if(palladium.superpowers.hasSuperpower(entity, "withered_soul:arch_angel") ||palladium.superpowers.hasSuperpower(entity, "withered_soul:angel")) return
             if (mainhandangelholysmitebonus < 30) {
               entity.server.runCommandSilent(`damage ${entity.getUuid()} ${mainhandangelholysmitebonus / 2 || 0} minecraft:player_attack`)
             } else {
