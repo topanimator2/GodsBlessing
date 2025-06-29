@@ -1,8 +1,19 @@
 {
     "name": "electric phantom",
-    "background": "minecraft:textures/block/soul_sand.png",
+    "background": "minecraft:textures/block/white_stained_glass.png",
     "icon": "minecraft:phantom_membrane",
     "gui_display_type": "tree",
+    "energy_bars": {
+  "Energy": {
+    "color": "#f2e60c",
+    "max":1000,
+    "synced_value": {
+      "type": "score",
+      "objective": "speed_damage",
+      "fallback": 0
+    }
+  }
+},
    
     "abilities": 
     {
@@ -46,7 +57,8 @@
             "commands": [
             "execute as @s at @s run execute as @e[distance=..40] at @e[distance=3..40] run summon minecraft:lightning_bolt",
             "weather thunder",
-            "playsound minecraft:block.chain.hit weather @a"
+            "playsound minecraft:block.chain.hit weather @a",
+            "scoreboard players remove @s speed_damage 300"
             
             
 
@@ -95,7 +107,7 @@
             },{
     "type": "palladium:activation",
     "cooldown": 30,
-    "ticks": 5,
+    "ticks": 1,
     "needs_empty_hand": false,
     "allow_scrolling_when_crouching": true
 }
@@ -112,11 +124,18 @@
             "hidden":true,
             "hidden_in_bar":true,
             "first_tick_commands": [
-                "scoreboard objectives add lightning_affinity dummy"
+                "scoreboard objectives add lightning_affinity dummy",
+                "scoreboard objectives add speed_damage dummy",
+                "scoreboard objectives add lightning_evo dummy"
+
                 
             ],"commands": [
-                "execute if score @s lightning_affinity matches 10.. run kill @s",
-                "execute if score @s lightning_affinity matches 10.. run scoreboard players set @s lightning_affinity 8"
+                "execute if score @s speed_damage matches ..0 run scoreboard players set @s speed_damage 0",
+                 "execute if score @s lightning_affinity matches 10.. run scoreboard players set @s lightning_affinity 9",
+                "execute if score @s speed_damage matches 1000.. run scoreboard players set @s speed_damage 1000",
+                "execute if score @s speed_damage matches ..0 run damage @s 3 minecraft:magic",
+                "execute if score @s speed_damage matches ..0 run scoreboard players add @s lightning_evo 1",
+                "scoreboard players add @s speed_damage 1"
                 
             ]
            
@@ -137,6 +156,7 @@
     "description": "usable while a storm is active",
     "radius": 6,
     "damage": 5,
+    "damage_type":"player_attack",
     "fire_seconds": 0,
     "tag_ex": "exclusion_tag",
 
@@ -195,6 +215,7 @@
     "description": "usable while a storm is active",
     "radius": 7,
     "damage": 6,
+    "damage_type":"player_attack",
     "fire_seconds": 0,
     "tag_ex": "exclusion_tag",
 
@@ -239,6 +260,7 @@
     "description": "usable while a storm is active",
     "radius": 8,
     "damage": 7,
+    "damage_type":"player_attack",
     "fire_seconds": 0,
     "tag_ex": "exclusion_tag",
 
@@ -283,6 +305,7 @@
     "description": "usable while a storm is active",
     "radius": 8,
     "damage": 8,
+    "damage_type":"player_attack",
     "fire_seconds": 0,
     "tag_ex": "exclusion_tag",
 
@@ -327,6 +350,7 @@
     "description": "usable while a storm is active",
     "radius": 8,
     "damage": 9,
+    "damage_type":"player_attack",
     "fire_seconds": 0,
     "tag_ex": "exclusion_tag",
 
@@ -371,6 +395,7 @@
     "description": "usable while a storm is active",
     "radius": 8,
     "damage": 10,
+    "damage_type":"player_attack",
     "fire_seconds": 0,
     "tag_ex": "exclusion_tag",
 
@@ -415,6 +440,7 @@
     "description": "usable while a storm is active",
     "radius": 8,
     "damage": 12,
+    "damage_type":"player_attack",
     "fire_seconds": 1,
     "tag_ex": "exclusion_tag",
 
@@ -459,6 +485,7 @@
     "description": "usable while a storm is active",
     "radius": 8,
     "damage": 14,
+    "damage_type":"player_attack",
     "fire_seconds": 2,
     "tag_ex": "exclusion_tag",
 
@@ -503,6 +530,7 @@
     "description": "usable while a storm is active",
     "radius": 6,
     "damage": 18,
+    "damage_type":"player_attack",
     "fire_seconds": 0,
     "tag_ex": "exclusion_tag",
 
@@ -544,9 +572,10 @@
     "hidden_in_bar": true,
     "list_index": -1,
     "gui_position": "null",
-    "description": "usable while a storm is active",
+    "description": "usable while standing in rain",
     "radius": 4,
     "damage": 3,
+    "damage_type":"player_attack",
     "fire_seconds": 0,
     "tag_ex": "exclusion_tag",
 
@@ -582,7 +611,8 @@
             "hidden":false,
             "hidden_in_bar":false,
            "commands": [
-                "effect give @s minecraft:speed 1 20 true"
+                "effect give @s minecraft:speed 1 20 true",
+                "scoreboard players remove @s speed_damage 4"
                 
             ],
              "conditions":{
@@ -648,7 +678,9 @@
            "commands": [
                 "effect give @s minecraft:speed 15 5 true",
                 "effect give @s minecraft:strength 15 1 true",
-                "damage @s 12 minecraft:lightning_bolt"
+                "damage @s 12 minecraft:magic",
+                "playsound minecraft:entity.lightning_bolt.thunder ambient @s ~ ~ ~ 2 1",
+                "playsound minecraft:entity.lightning_bolt.thunder ambient @a[distance=10] ~ ~ ~ 2 1"
                 
             ],
              "conditions":{
@@ -661,18 +693,90 @@
                 }
                   ]  }
            
+        },"Aoe_sound":{
+            "type": "palladium:command",
+            "icon": "minecraft:lightning_rod",
+            "title": "Overcharge",
+            "description":"damage urself to boost ur speed and damage",
+            "hidden":true,
+            "hidden_in_bar":true,
+           "commands": [
+            "playsound minecraft:entity.lightning_bolt.impact ambient @s ~ ~ ~ 2 0.5",
+            "playsound minecraft:entity.lightning_bolt.impact ambient @a[distance=10] ~ ~ ~ 2 0.5"
+                
+                
+            ],
+             "conditions":{
+            "enabling": [
+                {"type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "Aoe_activate"
+                }
+                  ]  }
+           
+        },"thunder_phantom": {
+            "type": "palladium:command",
+            "icon": "minecraft:soul_sand",
+            "title": "Lightning Affinity",
+            "hidden":true,
+            "hidden_in_bar":true,
+           "commands": [
+                "superpower replace withered_soul:all withered_soul:thunder_phantom @s"
+            ],
+             "conditions":{
+            "enabling": [
+                { "type": "palladium:objective_score",
+                        "objective": "lightning_evo",
+                        "min_score": 100,
+                        "max_score": 2147483647
+                }, { "type": "palladium:objective_score",
+                        "objective": "speed_damage",
+                        "min_score": 1000,
+                        "max_score": 2147483647
+                }, { "type": "palladium:objective_score",
+                        "objective": "lightning_affinity",
+                        "min_score": 9,
+                        "max_score": 2147483647
+                }
+                  ]  }
+           
+        },"particle": {
+            "type": "godsblessing:circle_effect",
+            "icon": "minecraft:textures/mob_effect/regeneration.png",
+            "title": "lightning Particles",
+            "hidden":"true",
+            "particle": "minecraft:electric_spark",
+            "all_players": true,
+            "force_up": 1,
+            "radius": 6,
+            "list index": -2,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "power": "withered_soul:pahntom",
+                        "ability": "Aoe_activate"
+                    }
+                ]
+            }
+            }
+           
         }
+             
+        }
+           
+        
                     
 
 
 
 
     
-}
+
            
               
        
-}
+
 
            
 

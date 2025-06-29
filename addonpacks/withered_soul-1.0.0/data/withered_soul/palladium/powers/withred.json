@@ -161,8 +161,8 @@
             "title": "Soul destroyer",
             "bar_color": "white",
             "commands":[
-                "effect give @e[distance=..5] minecraft:nausea 3 6 true",
-                "effect give @e[distance=..5] minecraft:wither 3 3 true",
+                "effect give @e[distance=..5] minecraft:nausea 1 6 true",
+                "effect give @e[distance=..5] minecraft:wither 1 3 true",
                 "effect clear @s minecraft:wither",
                 "effect clear @s minecraft:nausea"
                 
@@ -257,7 +257,7 @@
             "conditions":{
             "enabling": [
                 {"type":"palladium:action",
-                "cooldown": 18000,
+                "cooldown": 20000,
                 "key_type":"key_bind",
                 "needs_empty_hand":false,
                 "allow_scrolling_when_crouching":true
@@ -627,9 +627,9 @@
             "type": "palladium:command",
             "hidden": true,
             "commands": [
-            "effect give @e[distance=..10] minecraft:wither 3 3 true",
-            "effect give @e[distance=..15] minecraft:nausea 3 3 true",   
-            "effect give @e[distance=..10] minecraft:darkness 40 20 true",
+            "effect give @e[distance=..10] minecraft:wither 2 3 true",
+            "effect give @e[distance=..15] minecraft:nausea 2 3 true",   
+            "effect give @e[distance=..10] minecraft:darkness 20 20 true",
             "effect give @e[distance=..10] minecraft:slowness 1 1 true",
             
             "effect clear @s minecraft:slowness",
@@ -650,14 +650,7 @@
                         "type": "palladium:moon_phase",
                         "min_phase": 4,
                         "max_phase": 4
-                    },{
-                        "type": "palladium:item_in_slot",
-                       "item": {
-                       "item": "withered_soul:chrono_scythe"
-                   },
-                       "slot": "mainhand"
-                           
-                       }
+                    }
                 ]
             } 
          },"die_die_die":{
@@ -1123,31 +1116,7 @@
 
         
     ]}  
-},"name_change":{
-    "type": "palladium:name_change",
-    "icon": "minecraft:blaze_rod",
-    "title": "null",
-    "bar_color": "light_gray",
-    "hidden": true,
-    "hidden_in_bar": true,
-    "list_index": -1,
-    "gui_position": "null",
-    "description": "null",
-    "name": {
-        "text": "Chaos demon"
-
-    },
-    "conditions": {
-            "enabling": [
-               {
-                    "type": "palladium:moon_phase",
-                    "min_phase": 4,
-                    "max_phase": 4
-                }
-            ]
-        } 
-     
-    },
+},
     "soul_barrier":{
     "type": "godsblessing:soul_barrier",
            "icon": "minecraft:shield",
@@ -1166,7 +1135,7 @@
         "fire_damage": {
             "type": "palladium:damage_immunity",
             "icon": "minecraft:tnt",
-            "title": "explosion resisstance",
+            "title": "fire resistance",
             "bar_color": "light_gray",
             "hidden": false,
             "hidden_in_bar": true,
@@ -1176,7 +1145,188 @@
             "damage_sources": [
                 "minecraft:is_fire"
             ]
-        }
+        },
+        "soul_sound": {
+            "type": "palladium:command",
+            "icon": "minecraft:potion",
+            "bar_color": "red",
+            "title": "Holy beings never die/cost 20 points",
+            "hidden":true,
+            "hidden_in_bar":true,
+            "description": "makes urself almost invulnerable for 6 sec",
+            "list index": -1,
+            "commands": [
+                "playsound minecraft:particle.soul_escape ambient @s[distance=..6] ~ ~ ~ 3 0.7",
+                "effect give @s born_in_chaos_v1:vampiric_touch 5 1 true"
+                
+            ],
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:objective_score",
+                        "objective": "withred_soul.got_kill",
+                        "min_score": 1,
+                        "max_score": 2147483647
+                    }
+                ]
+            }
+        },"block_sound":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "born_in_chaos_v1:chaos_spirit_haunt",
+    "volume": 0.5,
+    "pitch": 0.3,
+    "looping": true,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "soul_barrier"
+            }
+
+
+
+            
+        ]}  
+},"death_wish_sound":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "born_in_chaos_v1:krampus_alert",
+    "volume": 0.5,
+    "pitch": 0.5,
+    "looping": false,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "death_wish"
+            }
+
+
+
+            
+        ]}  
+},"death_wish_particle": {
+            "type": "godsblessing:circle_effect",
+            "icon": "minecraft:textures/mob_effect/regeneration.png",
+            "title": "slam Particles",
+            "hidden":"true",
+            "particle": "minecraft:damage_indicator",
+            "all_players": true,
+            "force_up": 0.3,
+            "radius": 20,
+            "list index": -2,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "ability": "death_wish"
+                    }
+                ]
+            }
+            },"soul_destroyer_particle": {
+            "type": "godsblessing:circle_effect",
+            "icon": "minecraft:textures/mob_effect/regeneration.png",
+            "title": "slam Particles",
+            "hidden":"true",
+            "particle": "minecraft:soul",
+            "all_players": true,
+            "force_up": 0.3,
+            "radius": 5,
+            "list index": -2,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "ability": "soul_destroyer"
+                    }
+                ]
+            }
+            },"soul_destroyer_night_particle": {
+            "type": "godsblessing:circle_effect",
+            "icon": "minecraft:textures/mob_effect/regeneration.png",
+            "title": "slam Particles",
+            "hidden":"true",
+            "particle": "minecraft:soul",
+            "all_players": true,
+            "force_up": 0.3,
+            "radius": 10,
+            "list index": -2,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "ability": "soul_destroyer_night_of_shadows"
+                    }
+                ]
+            }
+            },"die_die_die_particle": {
+            "type": "godsblessing:circle_effect",
+            "icon": "minecraft:textures/mob_effect/regeneration.png",
+            "title": "slam Particles",
+            "hidden":"true",
+            "particle": "minecraft:soul_fire_flame",
+            "all_players": true,
+            "force_up": 0.5,
+            "radius": 5,
+            "list index": -2,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "ability": "die_die_die"
+                    }
+                ]
+            }
+            },"die_die_die_sound":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "born_in_chaos_v1:lifestealer_scream",
+    "volume": 0.5,
+    "pitch": 1,
+    "looping": false,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "die_die_die"
+            }
+
+
+
+            
+        ]}  
+}
 }
 }                   
 

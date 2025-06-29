@@ -6,6 +6,7 @@
     "icon": "minecraft:tnt",
     "gui_display_type": "tree",
     "abilities":{
+
        "explode": {
     "type": "palladium:projectile",
     "icon": "minecraft:fire_charge",
@@ -18,8 +19,8 @@
     "description": "shoots a fireball",
     "entity_type": "minecraft:fireball",
     "entity_data": "null",
-    "inaccuracy": 2,
-    "velocity": 1.5,
+    "inaccuracy": 0.5,
+    "velocity": 8,
     "swinging_arm": "main_arm",
     "damage_from_player": true,
     "ignore_player_movement": false,
@@ -28,7 +29,7 @@
                 "enabling": [
                     {
                         "type": "palladium:action",
-                        "cooldown": 5,
+                        "cooldown": 7,
                         "key_type": "key_bind",
                         "needs_empty_hand": false,
                         "allow_scrolling_when_crouching": true
@@ -111,7 +112,7 @@
                 "enabling": [
                     {
                         "type": "palladium:action",
-                        "cooldown": 3000,
+                        "cooldown": 8000,
                         "key_type": "key_bind",
                         "needs_empty_hand": false,
                         "allow_scrolling_when_crouching": true

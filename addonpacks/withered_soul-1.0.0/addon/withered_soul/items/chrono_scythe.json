@@ -3,6 +3,6 @@
     "tier": "minecraft:netherite",
     "creative_mode_tab": "minecraft:combat",
     "is_fire_resistant":true,
-    "base_damage": 7,
+    "base_damage": 10,
     "attack_speed": -3.3
 }

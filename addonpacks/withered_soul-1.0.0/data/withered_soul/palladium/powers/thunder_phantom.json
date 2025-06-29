@@ -1,0 +1,341 @@
+{
+    "name": "thunder phantom",
+    "background": "minecraft:textures/block/copper_block.png",
+    "icon": "minecraft:phantom_membrane",
+    "gui_display_type": "tree",
+    "energy_bars": {
+  "Energy": {
+    "color": "#f2e60c",
+    "max":1000,
+    "synced_value": {
+      "type": "score",
+      "objective": "speed_damage",
+      "fallback": 0
+    }
+  }
+},
+   
+    "abilities": 
+    {
+        "fly": {
+            "type": "palladium:attribute_modifier",
+            "icon": "minecraft:feather",
+            "attribute": "palladium:flight_speed",
+            "amount": 1,
+            "title": "Phantom form",
+            "bar_color": "white",
+
+            "conditions":{
+            "enabling": [
+                {"type":"palladium:toggle",
+                "cooldown": 0,
+                "key_type":"key_bind",
+                "needs_empty_hand":false,
+                "allow_scrolling_when_crouching":true
+                }
+                  ]  }
+        },
+        "sculk_immu":{
+    "type": "palladium:sculk_immunity",
+    "icon": "minecraft:sculk",
+    "title": "sculk immunity",
+    "bar_color": "light_gray",
+    "hidden": false,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "sculk immunity duh"
+
+
+},"lightning_ultimate":{
+            "type": "palladium:command",
+            "hidden": false,
+            "description":"Strike everything with lightning",
+            "icon": "minecraft:torch",
+            "title":"lightning strikes ALL",
+            "bar_color": "red",
+            "commands": [
+            "execute as @s at @s run execute as @e[distance=..40] at @e[distance=3..40] run summon minecraft:lightning_bolt",
+            "weather thunder",
+            "playsound minecraft:block.chain.hit weather @a",
+            "scoreboard players remove @s speed_damage 100"
+            
+            
+
+            ],
+            
+            "conditions":{
+                
+        "enabling":[
+            {
+                "type":"palladium:action",
+                "cooldown": 20000,
+                "key_type":"key_bind",
+                "needs_empty_hand":false,
+                "allow_scrolling_when_crouching":true
+                
+                
+            }
+
+
+
+            
+        ]}  
+    },"scoreboard": {
+            "type": "palladium:command",
+            "icon": "minecraft:soul_sand",
+            "title": "Lightning Affinity",
+            "hidden":true,
+            "hidden_in_bar":true,
+            "first_tick_commands": [
+                "scoreboard objectives add lightning_affinity dummy",
+                "scoreboard objectives add speed_damage dummy",
+                "scoreboard objectives add lightning_evo dummy"
+
+                
+            ],"commands": [
+                "execute if score @s speed_damage matches ..0 run scoreboard players set @s speed_damage 0",
+                "execute if score @s speed_damage matches 1000.. run scoreboard players set @s speed_damage 1000",
+                "execute if score @s speed_damage matches ..0 run damage @s 2 minecraft:magic",
+                "execute if score @s speed_damage matches ..0 run scoreboard players add @s lightning_evo 1",
+                "scoreboard players add @s speed_damage 1"
+                
+            ]
+           
+        },"lightning_speed":{
+            "type": "palladium:command",
+            "icon": "minecraft:potion",
+            "title": "Speed of light",
+            "description":"I show speed",
+            "hidden":false,
+            "hidden_in_bar":false,
+           "commands": [
+                "effect give @s minecraft:speed 1 20 true",
+                "scoreboard players remove @s speed_damage 4"
+                
+            ],
+             "conditions":{
+            "enabling": [
+                {"type":"palladium:toggle",
+                "cooldown": 120,
+                "key_type":"key_bind",
+                "needs_empty_hand":false,
+                "allow_scrolling_when_crouching":true
+                }
+                  ]  }
+           
+        },"lightning_trail": {
+        "type": "palladium:trail",
+        "icon": "minecraft:blaze_rod",
+        "title": "trail",
+        "bar_color": "light_gray",
+        "hidden": true,
+        "hidden_in_bar": true,
+        "list_index": -1,
+        "gui_position": "null",
+        "description": "null",
+        "trail": "withered_soul:trail",
+        
+
+        "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "lightning_speed"
+            }
+
+
+
+            
+        ]}  
+    },"Aoe":{ 
+        "type": "gravestone:aoe_damage",
+    "icon": {
+        "type": "palladium:item",
+        "item": "minecraft:air",
+        "count": 0
+        
+    },
+    "title": "Aoe",
+    "bar_color": "light_gray",
+    "hidden": false,
+    "hidden_in_bar": false,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "damages everything near u,usable while ur standing in rain",
+    "radius": 6,
+    "damage": 20,
+    "damage_type":"player_attack",
+    "fire_seconds": 0,
+    "tag_ex": "exclusion_tag",
+
+    "conditions":{
+        "enabling":[
+            {
+                "type":"palladium:is_in_rain"
+                
+                
+                
+            },{
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "Aoe_activate"
+            }
+
+    
+
+
+
+
+            
+        ]}  
+},"lightning_heal":{
+            "type": "palladium:command",
+            "icon": "minecraft:potion",
+            "title": "Speed",
+            "hidden":true,
+            "hidden_in_bar":true,
+           "commands": [
+                "effect give @s minecraft:speed 1 5 true",
+                "effect give @s minecraft:strength 1 2 true"
+                
+            ],
+             "conditions":{
+            "enabling": [
+                {
+                    "type": "palladium:is_in_rain"
+                }
+                  ]  }
+           
+        },"overcharge":{
+            "type": "palladium:command",
+            "icon": "minecraft:lightning_rod",
+            "title": "Overcharge",
+            "description":"damage urself to boost ur speed and damage",
+            "hidden":false,
+            "hidden_in_bar":false,
+           "commands": [
+                "effect give @s minecraft:speed 15 5 true",
+                "effect give @s minecraft:strength 15 2 true",
+                "damage @s 8 minecraft:magic",
+                "playsound minecraft:entity.lightning_bolt.thunder ambient @s ~ ~ ~ 2 1",
+                "playsound minecraft:entity.lightning_bolt.thunder ambient @a[distance=10] ~ ~ ~ 2 1"
+                
+            ],
+             "conditions":{
+            "enabling": [
+                {"type":"palladium:action",
+                "cooldown": 1000,
+                "key_type":"key_bind",
+                "needs_empty_hand":false,
+                "allow_scrolling_when_crouching":true
+                }
+                  ]  }
+           
+        },"Aoe_lightning":{
+            "type": "palladium:command",
+            "icon": "minecraft:lightning_rod",
+            "description":"damage urself to boost ur speed and damage",
+            "hidden":true,
+            "hidden_in_bar":true,
+           "commands": [
+            "execute as @s at @s run execute as @e[distance=..6] at @e[distance=1..6] run summon minecraft:lightning_bolt"
+                
+                
+            ],
+             "conditions":{
+            "enabling": [
+                {"type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "Aoe_activate"
+                }
+                  ]  }
+           
+        },"Aoe_activate":{ 
+        "type": "gravestone:aoe_damage",
+    "icon":"withered_soul:lightning_affinity",
+    
+    "title": "Aoe",
+    "bar_color": "light_gray",
+    "hidden": false,
+    "hidden_in_bar": false,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "damages everything near u,usable while ur in rain",
+    "damage_type":"lightning_bolt",
+    "radius": 4,
+    "damage": 0,
+    "fire_seconds": 0,
+    "tag_ex": "exclusion_tag",
+
+    "conditions":{
+        "enabling":[
+            {
+                "type":"palladium:is_in_rain"
+                
+                
+            },{
+    "type": "palladium:activation",
+    "cooldown": 30,
+    "ticks":1,
+    "needs_empty_hand": false,
+    "allow_scrolling_when_crouching": true
+}
+
+
+
+
+            
+        ]}  
+},"particle": {
+            "type": "godsblessing:circle_effect",
+            "icon": "minecraft:textures/mob_effect/regeneration.png",
+            "title": "lightning Particles",
+            "hidden":"true",
+            "particle": "minecraft:electric_spark",
+            "all_players": true,
+            "force_up": 1,
+            "radius": 6,
+            "list index": -2,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "power": "withered_soul:thunder_phantom",
+                        "ability": "Aoe_activate"
+                    }
+                ]
+            }
+            }
+           
+        }
+             
+        }
+           
+        
+                    
+
+
+
+
+    
+
+           
+              
+       
+
+
+           
+
+
+    
+
+
+
+    
+
+
+
+         
+ 

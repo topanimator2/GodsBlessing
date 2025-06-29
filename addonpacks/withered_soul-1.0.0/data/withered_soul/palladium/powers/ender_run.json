@@ -143,7 +143,7 @@
         "r_or_s_reset": {
             "type":"palladium:command",
             "description":"lets ur choose if u want resistance or strength",
-            "title": "R or S Reset",
+            "title": "R or S",
             "commands": [
                 "scoreboard players set @s resistanceorstrenght 0"
             ],

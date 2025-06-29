@@ -57,7 +57,8 @@
             "description": "heals everybody around u",
             "list index": -1,
             "commands": [
-                "effect give @e[distance=..15] minecraft:regeneration 15 2 true"
+                "effect give @e[distance=..15] minecraft:regeneration 15 2 true",
+                "playsound minecraft:block.bell.use ambient @a[distance=..15]"
             ],
             "conditions": {
                 "enabling": [
@@ -79,7 +80,8 @@
             "description": "makes urself almost invulnerable for 6 sec",
             "list index": -1,
             "commands": [
-                "effect give @s minecraft:instant_health 100 2 true"
+                "effect give @s minecraft:instant_health 100 2 true",
+                "playsound irons_spellbooks:cast.generic.holy ambient @a[distance=..10]"
             ],
             "conditions": {
                 "enabling": [

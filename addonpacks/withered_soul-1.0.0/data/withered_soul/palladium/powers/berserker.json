@@ -87,8 +87,7 @@
             "hidden": true,
             "commands": [
                 "scoreboard players set @s rage 0",
-                "playsound born_in_chaos_v1:fallen_curse_mark ambient @a[distance=20..]",
-                "playsound born_in_chaos_v1:fallen_curse_mark ambient @s"
+                "playsound born_in_chaos_v1:fallen_curse_mark ambient @a[distance=..20]"
             ],
             
             "conditions": {
@@ -111,8 +110,7 @@
             "commands": [
                 "effect give @s born_in_chaos_v1:rampant_rampage 10 1 true",
                 "scoreboard players add @s rage 25",
-                "playsound midnight:ambient.surface.howling ambient @a[distance=20..] ~ ~ ~ 2 0.3",
-                "playsound midnight:ambient.surface.howling ambient @s ~ ~ ~ 2 0.3"
+                "playsound midnight:ambient.surface.howling ambient @a[distance=..20] ~ ~ ~ 2 0.3"
                
             ],
             "conditions": {
@@ -162,8 +160,7 @@
             "hidden": true,
             "commands": [
                 "scoreboard players remove @s rage 30",
-                "playsound born_in_chaos_v1:charm_of_rage_use ambient @a[distance=20..] ~ ~ ~ 2 0.5",
-                "playsound born_in_chaos_v1:charm_of_rage_use ambient @s ~ ~ ~ 2 0.5"
+                "playsound born_in_chaos_v1:charm_of_rage_use ambient @a[distance=..20] ~ ~ ~ 2 0.5"
             ],
             
             "conditions": {
@@ -241,7 +238,7 @@
             "commands": [
                 "scoreboard players set @s slam.timer 0",
                 "scoreboard players set @s slam 0",
-                "playsound minecraft:block.anvil.place ambient @s ~ ~ ~ 2 0.5"
+                "playsound minecraft:block.anvil.place ambient @a[distance=..20] ~ ~ ~ 2 0.5"
 
                 
             ],
