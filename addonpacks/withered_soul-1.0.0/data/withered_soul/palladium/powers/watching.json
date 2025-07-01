@@ -94,9 +94,7 @@
            "effect give @e[distance=..20] born_in_chaos_v1:gaze_of_terror 20 20 true",
            "effect give @s minecraft:speed 15 4 true",
            "effect clear @s minecraft:slowness",
-           "effect clear @s born_in_chaos_v1:gaze_of_terror",
-          
-           "playsound born_in_chaos_v1:nightmare_stalker_roar master @a[distance=..40] ~ ~ ~ 10 0.4"
+           "effect clear @s born_in_chaos_v1:gaze_of_terror"
             
 
             ],
@@ -219,23 +217,7 @@
                 ]
             } 
             
-         },"sound_not_movin":{
-        "type":"palladium:command",
-        "hidden":true,
-        "commands":
-        "playsound minecraft:block.chain.break ambient @a ~ ~ ~ 2 0.5",
-
-
-      "conditions":{
-        "enabling":[
-            {
-                "type": "palladium:ability_enabled",
-                "power": "null",
-                "ability": "u_not_movin"
-              
-            }
-        ]}  
-    },
+         },
         "sculk_immu":{
     "type": "palladium:sculk_immunity",
     "icon": "minecraft:sculk",
@@ -248,7 +230,81 @@
     "description": "sculk immunity duh"
 
 
-}
+},"sound_not_movin":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "minecraft:block.chain.break",
+    "volume": 2,
+    "pitch": 0.5,
+    "looping": false,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "u_not_movin"
+            }
+
+
+
+            
+        ]}  
+},"nobody_will_move_ever_again_sound":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "born_in_chaos_v1:nightmare_stalker_roar",
+    "volume": 10,
+    "pitch": 0.4,
+    "looping": false,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "nobody_will_move_ever_again"
+            }
+
+
+
+            
+        ]}  
+},"particle": {
+            "type": "godsblessing:circle_effect",
+            "icon": "minecraft:textures/mob_effect/regeneration.png",
+            "title": "ult Particles",
+            "hidden":"true",
+            "particle": "minecraft:soul_fire_flame",
+            "all_players": true,
+            "force_up": 1,
+            "radius": 20,
+            "list index": -2,
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "ability": "nobody_will_move_ever_again"
+                    }
+                ]
+            }
+            }
 
         
 }                   

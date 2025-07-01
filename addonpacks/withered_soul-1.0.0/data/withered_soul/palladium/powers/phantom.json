@@ -57,8 +57,7 @@
             "commands": [
             "execute as @s at @s run execute as @e[distance=..40] at @e[distance=3..40] run summon minecraft:lightning_bolt",
             "weather thunder",
-            "playsound minecraft:block.chain.hit weather @a",
-            "scoreboard players remove @s speed_damage 300"
+            "scoreboard players remove @s speed_damage 400"
             
             
 
@@ -679,8 +678,7 @@
                 "effect give @s minecraft:speed 15 5 true",
                 "effect give @s minecraft:strength 15 1 true",
                 "damage @s 12 minecraft:magic",
-                "playsound minecraft:entity.lightning_bolt.thunder ambient @s ~ ~ ~ 2 1",
-                "playsound minecraft:entity.lightning_bolt.thunder ambient @a[distance=10] ~ ~ ~ 2 1"
+                "scoreboard players remove @s speed_damage 150"
                 
             ],
              "conditions":{
@@ -690,27 +688,6 @@
                 "key_type":"key_bind",
                 "needs_empty_hand":false,
                 "allow_scrolling_when_crouching":true
-                }
-                  ]  }
-           
-        },"Aoe_sound":{
-            "type": "palladium:command",
-            "icon": "minecraft:lightning_rod",
-            "title": "Overcharge",
-            "description":"damage urself to boost ur speed and damage",
-            "hidden":true,
-            "hidden_in_bar":true,
-           "commands": [
-            "playsound minecraft:entity.lightning_bolt.impact ambient @s ~ ~ ~ 2 0.5",
-            "playsound minecraft:entity.lightning_bolt.impact ambient @a[distance=10] ~ ~ ~ 2 0.5"
-                
-                
-            ],
-             "conditions":{
-            "enabling": [
-                {"type": "palladium:ability_enabled",
-                "power": "null",
-                "ability": "Aoe_activate"
                 }
                   ]  }
            
@@ -754,12 +731,96 @@
                 "enabling": [
                     {
                         "type": "palladium:ability_enabled",
-                        "power": "withered_soul:pahntom",
+                        "power": "withered_soul:phantom",
                         "ability": "Aoe_activate"
                     }
                 ]
             }
+            },"lightning_ultimate_sound":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "minecraft:block.chain.hit",
+    "volume": 10,
+    "pitch": 1,
+    "looping": false,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "lightning_ultimate"
             }
+
+
+
+            
+        ]}  
+},"overcharge_sound":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "minecraft:entity.lightning_bolt.thunder",
+    "volume": 2,
+    "pitch": 0.3,
+    "looping": false,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "overcharge"
+            }
+
+
+
+            
+        ]}  
+},"Aoe_sound":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "minecraft:entity.lightning_bolt.impact",
+    "volume": 2,
+    "pitch": 0.5,
+    "looping": false,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "Aoe_activate"
+            }
+
+
+
+            
+        ]}  
+}
            
         }
              

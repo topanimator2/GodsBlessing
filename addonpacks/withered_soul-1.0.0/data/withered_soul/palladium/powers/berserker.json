@@ -109,8 +109,7 @@
             "bar_color":"white",
             "commands": [
                 "effect give @s born_in_chaos_v1:rampant_rampage 10 1 true",
-                "scoreboard players add @s rage 25",
-                "playsound midnight:ambient.surface.howling ambient @a[distance=..20] ~ ~ ~ 2 0.3"
+                "scoreboard players add @s rage 25"
                
             ],
             "conditions": {
@@ -159,8 +158,7 @@
             "type": "palladium:command",
             "hidden": true,
             "commands": [
-                "scoreboard players remove @s rage 30",
-                "playsound born_in_chaos_v1:charm_of_rage_use ambient @a[distance=..20] ~ ~ ~ 2 0.5"
+                "scoreboard players remove @s rage 30"
             ],
             
             "conditions": {
@@ -237,8 +235,7 @@
             "hidden": true,
             "commands": [
                 "scoreboard players set @s slam.timer 0",
-                "scoreboard players set @s slam 0",
-                "playsound minecraft:block.anvil.place ambient @a[distance=..20] ~ ~ ~ 2 0.5"
+                "scoreboard players set @s slam 0"
 
                 
             ],
@@ -272,7 +269,119 @@
                     }
                 ]
             }
+            },"slam_sound":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "minecraft:block.anvil.place",
+    "volume": 2,
+    "pitch": 0.5,
+    "looping": false,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "slam_reset"
             }
+
+
+
+            
+        ]}  
+},"scream_sound":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "born_in_chaos_v1:charm_of_rage_use ambient",
+    "volume": 2,
+    "pitch": 0.5,
+    "looping": false,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "scream"
+            }
+
+
+
+            
+        ]}  
+},"bloodlust_sound":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "midnight:ambient.surface.howling",
+    "volume": 2,
+    "pitch": 0.3,
+    "looping": false,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "bloodlust"
+            }
+
+
+
+            
+        ]}  
+},"kill_them_all_sound":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "born_in_chaos_v1:fallen_curse_mark",
+    "volume": 1,
+    "pitch": 1,
+    "looping": false,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "kill_them_all"
+            }
+
+
+
+            
+        ]}  
+}
     
 }
            

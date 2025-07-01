@@ -57,8 +57,7 @@
             "description": "heals everybody around u",
             "list index": -1,
             "commands": [
-                "effect give @e[distance=..15] minecraft:regeneration 15 2 true",
-                "playsound minecraft:block.bell.use ambient @a[distance=..15]"
+                "effect give @e[distance=..15] minecraft:regeneration 15 2 true"
             ],
             "conditions": {
                 "enabling": [
@@ -80,8 +79,7 @@
             "description": "makes urself almost invulnerable for 6 sec",
             "list index": -1,
             "commands": [
-                "effect give @s minecraft:instant_health 100 2 true",
-                "playsound irons_spellbooks:cast.generic.holy ambient @a[distance=..10]"
+                "effect give @s minecraft:instant_health 100 2 true"
             ],
             "conditions": {
                 "enabling": [
@@ -199,6 +197,117 @@
                     }
                 ]
             }
-        }
+        },"never_die_sound":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "irons_spellbooks:cast.generic.holy",
+    "volume": 2,
+    "pitch": 1,
+    "looping": false,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "never_die"
+            }
+
+
+
+            
+        ]}  
+},"heal all_sound":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "minecraft:block.bell.use",
+    "volume": 2,
+    "pitch": 1,
+    "looping": false,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "heal_all"
+            }
+
+
+
+            
+        ]}  
+},"holy_smite_sound":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "eyesinthedarkness:mob.eyes.jumpscare",
+    "volume": 2,
+    "pitch": 0.5,
+    "looping": true,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "holy_smite"
+            }
+
+
+
+            
+        ]}  
+},
+
+        "holy_gold_drain":{
+            "type": "palladium:command",
+            "hidden": true,
+            "commands": [
+                "scoreboard players remove @s undead_death 70"
+                
+                
+            ],
+            
+            "conditions": {
+                "enabling": [
+                    {
+                        "type": "palladium:ability_enabled",
+                        "power": "null",
+                        "ability": "holy_gold"
+                      
+                    },
+                    {
+                        "type": "palladium:objective_score",
+                        "objective": "undead_death",
+                        "min_score": 70,
+                        "max_score": 2147483647
+                    }
+                ]
+            }
+         }
     }
 }

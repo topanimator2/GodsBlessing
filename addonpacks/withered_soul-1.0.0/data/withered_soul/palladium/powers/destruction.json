@@ -19,8 +19,8 @@
     "description": "shoots a fireball",
     "entity_type": "minecraft:fireball",
     "entity_data": "null",
-    "inaccuracy": 0.5,
-    "velocity": 8,
+    "inaccuracy": 0,
+    "velocity": 7,
     "swinging_arm": "main_arm",
     "damage_from_player": true,
     "ignore_player_movement": false,
@@ -29,7 +29,7 @@
                 "enabling": [
                     {
                         "type": "palladium:action",
-                        "cooldown": 7,
+                        "cooldown": 20,
                         "key_type": "key_bind",
                         "needs_empty_hand": false,
                         "allow_scrolling_when_crouching": true

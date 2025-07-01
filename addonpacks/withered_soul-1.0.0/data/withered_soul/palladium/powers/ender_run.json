@@ -1,7 +1,7 @@
 {
     "name": "Enderrun",
     "background": "minecraft:textures/block/command_block.png",
-    "icon": "minecraft:redstone_block",
+    "icon": "minecraft:ender_eye",
     "gui_display_type": "list",
     "abilities": {
         "scoreboard": {
@@ -11,9 +11,13 @@
             "hidden":true,
             "first_tick_commands": [
                 "scoreboard objectives add resistanceorstrenght dummy",
+                "scoreboard objectives add tp_point_sound dummy",
+                "scoreboard players set @s tp_point_sound 1",
                 "scoreboard players set @s resistanceorstrenght 0"
             ],
-            "commands": []
+            "commands": [
+                "execute if score @s tp_point_sound matches 3.. run scoreboard players set @s tp_point_sound 1"
+            ]
         },
 
 
@@ -24,8 +28,7 @@
             "description":"teleports u 15 blocks",
             "commands": [
                 "execute as @s at @s if block ^ ^ ^15 minecraft:air run tp @s ^ ^ ^15",
-                "effect give @s minecraft:slow_falling 2 0 true",
-                "playsound minecraft:entity.ender_eye.death master @a[distance=..15]"
+                "effect give @s minecraft:slow_falling 2 0 true"
             ],
             "conditions": {
                 "enabling": [
@@ -174,6 +177,128 @@
                     }
                 ]
             }
+        },"teleporter_sound":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "minecraft:entity.ender_eye.death",
+    "volume": 2,
+    "pitch": 0.7,
+    "looping": false,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "teleporter"
+            }
+
+
+
+            
+        ]}  
+},"tp_point_sound1":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "minecraft:entity.ender_dragon.growl",
+    "volume": 1,
+    "pitch": 0.5,
+    "looping": false,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "tp_point"
+            },
+                    {
+                        "type": "palladium:objective_score",
+                        "objective": "tp_point_sound",
+                        "min_score": 1,
+                        "max_score": 1
+                    }
+
+
+
+            
+        ]}  
+},
+
+
+            "tp_point_sound_scoreboard":{
+
+            "type":"palladium:command",
+            "hidden":true,
+            "commands":[
+                "scoreboard players add @s tp_point_sound 1"
+            
+                
+            ],
+            "conditions":{
+                "enabling":[
+                {
+                    "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "tp_point"
+                    
+                    
+                 
+
+
+                }
+            ]
         }
+        },"tp_point_sound2":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "minecraft:entity.enderman.teleport",
+    "volume": 2,
+    "pitch": 0.8,
+    "looping": false,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "tp_point"
+            },
+                    {
+                        "type": "palladium:objective_score",
+                        "objective": "tp_point_sound",
+                        "min_score": 1,
+                        "max_score": 1
+                    }
+
+
+
+            
+        ]}  
+}
     }
 }

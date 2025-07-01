@@ -15,7 +15,7 @@
         }
     },
     "abilities": {
-        "shit": {
+        "particles_heal_all": {
             "type": "godsblessing:circle_effect",
             "icon": "minecraft:textures/mob_effect/regeneration.png",
             "title": "Heal all Particles",
@@ -55,9 +55,7 @@
             "description": "heals everybody around u",
             "list index": -1,
             "commands": [
-                "effect give @a[distance=..15] minecraft:regeneration 25 2 true",
-                "playsound minecraft:block.bell.use ambient @a[distance=15]",
-                "playsound minecraft:block.bell.use ambient @s"
+                "effect give @a[distance=..15] minecraft:regeneration 25 2 true"
             ],
             "conditions": {
                 "enabling": [
@@ -79,9 +77,7 @@
             "description": "makes urself almost invulnerable for 10 sec",
             "list index": -1,
             "commands": [
-                "effect give @s minecraft:instant_health 200 2 true",
-                "playsound irons_spellbooks:cast.generic.holy ambient @a[distance=10]",
-                "playsound irons_spellbooks:cast.generic.holy ambient @s"
+                "effect give @s minecraft:instant_health 200 2 true"
             ],
             "conditions": {
                 "enabling": [
@@ -262,6 +258,62 @@
                     }
                 ]
             }
-         }
+         },"never_die_sound":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "irons_spellbooks:cast.generic.holy",
+    "volume": 2,
+    "pitch": 1,
+    "looping": false,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "never_die"
+            }
+
+
+
+            
+        ]}  
+},"heal all_sound":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "minecraft:block.bell.use",
+    "volume": 2,
+    "pitch": 1,
+    "looping": false,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "heal_all"
+            }
+
+
+
+            
+        ]}  
+}
     }
 }

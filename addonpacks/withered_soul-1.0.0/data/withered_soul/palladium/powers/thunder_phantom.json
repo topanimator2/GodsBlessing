@@ -57,8 +57,7 @@
             "commands": [
             "execute as @s at @s run execute as @e[distance=..40] at @e[distance=3..40] run summon minecraft:lightning_bolt",
             "weather thunder",
-            "playsound minecraft:block.chain.hit weather @a",
-            "scoreboard players remove @s speed_damage 100"
+            "scoreboard players remove @s speed_damage 200"
             
             
 
@@ -89,16 +88,14 @@
             "hidden_in_bar":true,
             "first_tick_commands": [
                 "scoreboard objectives add lightning_affinity dummy",
-                "scoreboard objectives add speed_damage dummy",
-                "scoreboard objectives add lightning_evo dummy"
+                "scoreboard objectives add speed_damage dummy"
 
                 
             ],"commands": [
                 "execute if score @s speed_damage matches ..0 run scoreboard players set @s speed_damage 0",
                 "execute if score @s speed_damage matches 1000.. run scoreboard players set @s speed_damage 1000",
                 "execute if score @s speed_damage matches ..0 run damage @s 2 minecraft:magic",
-                "execute if score @s speed_damage matches ..0 run scoreboard players add @s lightning_evo 1",
-                "scoreboard players add @s speed_damage 1"
+                "scoreboard players add @s speed_damage 2"
                 
             ]
            
@@ -111,7 +108,7 @@
             "hidden_in_bar":false,
            "commands": [
                 "effect give @s minecraft:speed 1 20 true",
-                "scoreboard players remove @s speed_damage 4"
+                "scoreboard players remove @s speed_damage 5"
                 
             ],
              "conditions":{
@@ -219,8 +216,7 @@
                 "effect give @s minecraft:speed 15 5 true",
                 "effect give @s minecraft:strength 15 2 true",
                 "damage @s 8 minecraft:magic",
-                "playsound minecraft:entity.lightning_bolt.thunder ambient @s ~ ~ ~ 2 1",
-                "playsound minecraft:entity.lightning_bolt.thunder ambient @a[distance=10] ~ ~ ~ 2 1"
+                "scoreboard players remove @s speed_damage 150"
                 
             ],
              "conditions":{
@@ -240,7 +236,8 @@
             "hidden":true,
             "hidden_in_bar":true,
            "commands": [
-            "execute as @s at @s run execute as @e[distance=..6] at @e[distance=1..6] run summon minecraft:lightning_bolt"
+            "execute as @s at @s run execute as @e[distance=..6] at @e[distance=1..6] run summon minecraft:lightning_bolt",
+            "scoreboard players remove @s speed_damage 200"
                 
                 
             ],
@@ -307,11 +304,67 @@
                     }
                 ]
             }
+            },"lightning_ultimate_sound":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "minecraft:block.chain.hit",
+    "volume": 10,
+    "pitch": 1,
+    "looping": false,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "lightning_ultimate"
             }
+
+
+
+            
+        ]}  
+},"overcharge_sound":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "minecraft:entity.lightning_bolt.thunder",
+    "volume": 2,
+    "pitch": 0.3,
+    "looping": false,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "overcharge"
+            }
+
+
+
+            
+        ]}  
+}
            
-        }
+}
              
-        }
+}
            
         
                     
