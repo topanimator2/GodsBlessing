@@ -480,8 +480,7 @@ function makeOrbFall(orb) {
   orb.mergeNbt(orb.getNbt().put('KubeJSPersistentData', pd));
 }
 
-const ProxyArray    = Java.loadClass('io.github.douira.glsl_transformer.ast.data.ProxyArrayList');
-// Fires on every craft, for every output
+
 
 ItemEvents.crafted(/.*/, event => {
   // Wrap the Java list of ItemStacks in a JS‐array proxy
