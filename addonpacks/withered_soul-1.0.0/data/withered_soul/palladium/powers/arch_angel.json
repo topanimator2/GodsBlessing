@@ -234,6 +234,12 @@
                         "power": "null",
                         "ability": "holy_gold"
                       
+                    },
+                    {
+                        "type": "palladium:objective_score",
+                        "objective": "undead_death",
+                        "min_score": 70,
+                        "max_score": 2147483647
                     }
                 ]
             }
@@ -308,6 +314,34 @@
                 "type": "palladium:ability_enabled",
                 "power": "null",
                 "ability": "heal_all"
+            }
+
+
+
+            
+        ]}  
+},"holy_smite_sound":{
+    "type": "palladium:play_sound",
+    "icon": "minecraft:blaze_rod",
+    "title": "null",
+    "bar_color": "light_gray",
+    "hidden": true,
+    "hidden_in_bar": true,
+    "list_index": -1,
+    "gui_position": "null",
+    "description": "null",
+    "sound": "eyesinthedarkness:mob.eyes.jumpscare",
+    "volume": 2,
+    "pitch": 0.5,
+    "looping": true,
+    "play_self": false,
+
+    "conditions":{
+        "enabling":[
+            {
+                "type": "palladium:ability_enabled",
+                "power": "null",
+                "ability": "holy_smite"
             }
 
 
